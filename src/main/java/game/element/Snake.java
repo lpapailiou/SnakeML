@@ -1,7 +1,9 @@
-package game;
+package game.element;
 
+import game.Direction;
 import java.util.LinkedList;
 import java.util.List;
+import main.Config;
 
 public class Snake {
 
@@ -47,5 +49,13 @@ public class Snake {
 
   public List<Cell> getBody() {
     return body;
+  }
+
+  public boolean isHeadAt(Cell foodPosition) {
+    return foodPosition.x == body.get(0).x && foodPosition.y == body.get(0).y;
+  }
+
+  public void grow() {
+    body.add(new Cell(-1, -1));
   }
 }

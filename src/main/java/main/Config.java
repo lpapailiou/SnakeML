@@ -1,6 +1,6 @@
-package game;
+package main;
 
-import game.Cell;
+import game.element.Cell;
 import game.Direction;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -16,6 +16,7 @@ public class Config {
   public static final Color BACKGROUND_COLOR = Color.BURLYWOOD;
   public static final Paint SNAKE_BODY_COLOR = Color.SIENNA;
 
+  // TODO: redesign: make width constant in cm, calculate px according to primary screen dpi
   public static final int CELL_SIZE_IN_PX = 100;
   public static final int NUMBER_OF_CELL_COLUMNS = 20;
   public static final int NUMBER_OF_CELL_ROWS = 20;
@@ -24,6 +25,9 @@ public class Config {
   public static final Direction INITIAL_DIRECTION = Direction.RIGHT;
   public static final Cell INITIAL_STARTING_POINT = new Cell(3, 3);
 
-  public static final int SPEED_FACTOR = 7;
+  public static final int SPEED_FACTOR = 1;
 
+  public static final String TITLE_TEXT = "SNAKE GAME";
+  public static final String GAME_OVER_TEXT = "GAME OVER";
+  public static final Paint FOOD_COLOR = Color.RED;
 }
