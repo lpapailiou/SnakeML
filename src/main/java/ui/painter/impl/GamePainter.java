@@ -5,7 +5,6 @@ import static main.Config.NUMBER_OF_CELL_COLUMNS;
 import static main.Config.NUMBER_OF_CELL_ROWS;
 import static main.Config.SNAKE_BODY_COLOR;
 
-import game.element.Cell;
 import main.Config;
 import game.element.Snake;
 import javafx.scene.canvas.GraphicsContext;
@@ -25,10 +24,9 @@ public class GamePainter implements IGamePainter {
     });
   }
 
-  public void paintFood(GraphicsContext gc, Cell foodPosition) {
+  public void paintFood(GraphicsContext gc, int x, int y) {
     gc.setFill(Config.FOOD_COLOR);
-    gc.fillOval(foodPosition.x * CELL_SIZE_IN_PX, foodPosition.y * CELL_SIZE_IN_PX, CELL_SIZE_IN_PX,
-        CELL_SIZE_IN_PX);
+    gc.fillOval(x * CELL_SIZE_IN_PX, y * CELL_SIZE_IN_PX, CELL_SIZE_IN_PX, CELL_SIZE_IN_PX);
   }
 
   public void paintBoard(GraphicsContext gc) {

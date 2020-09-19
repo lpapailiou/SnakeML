@@ -8,7 +8,7 @@ public interface IGamePainter {
 
   void paintBoard(GraphicsContext gc);
 
-  void paintFood(GraphicsContext gc, Cell foodPosition);
+  void paintFood(GraphicsContext gc, int x, int y);
 
   void paintSnake(GraphicsContext gc, Snake snake);
 }

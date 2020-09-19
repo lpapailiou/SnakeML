@@ -47,7 +47,7 @@ public class GameScene implements TickAware {
   @Override
   public void onTick() {
     gamePainter.paintBoard(gc);
-    gamePainter.paintFood(gc, game.food.position);
+    gamePainter.paintFood(gc, game.food.position.x, game.food.position.y);
     gamePainter.paintSnake(gc, game.snake);
   }
 }
