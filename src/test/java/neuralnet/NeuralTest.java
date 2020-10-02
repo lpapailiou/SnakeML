@@ -7,7 +7,7 @@ import java.util.List;
 public class NeuralTest {
 
     @Test
-    public void testXOr() {
+    public void xOrTest() {
         // testing xor function
         double[][] in = {{0,0}, {1,0}, {0,1}, {1,1}};
         double[][] out = {{0}, {1}, {1}, {0}};
@@ -20,11 +20,10 @@ public class NeuralTest {
         System.out.println("combo 4: " + net.predict(in[3]));
     }
 
-    public void testNeurons() {
+    @Test
+    public void neuronTest() {
         NeuralNetwork net = new NeuralNetwork(3, 4, 7, 2);
         List<Double> out = net.predict(new double[] {1, 2, 3});
         System.out.println(out);
-
-
     }
 }
