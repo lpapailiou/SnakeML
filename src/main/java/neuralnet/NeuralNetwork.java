@@ -72,7 +72,7 @@ public class NeuralNetwork {
             tmp.sigmoid();
         }
 
-        return Matrix.toArray(tmp);
+        return Matrix.asList(tmp);
     }
 
     /**
@@ -117,7 +117,7 @@ public class NeuralNetwork {
             layers.get(i).bias.addBias(gradient);
         }
 
-        return Matrix.toArray(tmp);
+        return Matrix.asList(tmp);
     }
 
     /**
