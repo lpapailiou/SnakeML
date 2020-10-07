@@ -29,4 +29,9 @@ public class Cell {
   public int hashCode() {
     return Objects.hash(x, y);
   }
+
+  @Override
+  public Cell clone() {
+    return new Cell(this.x, this.y);
+  }
 }

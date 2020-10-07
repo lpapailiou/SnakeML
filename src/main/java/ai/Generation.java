@@ -1,0 +1,104 @@
+package ai;
+
+import ai.data.GenerationEntity;
+import ai.data.SnakeEntity;
+import ai.neuralnet.NeuralNetwork;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
+public class Generation {
+
+  private int id;
+  private int populationSize;
+  private final static int THREAD_POOL = 12;
+  private HashMap<GameAdapter, Long> scoreList = new HashMap<>();
+  private int winnersToMerge = 2;
+  private List<SnakeEntity> snakeEntities = new ArrayList<>();
+  private List<GenerationEntity> generationEntites;
+
+  public Generation(int id, int populationSize, List<GenerationEntity> generationEntites) {
+    if (populationSize < 1) {
+      throw new IllegalArgumentException("minimum size of a population is 1.");
+    }
+    this.id = id;
+    this.populationSize = populationSize;
+    this.generationEntites = generationEntites;
+  }
+
+  public NeuralNetwork run(NeuralNetwork net) {
+    ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL);
+
+    for (int i = 0; i < populationSize; i++) {
+      Runnable worker = new BackgroundGame(i == 0 ? net : net.clone(), scoreList, snakeEntities);
+      executor.execute(worker);
+    }
+    executor.shutdown();
+    try {
+      executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      System.out.println("executor service interrupted unexpectedly!");
+    }
+
+    GenerationEntity generationEntity = new GenerationEntity(id, snakeEntities);
+    generationEntites.add(generationEntity);
+
+    NeuralNetwork best = getBest(scoreList);
+    for (int i = 1; i < winnersToMerge; i++) {
+      NeuralNetwork next = getBest(scoreList);
+      if (next != null) {
+        best = NeuralNetwork.merge(best, next);
+      }
+    }
+    return best;
+  }
+
+  private NeuralNetwork getBest(HashMap<GameAdapter, Long> map) {
+    if (map.isEmpty() || scoreList.isEmpty()) {
+      return null;
+    }
+    //System.out.println(scoreList.size());
+    Long max = 0l;
+    try {
+      max = Collections.max(scoreList.values());
+    } catch (NoSuchElementException e) {
+      System.out.println("no max found");
+    }
+    Long finalMax = max;
+    List<GameAdapter> ad = map.entrySet().stream().filter(e -> e.getValue().equals(finalMax)).map(Map.Entry::getKey).collect(
+        Collectors.toList());
+    if (!ad.isEmpty()) {
+      System.out.println("----------------------------------------------------------fitness of generation is: " + ad.get(0).getFitness() + " / " + ad.get(0).getSnakeLength());
+      map.remove(ad.get(0));
+    }
+    return ad.isEmpty() ? null : ad.get(0).getNeuralNetwork();
+  }
+
+  static class BackgroundGame implements Runnable {
+    NeuralNetwork net;
+    HashMap<GameAdapter, Long> scores;
+    List<SnakeEntity> snakeEntities;
+    BackgroundGame(NeuralNetwork net, HashMap<GameAdapter, Long> scoreList, List<SnakeEntity> snakeEntities) {
+      this.net = net;
+      this.snakeEntities = snakeEntities;
+      this.scores = scoreList;
+    }
+
+    @Override
+    public void run() {
+      GameAdapter adapter = new GameAdapter(net, snakeEntities);
+      boolean running = true;
+      while (running) {
+        running = adapter.moveSnake();
+      }
+      scores.put(adapter, adapter.getFitness());
+    }
+  }
+}

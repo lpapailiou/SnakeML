@@ -17,9 +17,10 @@ public class Config {
   public static final Paint SNAKE_BODY_COLOR = Color.SIENNA;
 
   // TODO: redesign: make width constant in cm, calculate px according to primary screen dpi
-  public static final int CELL_SIZE_IN_PX = 100;
+  public static final int CELL_SIZE_IN_PX = 35;
   public static final int NUMBER_OF_CELL_COLUMNS = 20;
   public static final int NUMBER_OF_CELL_ROWS = 20;
+  public static final int SNAKE_TIMEOUT = NUMBER_OF_CELL_COLUMNS * NUMBER_OF_CELL_ROWS;
 
   public static final int INITIAL_SNAKE_SIZE = 3;
   public static final Direction INITIAL_DIRECTION = Direction.RIGHT;

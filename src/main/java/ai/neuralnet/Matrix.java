@@ -1,4 +1,4 @@
-package neuralnet;
+package ai.neuralnet;
 
 import java.util.ArrayList;
 import java.util.List;
