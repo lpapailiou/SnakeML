@@ -1,9 +1,7 @@
 package ai;
 
 import ai.data.GenerationEntity;
-import ai.data.SnakeEntity;
 import ai.neuralnet.NeuralNetwork;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -16,19 +14,19 @@ import java.util.stream.Collectors;
 
 public class Generation {
 
-  private int id;
   private int populationSize;
   private final static int THREAD_POOL = 12;
   private HashMap<GameAdapter, Long> scoreList = new HashMap<>();
   private int winnersToMerge = 2;
-  private List<SnakeEntity> snakeEntities = new ArrayList<>();
+  private GenerationEntity generationEntity = new GenerationEntity();
   private List<GenerationEntity> generationEntites;
 
   public Generation(int id, int populationSize, List<GenerationEntity> generationEntites) {
     if (populationSize < 1) {
       throw new IllegalArgumentException("minimum size of a population is 1.");
     }
-    this.id = id;
+
+    generationEntity.setId(id);
     this.populationSize = populationSize;
     this.generationEntites = generationEntites;
   }
@@ -37,7 +35,7 @@ public class Generation {
     ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL);
 
     for (int i = 0; i < populationSize; i++) {
-      Runnable worker = new BackgroundGame(i == 0 ? net : net.clone(), scoreList, snakeEntities);
+      Runnable worker = new BackgroundGame(i == 0 ? net : net.clone(), scoreList, generationEntity);
       executor.execute(worker);
     }
     executor.shutdown();
@@ -47,9 +45,8 @@ public class Generation {
       System.out.println("executor service interrupted unexpectedly!");
     }
 
-    GenerationEntity generationEntity = new GenerationEntity();
-    generationEntity.setId(id);
-    generationEntity.setSnakes(snakeEntities);
+
+
     generationEntites.add(generationEntity);
 
     NeuralNetwork best = getBest(scoreList);
@@ -86,16 +83,16 @@ public class Generation {
   static class BackgroundGame implements Runnable {
     NeuralNetwork net;
     HashMap<GameAdapter, Long> scores;
-    List<SnakeEntity> snakeEntities;
-    BackgroundGame(NeuralNetwork net, HashMap<GameAdapter, Long> scoreList, List<SnakeEntity> snakeEntities) {
+    GenerationEntity generationEntity;
+    BackgroundGame(NeuralNetwork net, HashMap<GameAdapter, Long> scoreList, GenerationEntity generationEntity) {
       this.net = net;
-      this.snakeEntities = snakeEntities;
+      this.generationEntity = generationEntity;
       this.scores = scoreList;
     }
 
     @Override
     public void run() {
-      GameAdapter adapter = new GameAdapter(net, snakeEntities);
+      GameAdapter adapter = new GameAdapter(net, generationEntity);
       boolean running = true;
       while (running) {
         running = adapter.moveSnake();

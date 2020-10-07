@@ -1,6 +1,6 @@
 package ai;
 
-import ai.data.SnakeEntity;
+import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
 import game.Direction;
 import game.Game;
@@ -18,11 +18,11 @@ public class GameAdapter {
   private double[] inputValues = new double[12];
   private Set<Integer> nodeSelection = new HashSet<>();
   private boolean isGameOver = false;
-  private List<SnakeEntity> snakeEntities;
+  private GenerationEntity generationEntity;
 
-  GameAdapter(NeuralNetwork net, List<SnakeEntity> snakeEntities) {
+  GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
     neuralNetwork = net;
-    this.snakeEntities = snakeEntities;
+    this.generationEntity = generationEntity;
     game = new Game();
     for ( int i = 0; i < 12; i++) {
       nodeSelection.add(i);
@@ -52,17 +52,11 @@ public class GameAdapter {
   }
 
   private synchronized void setGameOver() {
-    Snake snake = game.snake;
-    SnakeEntity snakeEntity = new SnakeEntity();
-    snakeEntity.setSnakeLength(snake.getBody().size());
-    snakeEntity.setSteps(snake.getSteps());
-    snakeEntity.setCauseOfDeath(snake.getCauseOfDeath());
-    snakeEntity.setFitness(snake.getFitness());
     synchronized (this) {
       try {
-        snakeEntities.add(0, snakeEntity);
+        generationEntity.aggregateSnakeData(game.snake);
       } catch (ArrayIndexOutOfBoundsException e) {
-        //e.printStackTrace();    // TODO: fix
+        e.printStackTrace();    // TODO: fix
       }
     }
     isGameOver = true;
