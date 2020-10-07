@@ -9,10 +9,10 @@ public class JsonTest {
 
   @Test
   public void jsonTest() {
-    GameBatch batch = new GameBatch(200,250,new NeuralNetwork(0.999,12,32,32,32,4));
+    GameBatch batch = new GameBatch(100,1000,new NeuralNetwork(0.999,12,32,32,32,4));
     batch.run();
-    System.out.println(batch.getJsonString().replaceAll(",", ",\n"));
-    //batch.saveJsonData();
+    //System.out.println(batch.getJsonString().replaceAll(",", ",\n"));
+    batch.saveJsonData();
   }
 
   @Test

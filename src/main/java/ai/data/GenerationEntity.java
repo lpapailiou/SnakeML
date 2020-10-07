@@ -64,10 +64,6 @@ public class GenerationEntity {   // TODO: debug number stuff
     return id;
   }
 
-  public int getPopulation_size() {
-    return populationSize;
-  }
-
   public int getMin_snake_length() {
     return minSnakeLength;
   }
@@ -112,7 +108,7 @@ public class GenerationEntity {   // TODO: debug number stuff
     return avgFitness;
   }
 
-  public long getMaxFitness() {
+  public long getMax_fitness() {
     return maxFitness;
   }
 
