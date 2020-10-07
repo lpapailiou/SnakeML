@@ -52,14 +52,14 @@ public class GameAdapter {
   }
 
   private synchronized void setGameOver() {
-    synchronized (this) {
+    if (!isGameOver) {
       try {
         generationEntity.aggregateSnakeData(game.snake);
       } catch (ArrayIndexOutOfBoundsException e) {
         e.printStackTrace();    // TODO: fix
       }
+      isGameOver = true;
     }
-    isGameOver = true;
   }
 
   public NeuralNetwork getNeuralNetwork() {

@@ -44,6 +44,7 @@ public class NeuralNetwork {
   public NeuralNetwork(double randomizationRate, int... layerParams) {
     this(layerParams);
     this.randomizationRate = randomizationRate;
+    architectureCode = randomizationRate + "_" + Arrays.toString(layerParams);
   }
 
   private NeuralNetwork(int inputLayerNodes, double randomizationRate, List<Layer> layers) {

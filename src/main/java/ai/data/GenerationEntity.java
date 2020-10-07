@@ -4,6 +4,7 @@ import game.element.Snake;
 
 public class GenerationEntity {   // TODO: debug number stuff
 
+  private static Object lock = new Object();
   private int id;
   private int populationSize;
   private int minSnakeLength = Integer.MAX_VALUE;
@@ -20,36 +21,38 @@ public class GenerationEntity {   // TODO: debug number stuff
   private long maxFitness;
 
   public void aggregateSnakeData(Snake snake) {
-    populationSize++;
-    int length = snake.getBody().size();
-    avgSnakeLength = ((avgSnakeLength*(populationSize-1))+length)/populationSize;
-    if (minSnakeLength > length) {
-      minSnakeLength = length;
-    } else if (maxSnakeLength < length) {
-      maxSnakeLength = length;
-    }
-    int steps = snake.getSteps();
-    avgSteps = ((avgSteps*(populationSize-1))+steps)/populationSize;
-    if (minSteps > steps) {
-      minSteps = steps;
-    } else if (maxSteps < steps) {
-      maxSteps = steps;
-    }
-    String deathCause = snake.getCauseOfDeath();
-    if (deathCause.equals("wall")) {
-      numberOfWallDeath++;
-    } else if (deathCause.equals("body")) {
-      numberOfBodyDeath++;
-    } else {
-      numberOfTimeoutDeath++;
-    }
+    synchronized (lock) {
+      populationSize++;
+      int length = snake.getBody().size();
+      avgSnakeLength = ((avgSnakeLength * (populationSize - 1)) + length) / populationSize;
+      if (minSnakeLength > length) {
+        minSnakeLength = length;
+      } else if (maxSnakeLength < length) {
+        maxSnakeLength = length;
+      }
+      int steps = snake.getSteps();
+      avgSteps = ((avgSteps * (populationSize - 1)) + steps) / populationSize;
+      if (minSteps > steps) {
+        minSteps = steps;
+      } else if (maxSteps < steps) {
+        maxSteps = steps;
+      }
+      String deathCause = snake.getCauseOfDeath();
+      if (deathCause.equals("wall")) {
+        numberOfWallDeath++;
+      } else if (deathCause.equals("body")) {
+        numberOfBodyDeath++;
+      } else {
+        numberOfTimeoutDeath++;
+      }
 
-    long fitness = snake.getFitness();
-    avgFitness = ((avgFitness*(populationSize-1))+fitness)/populationSize;
-    if (minFitness > fitness) {
-      minFitness = fitness;
-    } else if (maxFitness < fitness) {
-      maxFitness = fitness;
+      long fitness = snake.getFitness();
+      avgFitness = ((avgFitness * (populationSize - 1)) + fitness) / populationSize;
+      if (minFitness > fitness) {
+        minFitness = fitness;
+      } else if (maxFitness < fitness) {
+        maxFitness = fitness;
+      }
     }
    }
 

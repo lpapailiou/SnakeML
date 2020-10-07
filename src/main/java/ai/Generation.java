@@ -35,6 +35,7 @@ public class Generation {
     ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL);
 
     for (int i = 0; i < populationSize; i++) {
+
       Runnable worker = new BackgroundGame(i == 0 ? net : net.clone(), scoreList, generationEntity);
       executor.execute(worker);
     }
@@ -45,10 +46,7 @@ public class Generation {
       System.out.println("executor service interrupted unexpectedly!");
     }
 
-
-
     generationEntites.add(generationEntity);
-
     NeuralNetwork best = getBest(scoreList);
     for (int i = 1; i < winnersToMerge; i++) {
       NeuralNetwork next = getBest(scoreList);
