@@ -3,6 +3,7 @@ package ai;
 import ai.data.BatchEntity;
 import ai.data.ConfigurationEntity;
 import ai.data.GenerationEntity;
+import ai.data.storage.JsonFileHandler;
 import ai.neuralnet.NeuralNetwork;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +26,11 @@ public class GameBatch {
     this.generationCount = generationCount;
     this.populationnSize = populationnSize;
     this.neuralNetwork = neuralNetwork;
-    configurationEntity = new ConfigurationEntity(NUMBER_OF_CELL_COLUMNS, NUMBER_OF_CELL_ROWS, neuralNetwork.getArchitectureCode(), populationnSize);
+    configurationEntity = new ConfigurationEntity();
+    configurationEntity.setBoardWidth(NUMBER_OF_CELL_COLUMNS);
+    configurationEntity.setBoardHeight(NUMBER_OF_CELL_ROWS);
+    configurationEntity.setAlgorithm(neuralNetwork.getArchitectureCode());
+    configurationEntity.setPopulationSize(populationnSize);
   }
 
 
@@ -52,11 +57,16 @@ public class GameBatch {
     }
   }
 
-  public String getJsonData() {
+  public String getJsonString() {
     if (jsonData == null) {
       generateJson();
     }
     return jsonData;
+  }
+
+  public void saveJsonData() {
+    JsonFileHandler jfh = new JsonFileHandler(getJsonString());
+    jfh.save();
   }
 
 }

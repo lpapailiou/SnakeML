@@ -2,24 +2,33 @@ package ai.data;
 
 public class ConfigurationEntity {
 
-  private int board_width;
-  private int board_height;
+  private int boardWidth;
+  private int boardHeight;
   private String algorithm;
-  private int population_size;
+  private int populationSize;
 
-  public ConfigurationEntity(int boardWith, int boardHeight, String algorithm, int populationSize) {
-    this.board_width = boardWith;
-    this.board_height = boardHeight;
+  public void setBoardWidth(int boardWidth) {
+    this.boardWidth = boardWidth;
+  }
+
+  public void setBoardHeight(int boardHeight) {
+    this.boardHeight = boardHeight;
+  }
+
+  public void setAlgorithm(String algorithm) {
     this.algorithm = algorithm;
-    this.population_size = populationSize;
+  }
+
+  public void setPopulationSize(int populationSize) {
+    this.populationSize = populationSize;
   }
 
   public int getBoard_width() {
-    return board_width;
+    return boardWidth;
   }
 
   public int getBoard_height() {
-    return board_height;
+    return boardHeight;
   }
 
   public String getAlgorithm() {
@@ -27,6 +36,6 @@ public class ConfigurationEntity {
   }
 
   public int getPopulation_size() {
-    return population_size;
+    return populationSize;
   }
 }

@@ -7,8 +7,11 @@ public class GenerationEntity {
   private int id;
   private List<SnakeEntity> snakes;
 
-  public GenerationEntity(int id, List<SnakeEntity> snakes) {
+  public void setId(int id) {
     this.id = id;
+  }
+
+  public void setSnakes(List<SnakeEntity> snakes) {
     this.snakes = snakes;
   }
 

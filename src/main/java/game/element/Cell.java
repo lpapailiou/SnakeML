@@ -34,4 +34,7 @@ public class Cell {
   public Cell clone() {
     return new Cell(this.x, this.y);
   }
+
+  @Override
+  public String toString() { return "(" + x + ", " + y + ")"; }
 }

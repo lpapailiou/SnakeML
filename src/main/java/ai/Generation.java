@@ -47,7 +47,9 @@ public class Generation {
       System.out.println("executor service interrupted unexpectedly!");
     }
 
-    GenerationEntity generationEntity = new GenerationEntity(id, snakeEntities);
+    GenerationEntity generationEntity = new GenerationEntity();
+    generationEntity.setId(id);
+    generationEntity.setSnakes(snakeEntities);
     generationEntites.add(generationEntity);
 
     NeuralNetwork best = getBest(scoreList);
@@ -69,13 +71,13 @@ public class Generation {
     try {
       max = Collections.max(scoreList.values());
     } catch (NoSuchElementException e) {
-      System.out.println("no max found");
+      System.out.println("no max found");   // TODO: could be avoided
     }
     Long finalMax = max;
     List<GameAdapter> ad = map.entrySet().stream().filter(e -> e.getValue().equals(finalMax)).map(Map.Entry::getKey).collect(
         Collectors.toList());
     if (!ad.isEmpty()) {
-      System.out.println("----------------------------------------------------------fitness of generation is: " + ad.get(0).getFitness() + " / " + ad.get(0).getSnakeLength());
+      System.out.println("fitness of generation: " + ad.get(0).getFitness() + " / snake length: " + ad.get(0).getSnakeLength());
       map.remove(ad.get(0));
     }
     return ad.isEmpty() ? null : ad.get(0).getNeuralNetwork();

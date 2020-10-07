@@ -91,7 +91,7 @@ public class Snake {
   }
 
   public boolean isHeadAt(Cell foodPosition) {
-    return foodPosition.x == body.get(0).x && foodPosition.y == body.get(0).y;
+    return body.get(0).equals(foodPosition);
   }
 
   public void grow() {

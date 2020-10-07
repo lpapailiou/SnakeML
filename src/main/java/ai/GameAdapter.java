@@ -1,6 +1,5 @@
 package ai;
 
-
 import ai.data.SnakeEntity;
 import ai.neuralnet.NeuralNetwork;
 import game.Direction;
@@ -17,7 +16,7 @@ public class GameAdapter {
   private NeuralNetwork neuralNetwork;
   private Game game;
   private double[] inputValues = new double[12];
- private Set<Integer> nodeSelection = new HashSet<>();
+  private Set<Integer> nodeSelection = new HashSet<>();
   private boolean isGameOver = false;
   private List<SnakeEntity> snakeEntities;
 
@@ -44,21 +43,8 @@ public class GameAdapter {
       arrayIndex++;
     }
     List<Double> out = neuralNetwork.predict(inputValues);
-    //List<Double> out = net.learn(inputValues, null);
     int maxIndex = out.indexOf(Collections.max(out));
-
-    Direction result;
-    if (maxIndex == 0) {
-      result = Direction.LEFT;
-    } else if (maxIndex == 1) {
-      result = Direction.RIGHT;
-    } else if (maxIndex == 2) {
-      result = Direction.UP;
-    } else {
-      result = Direction.DOWN;
-    }
-
-    return result;
+    return Direction.values()[maxIndex];
   }
 
   long getFitness() {
