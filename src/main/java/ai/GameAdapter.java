@@ -4,29 +4,29 @@ import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
 import game.Direction;
 import game.Game;
-import game.element.Food;
+import game.element.Cell;
 import game.element.Snake;
+import main.configuration.Config;
+import main.configuration.INeuralNetworkConfig;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GameAdapter {
+class GameAdapter implements Comparable<GameAdapter> {
 
   private NeuralNetwork neuralNetwork;
   private Game game;
-  private double[] inputValues = new double[12];
-  private Set<Integer> nodeSelection = new HashSet<>();
+  private Set<Integer> nodeSelection;
   private boolean isGameOver = false;
   private GenerationEntity generationEntity;
+  private long fitness;
 
   GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
+    INeuralNetworkConfig config = Config.getInstance();
     neuralNetwork = net;
+    nodeSelection = config.getInputNodeSelection();
     this.generationEntity = generationEntity;
     game = new Game();
-    for ( int i = 0; i < 12; i++) {
-      nodeSelection.add(i);
-    }
   }
 
   boolean moveSnake() {
@@ -36,10 +36,11 @@ public class GameAdapter {
     return !isGameOver;
   }
 
-  Direction getDirection(Snake snake, Food food) {
+  Direction getDirection(Snake snake, Cell food) {
     int arrayIndex = 0;
-    for (Integer index : nodeSelection) {
-      inputValues[arrayIndex] = InputNode.values()[index].getInput(snake, food);
+    double[] inputValues = new double[nodeSelection.size()];
+    for (Integer nodeIndex : nodeSelection) {
+      inputValues[arrayIndex] = InputNode.values()[nodeIndex].getInput(snake, food);
       arrayIndex++;
     }
     List<Double> out = neuralNetwork.predict(inputValues);
@@ -47,27 +48,39 @@ public class GameAdapter {
     return Direction.values()[maxIndex];
   }
 
-  long getFitness() {
-    return game.snake.getFitness();
-  }
-
-  private synchronized void setGameOver() {
-    if (!isGameOver) {
-      try {
-        generationEntity.aggregateSnakeData(game.snake);
-      } catch (ArrayIndexOutOfBoundsException e) {
-        e.printStackTrace();    // TODO: fix
-      }
-      isGameOver = true;
+  void updateFitness() {
+    if (fitness == 0) {
+      fitness = game.snake.getFitness();
     }
   }
 
-  public NeuralNetwork getNeuralNetwork() {
-    return neuralNetwork;
+  long getFitness() {
+    return fitness;
   }
 
   int getSnakeLength() {
     return game.snake.getBody().size();
   }
 
+  private void setGameOver() {
+    if (!isGameOver) {
+      isGameOver = true;
+      updateFitness();
+      generationEntity.aggregateSnakeData(game.snake);
+    }
+  }
+
+  NeuralNetwork getNeuralNetwork() {
+    return neuralNetwork;
+  }
+
+  @Override
+  public int compareTo(GameAdapter o) {
+    if (this.fitness > o.fitness) {
+      return 1;
+    } else if (this.fitness < o.fitness) {
+      return -1;
+    }
+    return 0;
+  }
 }

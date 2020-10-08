@@ -2,7 +2,7 @@ package ai.data;
 
 import game.element.Snake;
 
-public class GenerationEntity {   // TODO: debug number stuff
+public class GenerationEntity {
 
   private static Object lock = new Object();
   private int id;

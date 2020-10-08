@@ -1,7 +1,6 @@
 package ai.data.storage;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,7 +14,7 @@ public class JsonFileHandler {
     this.data = data;
   }
 
-  public void save() {   // TODO: check if works on mac or other os
+  public void save() {   // TODO: check if works on mac or other os. decide where data should go anyway
     TempStorage storage = TempStorage.getInstance();
     File tmpFile;
     FileWriter writer = null;

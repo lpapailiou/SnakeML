@@ -7,11 +7,10 @@ import ai.data.storage.JsonFileHandler;
 import ai.neuralnet.NeuralNetwork;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import main.configuration.Config;
+import main.configuration.INeuralNetworkConfig;
 import java.util.ArrayList;
 import java.util.List;
-
-import static main.Config.NUMBER_OF_CELL_COLUMNS;
-import static main.Config.NUMBER_OF_CELL_ROWS;
 
 public class GameBatch {
 
@@ -22,13 +21,14 @@ public class GameBatch {
   private NeuralNetwork neuralNetwork;
   private String jsonData;
 
-  public GameBatch(int generationCount, int populationnSize, NeuralNetwork neuralNetwork) {
-    this.generationCount = generationCount;
-    this.populationnSize = populationnSize;
+  public GameBatch(NeuralNetwork neuralNetwork) {
+    INeuralNetworkConfig config = Config.getInstance();
+    this.generationCount = config.getGenerationCount();
+    this.populationnSize = config.getPopulationSize();
     this.neuralNetwork = neuralNetwork;
     configurationEntity = new ConfigurationEntity();
-    configurationEntity.setBoardWidth(NUMBER_OF_CELL_COLUMNS);
-    configurationEntity.setBoardHeight(NUMBER_OF_CELL_ROWS);
+    configurationEntity.setBoardWidth(Config.getInstance().getBoardWidth());
+    configurationEntity.setBoardHeight(Config.getInstance().getBoardHeight());
     configurationEntity.setAlgorithm(neuralNetwork.getArchitectureCode());
     configurationEntity.setPopulationSize(populationnSize);
   }
@@ -45,7 +45,6 @@ public class GameBatch {
 
     batchEntity.setConfigurationEntity(configurationEntity);
     batchEntity.setGenerationEntities(generationEntities);
-
   }
 
   public void generateJson() {

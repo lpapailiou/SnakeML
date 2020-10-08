@@ -6,15 +6,14 @@ import java.util.List;
 
 public class TempStorage {
 
-  public static TempStorage instance;
+  private static TempStorage instance;
   private List<File> dataFiles;
 
   private TempStorage() {
-    this.instance = this;
     dataFiles = new ArrayList<>();
   }
 
-  public void addFile(File file) {
+  void addFile(File file) {
     dataFiles.add(file);
   }
 
@@ -22,9 +21,9 @@ public class TempStorage {
     return new ArrayList<>(dataFiles);
   }
 
-  public static synchronized TempStorage getInstance() {
+  static synchronized TempStorage getInstance() {
     if (instance == null) {
-      new TempStorage();
+      instance = new TempStorage();
     }
     return instance;
   }

@@ -1,30 +1,26 @@
 package game;
 
-import static main.Config.INITIAL_DIRECTION;
-import static main.Config.INITIAL_SNAKE_SIZE;
-import static main.Config.INITIAL_STARTING_POINT;
-import static main.Config.NUMBER_OF_CELL_COLUMNS;
-import static main.Config.NUMBER_OF_CELL_ROWS;
-
 import game.element.Cell;
-import game.element.Food;
 import game.element.Snake;
 import game.event.GameOverConsumer;
 import game.event.TickAware;
+import main.configuration.Config;
+import main.configuration.IGameConfig;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Game implements TickAware {
+public class Game implements TickAware {    // TODO: better encapsulation?
 
   private final ArrayList<GameOverConsumer> gameOverConsumers = new ArrayList<>();
 
-  Direction nextDirection = INITIAL_DIRECTION;
-  public Snake snake = new Snake(INITIAL_SNAKE_SIZE, INITIAL_DIRECTION, INITIAL_STARTING_POINT);
-  public Food food;
+  private IGameConfig config = Config.getInstance();
+  Direction nextDirection = config.getInitialDirection();
+  public Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection, config.getInitialStartingPosition());
+  public Cell food;
   Random rand = new Random();
 
   public Game() {
-    food = spawnFood();
+    food = findEmptyPosition();
   }
 
   public void changeDirection(Direction nextDirection) {
@@ -40,9 +36,9 @@ public class Game implements TickAware {
       return;
     }
 
-    if (snake.isHeadAt(food.position)) {
+    if (snake.isHeadAt(food)) {
       snake.grow();
-      food = spawnFood();
+      food = findEmptyPosition();
     }
   }
 
@@ -54,18 +50,12 @@ public class Game implements TickAware {
     this.gameOverConsumers.add(consumer);
   }
 
-  public Food spawnFood() {
-    Food food = new Food();
-    food.position = findEmptyPosition();
-    return food;
-  }
-
   private Cell findEmptyPosition() {
     // kein do-while, da die Leserlichkeit stark leiden würde.
     while (true) {
       Cell positionUnderTest = new Cell(
-          rand.nextInt(NUMBER_OF_CELL_COLUMNS - 1),
-          rand.nextInt(NUMBER_OF_CELL_ROWS - 1)
+          rand.nextInt(config.getBoardWidth() - 1),
+          rand.nextInt(config.getBoardHeight() - 1)
       );
 
       boolean isEmptyPosition = snake.getBody().stream()

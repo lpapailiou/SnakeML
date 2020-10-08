@@ -3,17 +3,15 @@ package game.element;
 import game.Direction;
 import java.util.LinkedList;
 import java.util.List;
-import main.Config;
-
-import static main.Config.SNAKE_TIMEOUT;
+import main.configuration.Config;
 
 public class Snake {
 
   protected LinkedList<Cell> body = new LinkedList<>();
   private int steps;
-  private int timeout = SNAKE_TIMEOUT;
+  private final int timeoutConstant = Config.getInstance().getSnakeTimeout();
+  private int timeout = timeoutConstant;
   private String causeOfDeath = "timeout";
-  private boolean isTimedOut = false;
 
   public Snake(int size, Direction initialDirection, Cell initialHeadPosition) {
     andGodSaidLetThereBeSnake(size, initialDirection, initialHeadPosition);
@@ -30,8 +28,7 @@ public class Snake {
   public void move(Direction direction) {
     if (!isDead()) {
       timeout--;
-      if (timeout == 0) {
-        isTimedOut = true;
+      if (timeout < 1) {
         return;   //TODO: does not work like that
       }
       Cell snakeHead = body.getFirst();
@@ -42,7 +39,7 @@ public class Snake {
   }
 
   public boolean isDead() {
-    return isSnakeInWall() || isSnakeInItself() || isTimedOut;
+    return isSnakeInWall() || isSnakeInItself() || timeout < 1;
   }
 
   private boolean isSnakeInItself() {
@@ -55,10 +52,10 @@ public class Snake {
 
   private boolean isSnakeInWall() {
     Cell snakeHead = body.get(0);
-    if (snakeHead.x > Config.NUMBER_OF_CELL_COLUMNS || snakeHead.x < 0) {
+    if (snakeHead.x > Config.getInstance().getBoardWidth() || snakeHead.x < 0) {
       causeOfDeath = "wall";
       return true;
-    } else if (snakeHead.y > Config.NUMBER_OF_CELL_ROWS || snakeHead.y < 0) {
+    } else if (snakeHead.y > Config.getInstance().getBoardHeight() || snakeHead.y < 0) {
       causeOfDeath = "wall";
       return true;
     }
@@ -95,7 +92,7 @@ public class Snake {
   }
 
   public void grow() {
-    timeout = SNAKE_TIMEOUT;
+    timeout = timeoutConstant;
     body.add(new Cell(-1, -1)); //TODO: fishy
   }
 }

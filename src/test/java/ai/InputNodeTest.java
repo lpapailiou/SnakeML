@@ -3,14 +3,13 @@ package ai;
 import game.Direction;
 import game.Game;
 import game.element.Cell;
-import game.element.Food;
 import game.element.Snake;
+import main.configuration.Config;
 import org.junit.Test;
 
 import java.util.LinkedList;
 
 import static junit.framework.TestCase.assertEquals;
-import static main.Config.*;
 
 public class InputNodeTest {
 
@@ -18,11 +17,11 @@ public class InputNodeTest {
   @Test
   public void foodInputNodesTest() {
     // assumption: board dimensions are 20x20
-    assertEquals(NUMBER_OF_CELL_COLUMNS, 20);
-    assertEquals(NUMBER_OF_CELL_ROWS, 20);
+    assertEquals(Config.getInstance().getBoardWidth(), 20);   // TODO: refactor as now board dimensions are variable
+    assertEquals(Config.getInstance().getBoardHeight(), 20);
 
     Game game = new Game();
-    game.food.position = new Cell(1,1);
+    game.food = new Cell(1,1);
 
     // assumption that snake head is at (6, 3)
     assertEquals(3, game.snake.getHead().x);
@@ -38,19 +37,19 @@ public class InputNodeTest {
     assertEquals(0, down, 0.001);
     assertEquals(0, left, 0.001);
 
-    game.food.position = new Cell(3,1);
+    game.food = new Cell(3,1);
     up = InputNode.UP_FOOD.getInput(game.snake, game.food);
     assertEquals(1, up, 0.001);
 
-    game.food.position = new Cell(4,3);
+    game.food = new Cell(4,3);
     right = InputNode.RIGHT_FOOD.getInput(game.snake, game.food);
     assertEquals(1, right, 0.001);
 
-    game.food.position = new Cell(3,10);
+    game.food = new Cell(3,10);
     down = InputNode.DOWN_FOOD.getInput(game.snake, game.food);
     assertEquals(1, down, 0.001);
 
-    game.food.position = new Cell(0,3);
+    game.food = new Cell(0,3);
     left = InputNode.LEFT_FOOD.getInput(game.snake, game.food);
     assertEquals(1, left, 0.001);
 
@@ -59,11 +58,11 @@ public class InputNodeTest {
   @Test
   public void bodynputNodesTest() {
     // assumption: board dimensions are 20x20
-    assertEquals(NUMBER_OF_CELL_COLUMNS, 20);
-    assertEquals(NUMBER_OF_CELL_ROWS, 20);
+    assertEquals(Config.getInstance().getBoardWidth(), 20);   // TODO: refactor as now board dimensions are variable
+    assertEquals(Config.getInstance().getBoardHeight(), 20);
 
     // use dummy snake to set custom body
-    DummySnake snake = new DummySnake(INITIAL_SNAKE_SIZE, INITIAL_DIRECTION, INITIAL_STARTING_POINT);
+    DummySnake snake = new DummySnake(Config.getInstance().getInitialSnakeSize(), Config.getInstance().getInitialDirection(), Config.getInstance().getInitialStartingPosition());
     snake.addBodyPart(new Cell(3,3));
     snake.addBodyPart(new Cell(3,2));
     snake.addBodyPart(new Cell(4,2));
@@ -79,8 +78,7 @@ public class InputNodeTest {
     // assumption that snake head is at (6, 3)
     assertEquals(3, snake.getHead().x);
     assertEquals(3, snake.getHead().y);
-    Food food = new Food();
-    food.position = new Cell(1,1);
+    Cell food = new Cell(1,1);
     double up = InputNode.UP_BODY.getInput(snake, food);
     double right = InputNode.RIGHT_BODY.getInput(snake, food);
     double down = InputNode.DOWN_BODY.getInput(snake, food);
@@ -106,11 +104,11 @@ public class InputNodeTest {
   @Test
   public void wallInputNodesTest() {
     // assumption: board dimensions are 20x20
-    assertEquals(NUMBER_OF_CELL_COLUMNS, 20);
-    assertEquals(NUMBER_OF_CELL_ROWS, 20);
+    assertEquals(Config.getInstance().getBoardWidth(), 20);   // TODO: refactor as now board dimensions are variable
+    assertEquals(Config.getInstance().getBoardHeight(), 20);
 
     Game game = new Game();
-    game.food.position = new Cell(1,1);
+    game.food = new Cell(1,1);
     game.onTick();
     game.onTick();
     game.onTick();

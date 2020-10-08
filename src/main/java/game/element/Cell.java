@@ -2,7 +2,7 @@ package game.element;
 
 import java.util.Objects;
 
-public class Cell {
+public class Cell {   // TODO: make immutable? encapsulation?
 
   public int x;
   public int y;

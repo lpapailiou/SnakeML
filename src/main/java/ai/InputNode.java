@@ -1,41 +1,38 @@
 package ai;
 
 import game.element.Cell;
-import game.element.Food;
 import game.element.Snake;
-
-import static main.Config.NUMBER_OF_CELL_COLUMNS;
-import static main.Config.NUMBER_OF_CELL_ROWS;
+import main.configuration.Config;
 
 public enum InputNode {
 
   UP_WALL(0,"distance to upper wall") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       return 1/(snake.getHead().y + 0.001);
     }
   },
   RIGHT_WALL(1, "distance to right wall") {
     @Override
-    public double getInput(Snake snake, Food food) {
-      return 1/(Math.abs(NUMBER_OF_CELL_COLUMNS-1 - snake.getHead().x)+0.001);
+    public double getInput(Snake snake, Cell food) {
+      return 1/(Math.abs(Config.getInstance().getBoardWidth()-1 - snake.getHead().x)+0.001);
     }
   },
   DOWN_WALL(2, "distance to bottom wall") {
     @Override
-    public double getInput(Snake snake, Food food) {
-      return 1/(Math.abs(NUMBER_OF_CELL_ROWS-1 - snake.getHead().y)+0.001);
+    public double getInput(Snake snake, Cell food) {
+      return 1/(Math.abs(Config.getInstance().getBoardHeight()-1 - snake.getHead().y)+0.001);
     }
   },
   LEFT_WALL(3, "distance to left wall") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       return 1/(snake.getHead().x+0.001);
     }
   },
   UP_BODY(4, "distance to body upwards") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
       int index = 0;
       for (int i = pos.y-1; i >= 0; i--) {
@@ -50,9 +47,9 @@ public enum InputNode {
   },
   RIGHT_BODY(5,  "distance to body right hand side") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
-      int end = NUMBER_OF_CELL_COLUMNS;
+      int end = Config.getInstance().getBoardWidth();
       int index = 0;
       for (int i = pos.x+1; i < end; i++) {
         pos.x = i;
@@ -66,9 +63,9 @@ public enum InputNode {
   },
   DOWN_BODY(6, "distance to body downwards") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
-      int end = NUMBER_OF_CELL_ROWS;
+      int end = Config.getInstance().getBoardHeight();
       int index = 0;
       for (int i = pos.y+1; i < end; i++) {
         pos.y = i;
@@ -82,7 +79,7 @@ public enum InputNode {
   },
   LEFT_BODY(7, "distance to body left hand side") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
       int index = 0;
       for (int i = pos.x-1; i >= 0; i--) {
@@ -97,10 +94,10 @@ public enum InputNode {
   },
   UP_FOOD(8,  "vision of food upwards") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       Cell snakeHead = snake.getHead().clone();
-      int distanceY = snakeHead.y - food.position.y;
-      if (snakeHead.x==food.position.x && distanceY > 0) {
+      int distanceY = snakeHead.y - food.y;
+      if (snakeHead.x==food.x && distanceY > 0) {
         return 1;
       }
       return 0;
@@ -108,10 +105,10 @@ public enum InputNode {
   },
   RIGHT_FOOD(9,  "vision of food right hand side") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       Cell snakeHead = snake.getHead().clone();
-      int distanceY = snakeHead.x - food.position.x;
-      if (snakeHead.y==food.position.y && distanceY < 0) {
+      int distanceY = snakeHead.x - food.x;
+      if (snakeHead.y==food.y && distanceY < 0) {
         return 1;
       }
       return 0;
@@ -119,10 +116,10 @@ public enum InputNode {
   },
   DOWN_FOOD(10, "vision of food downwards") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       Cell snakeHead = snake.getHead().clone();
-      int distanceY = snakeHead.y - food.position.y;
-      if (snakeHead.x==food.position.x && distanceY < 0) {
+      int distanceY = snakeHead.y - food.y;
+      if (snakeHead.x==food.x && distanceY < 0) {
         return 1;
       }
       return 0;
@@ -130,10 +127,10 @@ public enum InputNode {
   },
   LEFT_FOOD(11,  "vision of food left hand side") {
     @Override
-    public double getInput(Snake snake, Food food) {
+    public double getInput(Snake snake, Cell food) {
       Cell snakeHead = snake.getHead().clone();
-      int distanceY = snakeHead.x - food.position.x;
-      if (snakeHead.y==food.position.y && distanceY > 0) {
+      int distanceY = snakeHead.x - food.x;
+      if (snakeHead.y==food.y && distanceY > 0) {
         return 1;
       }
       return 0;
@@ -156,7 +153,7 @@ public enum InputNode {
     return tooltipText;
   }
 
-  public double getInput(Snake snake, Food food) {
+  public double getInput(Snake snake, Cell food) {
     return 0;
   }
 
