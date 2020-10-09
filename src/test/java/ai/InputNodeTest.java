@@ -5,6 +5,7 @@ import game.Game;
 import game.element.Cell;
 import game.element.Snake;
 import main.configuration.Config;
+import main.configuration.IGameConfig;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -16,9 +17,9 @@ public class InputNodeTest {
 
   @Test
   public void foodInputNodesTest() {
-    // assumption: board dimensions are 20x20
-    assertEquals(Config.getInstance().getBoardWidth(), 20);   // TODO: refactor as now board dimensions are variable
-    assertEquals(Config.getInstance().getBoardHeight(), 20);
+    IGameConfig config = Config.getInstance();
+    config.setBoardWith(20);
+    config.setBoardHeight(20);
 
     Game game = new Game();
     game.food = new Cell(1,1);
@@ -57,9 +58,9 @@ public class InputNodeTest {
 
   @Test
   public void bodynputNodesTest() {
-    // assumption: board dimensions are 20x20
-    assertEquals(Config.getInstance().getBoardWidth(), 20);   // TODO: refactor as now board dimensions are variable
-    assertEquals(Config.getInstance().getBoardHeight(), 20);
+    IGameConfig config = Config.getInstance();
+    config.setBoardWith(20);
+    config.setBoardHeight(20);
 
     // use dummy snake to set custom body
     DummySnake snake = new DummySnake(Config.getInstance().getInitialSnakeSize(), Config.getInstance().getInitialDirection(), Config.getInstance().getInitialStartingPosition());
@@ -103,9 +104,9 @@ public class InputNodeTest {
 
   @Test
   public void wallInputNodesTest() {
-    // assumption: board dimensions are 20x20
-    assertEquals(Config.getInstance().getBoardWidth(), 20);   // TODO: refactor as now board dimensions are variable
-    assertEquals(Config.getInstance().getBoardHeight(), 20);
+    IGameConfig config = Config.getInstance();
+    config.setBoardWith(20);
+    config.setBoardHeight(20);
 
     Game game = new Game();
     game.food = new Cell(1,1);

@@ -38,4 +38,5 @@ public class ConfigurationEntity {
   public int getPopulation_size() {
     return populationSize;
   }
+
 }

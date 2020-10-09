@@ -65,9 +65,13 @@ class Generation {
     populationList.sort(Comparator.nullsLast(Collections.reverseOrder()));
 
     NeuralNetwork best = populationList.get(0).getNeuralNetwork();
+
     System.out.println("max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0).getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength()+")");
 
-    best = NeuralNetwork.merge(best, populationList.get(1).getNeuralNetwork());     // best option at the moment, below alternative would be kind of nicer though
+    if (populationList.size() > 1) {
+      best = NeuralNetwork.merge(best, populationList.get(1)
+          .getNeuralNetwork());     // best option at the moment, below alternative would be kind of nicer though
+    }
 
     /*  // TODO: improve or remove
     // merge together some of the top scorers
@@ -88,20 +92,18 @@ class Generation {
     NeuralNetwork net;
     List<GameAdapter> populationList;
     GenerationEntity generationEntity;
-    private static final Object LOCK = new Object();
+    GameAdapter adapter;
 
     BackgroundGame(NeuralNetwork net, List<GameAdapter> populationList, GenerationEntity generationEntity) {
       this.net = net;
       this.generationEntity = generationEntity;
       this.populationList = populationList;
+      adapter = new GameAdapter(net, generationEntity);
+      populationList.add(adapter);
     }
 
     @Override
     public void run() {
-      GameAdapter adapter = new GameAdapter(net, generationEntity);
-      synchronized (LOCK) {
-        populationList.add(adapter);
-      }
       boolean running = true;
       while (running) {
         running = adapter.moveSnake();

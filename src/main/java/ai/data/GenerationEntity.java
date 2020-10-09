@@ -4,7 +4,7 @@ import game.element.Snake;
 
 public class GenerationEntity {
 
-  private static Object lock = new Object();
+  private final static Object LOCK = new Object();
   private int id;
   private int populationSize;
   private int minSnakeLength = Integer.MAX_VALUE;
@@ -21,7 +21,7 @@ public class GenerationEntity {
   private long maxFitness;
 
   public void aggregateSnakeData(Snake snake) {
-    synchronized (lock) {
+    synchronized (LOCK) {
       populationSize++;
       int length = snake.getBody().size();
       avgSnakeLength = ((avgSnakeLength * (populationSize - 1)) + length) / populationSize;

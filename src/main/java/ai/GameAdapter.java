@@ -10,6 +10,7 @@ import main.configuration.Config;
 import main.configuration.INeuralNetworkConfig;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 class GameAdapter implements Comparable<GameAdapter> {
@@ -37,6 +38,10 @@ class GameAdapter implements Comparable<GameAdapter> {
   }
 
   Direction getDirection(Snake snake, Cell food) {
+    if (food == null) {
+      return Direction.values()[new Random().nextInt(4)];
+    }
+
     int arrayIndex = 0;
     double[] inputValues = new double[nodeSelection.size()];
     for (Integer nodeIndex : nodeSelection) {
@@ -83,4 +88,5 @@ class GameAdapter implements Comparable<GameAdapter> {
     }
     return 0;
   }
+
 }

@@ -28,5 +28,4 @@ public class TempStorage {
     return instance;
   }
 
-
 }

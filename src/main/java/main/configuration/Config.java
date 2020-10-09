@@ -12,8 +12,8 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   private double manualSpeedFactor = 1;
   private double botSpeedFactor = 1;
   private double cellWidth = 35;
-  private int boardWidth = 20;
-  private int boardHeight = 20;
+  private int boardWidth = 6;
+  private int boardHeight = 6;
   private int initialSnakeSize = 3;
   private Direction initialDirection = Direction.RIGHT;
   private Cell initialStartingPosition = new Cell(3,3);
@@ -22,7 +22,7 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
 
   private double gameOverFontSize = 100;
   private double scoreFontSize = 30;
-  private String gameOverText = "GAME OVER";
+  private String gameOverText = "GAME OVER";    // TODO: font/text could be hardcoded?
 
   private int generationCount = 60;
   private int populationSize = 1000;
@@ -30,8 +30,6 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   private int[] layerConfiguration = {12, 16, 16, 12, 4};
   private int initialnputNodeCount = layerConfiguration[0];       // may be used for visual representation on gui
   private Set<Integer> inputNodeSelection = new HashSet<>();
-
-  // TODO: not included: timeout for neural net algorithm depending on board size
 
   private Config() {
     for (int i = 0; i < initialnputNodeCount; i++) {

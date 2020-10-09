@@ -54,8 +54,8 @@ public class Game implements TickAware {    // TODO: better encapsulation?
     // kein do-while, da die Leserlichkeit stark leiden würde.
     while (true) {
       Cell positionUnderTest = new Cell(
-          rand.nextInt(config.getBoardWidth() - 1),
-          rand.nextInt(config.getBoardHeight() - 1)
+          rand.nextInt(config.getBoardWidth()),
+          rand.nextInt(config.getBoardHeight())
       );
 
       boolean isEmptyPosition = snake.getBody().stream()
@@ -63,6 +63,11 @@ public class Game implements TickAware {    // TODO: better encapsulation?
 
       if (isEmptyPosition) {
         return positionUnderTest;
+      }
+
+      if (snake.getBody().size() == (config.getBoardWidth() * config.getBoardHeight())) {
+        System.out.println("----------------------------------------------> perfect game!!!");
+        return null;
       }
     }
   }

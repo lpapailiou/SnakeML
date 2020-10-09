@@ -28,9 +28,6 @@ public class Snake {
   public void move(Direction direction) {
     if (!isDead()) {
       timeout--;
-      if (timeout < 1) {
-        return;   //TODO: does not work like that
-      }
       Cell snakeHead = body.getFirst();
       body.addFirst(new Cell(snakeHead.x + direction.x, snakeHead.y + direction.y));
       body.removeLast();
@@ -62,7 +59,6 @@ public class Snake {
     return false;
   }
 
-
   public List<Cell> getBody() {
     return body;
   }
@@ -92,7 +88,7 @@ public class Snake {
   }
 
   public void grow() {
-    timeout = timeoutConstant;
-    body.add(new Cell(-1, -1)); //TODO: fishy
+    body.add(new Cell(-1, -1));
+    timeout = body.size() == (Config.getInstance().getBoardWidth() * Config.getInstance().getBoardHeight()) ? 0 : timeoutConstant;
   }
 }

@@ -8,8 +8,6 @@ public interface IColorConfig {
 
   int getBoardHeight();
 
-  double getCellWidth();
-
   Color getSnakeBodyColor();
 
   Color getFoodColor();
