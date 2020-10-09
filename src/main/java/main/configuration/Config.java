@@ -12,8 +12,8 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   private double manualSpeedFactor = 1;
   private double botSpeedFactor = 1;
   private double cellWidth = 35;
-  private int boardWidth = 6;
-  private int boardHeight = 6;
+  private int boardWidth = 20;
+  private int boardHeight = 20;
   private int initialSnakeSize = 3;
   private Direction initialDirection = Direction.RIGHT;
   private Cell initialStartingPosition = new Cell(3,3);

@@ -49,10 +49,10 @@ public class Snake {
 
   private boolean isSnakeInWall() {
     Cell snakeHead = body.get(0);
-    if (snakeHead.x > Config.getInstance().getBoardWidth() || snakeHead.x < 0) {
+    if (snakeHead.x >= Config.getInstance().getBoardWidth() || snakeHead.x < 0) {
       causeOfDeath = "wall";
       return true;
-    } else if (snakeHead.y > Config.getInstance().getBoardHeight() || snakeHead.y < 0) {
+    } else if (snakeHead.y >= Config.getInstance().getBoardHeight() || snakeHead.y < 0) {
       causeOfDeath = "wall";
       return true;
     }
