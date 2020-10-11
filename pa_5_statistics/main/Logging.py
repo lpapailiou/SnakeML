@@ -3,7 +3,7 @@ import os
 from datetime import date
 
 
-class Logging(object):
+class Logger(object):
     """
     This class is used for logging the statistics dashboard
     """

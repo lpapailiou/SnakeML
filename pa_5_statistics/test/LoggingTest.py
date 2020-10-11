@@ -1,6 +1,6 @@
 import unittest
 import logging
-from pa_5_statistics.main.Logging import Logging
+from pa_5_statistics.main.Logging import Logger
 
 
 class LoggingTest(unittest.TestCase):
@@ -11,7 +11,7 @@ class LoggingTest(unittest.TestCase):
     def test_debug_console(self):
         name = "DEBUG_LOGGER"
         logLevel = logging.DEBUG
-        logger = Logging(name, logLevel)
+        logger = Logger(name, logLevel)
 
         logMsg = logger.debug("DEBUG Test")
 
