@@ -31,6 +31,8 @@ class Logging(object):
         :param msg: message of log level
         :return:
         """
+        self.check_directory()
+
         logFile = os.path.join(self.LOG_FILENAME)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
@@ -54,6 +56,8 @@ class Logging(object):
         :param msg: message of log level
         :return:
         """
+        self.check_directory()
+
         logFile = os.path.join(self.LOG_FILENAME)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
@@ -77,6 +81,8 @@ class Logging(object):
         :param msg: message of log level
         :return:
         """
+        self.check_directory()
+
         logFile = os.path.join(self.LOG_FILENAME)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
@@ -100,6 +106,8 @@ class Logging(object):
         :param msg: message of log level
         :return:
         """
+        self.check_directory()
+
         logFile = os.path.join(self.LOG_FILENAME)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
@@ -119,6 +127,8 @@ class Logging(object):
         :param msg: message of log level
         :return:
         """
+        self.check_directory()
+
         logFile = os.path.join(self.LOG_FILENAME)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 

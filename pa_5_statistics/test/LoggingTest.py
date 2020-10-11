@@ -9,4 +9,14 @@ class LoggingTest(unittest.TestCase):
     """
 
     def test_debug_console(self):
-        stream_handler = logging.StreamHandler()
+        name = "DEBUG_LOGGER"
+        logLevel = logging.DEBUG
+        logger = Logging(name, logLevel)
+
+        logMsg = logger.debug("DEBUG Test")
+
+        #FIXME: Assertations! Just checked manually if logging works
+
+
+if __name__ == '__main__':
+    logging_test = LoggingTest()
