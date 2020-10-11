@@ -31,8 +31,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7ffe357-dc0e-47f1-ab5e-be3b8d94a674" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/pa_5_statistics/main/Logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/pa_5_statistics/main/Logging.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pa_5_statistics/test/LoggingTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/pa_5_statistics/test/LoggingTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/main/JsonLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/pa_5_statistics/main/JsonLoader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +59,28 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for LoggingTest.LoggingTest.test_debug_console">
+  <component name="RunManager" selected="Python.JsonLoader">
+    <configuration name="JsonLoader" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pa-5" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pa_5_statistics/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pa_5_statistics/main/JsonLoader.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Logging" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pa-5" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -73,6 +94,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pa_5_statistics/main/Logging.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="kjsb" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pa-5" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pa_5_statistics/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pa_5_statistics/main/kjsb.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -111,9 +153,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests for LoggingTest.LoggingTest.test_debug_console" />
-        <item itemvalue="Python tests.Unittests for LoggingTest.LoggingTest" />
-        <item itemvalue="Python.Logging" />
+        <item itemvalue="Python.JsonLoader" />
+        <item itemvalue="Python.kjsb" />
       </list>
     </recent_temporary>
   </component>
@@ -145,22 +186,22 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2334" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602412273163" />
-    <state width="1899" height="343" key="GridCell.Tab.0.bottom" timestamp="1602416075022">
+    <state width="1899" height="343" key="GridCell.Tab.0.bottom" timestamp="1602419610350">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="343" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602416075022" />
-    <state width="1899" height="343" key="GridCell.Tab.0.center" timestamp="1602416075022">
+    <state width="1899" height="343" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602419610350" />
+    <state width="1899" height="343" key="GridCell.Tab.0.center" timestamp="1602419610350">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="343" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602416075022" />
-    <state width="1899" height="343" key="GridCell.Tab.0.left" timestamp="1602416075022">
+    <state width="1899" height="343" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602419610350" />
+    <state width="1899" height="343" key="GridCell.Tab.0.left" timestamp="1602419610350">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="343" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602416075022" />
-    <state width="1899" height="343" key="GridCell.Tab.0.right" timestamp="1602416075022">
+    <state width="1899" height="343" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602419610350" />
+    <state width="1899" height="343" key="GridCell.Tab.0.right" timestamp="1602419610350">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="343" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602416075022" />
+    <state width="1899" height="343" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602419610350" />
     <state x="2381" y="164" key="SettingsEditor" timestamp="1602412288338">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
