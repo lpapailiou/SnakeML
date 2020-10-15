@@ -14,8 +14,10 @@ public class JsonTest {
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
 
-    config.setGenerationCount(100);
-    config.setPopulationSize(1000);
+    Config.getInstance().setBoardWith(12);
+    Config.getInstance().setBoardHeight(12);
+    config.setGenerationCount(400);
+    config.setPopulationSize(2000);
     GameBatch batch = new GameBatch(new NeuralNetwork(0.999,12,32,32,32,4));
     batch.run();
     System.out.println(batch.getJsonString().replaceAll(",", ",\n"));

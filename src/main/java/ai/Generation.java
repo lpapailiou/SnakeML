@@ -2,10 +2,13 @@ package ai;
 
 import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
+import main.configuration.Config;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -59,33 +62,53 @@ class Generation {
   }
 
   private NeuralNetwork evolve() {
-    final int bound = 3;
-    Random random = new Random();
-
     populationList.sort(Comparator.nullsLast(Collections.reverseOrder()));
-
     NeuralNetwork best = populationList.get(0).getNeuralNetwork();
-
     System.out.println("max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0).getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength()+")");
 
-    if (populationList.size() > 1) {
-      best = NeuralNetwork.merge(best, populationList.get(1)
-          .getNeuralNetwork());     // best option at the moment, below alternative would be kind of nicer though
+    if (populationList.size() < 2) {
+      return best;
+    } else if (populationList.size() < 20 || populationList.get(0).getSnakeLength() < 10) {
+      return NeuralNetwork.merge(best, populationList.get(1)
+          .getNeuralNetwork());
     }
 
-    /*  // TODO: improve or remove
-    // merge together some of the top scorers
+    // do roulette wheel selection algorithm
+
+    int bound = 8;  // bound is the number of selected snake for possible reproduction
+    if (populationList.size() > 100 && populationList.size() < 200) {
+      bound = (int) (Config.getInstance().getPopulationSize()*0.2);
+    } else if (populationList.size() > 1000) {
+      bound = (int) (Config.getInstance().getPopulationSize()*0.01);
+    }
+    int choice = 2;  // choice is the number of snakes which will be additionally selected to reproduce with the best snake
+
+    Map<Integer, Long> map = new HashMap();
+    double sum = 0;   // sum is the sum of fitness of all pre-selected snakes
     for (int i = 0; i < bound; i++) {
-      best = NeuralNetwork.merge(best, populationList.get(random.nextInt(bound)).getNeuralNetwork());
+      GameAdapter adaapter = populationList.get(i);
+      sum += adaapter.getFitness();
+      map.put(i, adaapter.getFitness());
     }
 
-    // seed in some random scorers to break 'eaten in' patterns and avoid local maima
-    for (int i = 0; i < bound/2; i++) {
-      best = NeuralNetwork.merge(best, populationList.get(random.nextInt(populationSize)).getNeuralNetwork());
+    for (int i = 0; i < choice; i++) {
+      best = NeuralNetwork.merge(best, spinRouletteWheel(populationList, map, bound, sum));   // selection after roulette wheel principle
     }
-    */
 
     return best;
+  }
+
+  private NeuralNetwork spinRouletteWheel(List<GameAdapter> generations, Map<Integer, Long> map, int bound, double sum) {
+    long checksum = 0;
+    NeuralNetwork chosen = null;
+    for (int i = 0; i < bound; i++) {
+      checksum += map.get(i);
+      if (checksum > new Random().nextInt((int) sum)) {
+        chosen = generations.get(i).getNeuralNetwork();
+        break;
+      }
+    }
+    return chosen;
   }
 
   static class BackgroundGame implements Runnable {

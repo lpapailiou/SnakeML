@@ -98,7 +98,7 @@ public enum InputNode {
       Cell snakeHead = snake.getHead().clone();
       int distanceY = snakeHead.y - food.y;
       if (snakeHead.x==food.x && distanceY > 0) {
-        return 1;
+        return 1000;
       }
       return 0;
     }
@@ -109,7 +109,7 @@ public enum InputNode {
       Cell snakeHead = snake.getHead().clone();
       int distanceY = snakeHead.x - food.x;
       if (snakeHead.y==food.y && distanceY < 0) {
-        return 1;
+        return 1000;
       }
       return 0;
     }
@@ -120,7 +120,7 @@ public enum InputNode {
       Cell snakeHead = snake.getHead().clone();
       int distanceY = snakeHead.y - food.y;
       if (snakeHead.x==food.x && distanceY < 0) {
-        return 1;
+        return 1000;
       }
       return 0;
     }
@@ -131,7 +131,7 @@ public enum InputNode {
       Cell snakeHead = snake.getHead().clone();
       int distanceY = snakeHead.x - food.x;
       if (snakeHead.y==food.y && distanceY > 0) {
-        return 1;
+        return 1000;
       }
       return 0;
     }

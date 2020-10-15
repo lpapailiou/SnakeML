@@ -73,31 +73,12 @@ public class Snake {
 
   public long getFitness() {
     int snakeLength = body.size();
-    return (long) Math.pow(snakeLength, 3.7) + steps;   // looks less advanced, but works quite nicely <3
+    int boardHalf = (Config.getInstance().getBoardWidth() + Config.getInstance().getBoardHeight())/2;
 
-    //(((Math.pow(snakeLength, 3))) + Math.log(snakeLength) * (stepsPerSnake*stepsPerSnake));
-/*
-    if (snakeLength < (Config.getInstance().getBoardWidth()+Config.getInstance().getBoardHeight())/2) {
-      return (long) ((stepsPerSnake*stepsPerSnake/2) * Math.pow(2, snakeLength));
+    if (snakeLength < boardHalf * 1.5) {
+      return (long) Math.pow(snakeLength, 3.7) + steps;
     }
-    return (long) ((Config.getInstance().getBoardWidth()*Config.getInstance().getBoardHeight() * Math.pow(2, snakeLength)));
-
-    //return (long) ((stepsPerSnake*stepsPerSnake/2) * Math.pow(2, snakeLength));
-    if (snakeLength < 10) {
-      return (long) ((steps / snakeLength) * Math.pow(2, snakeLength));
-    }
-    return (long) (((steps / snakeLength) * Math.pow(2, snakeLength)) - stepsPerSnake);
-    /*
-    return (long) (steps + (Math.pow(2, snakeLength) + Math.pow(snakeLength, 2.1) * 500) - (Math.pow(snakeLength, 1.2) * Math.pow((0.25*steps), 1.3)));
-    */
-    /*
-    // .................... original fitness function ....................
-    if (snakeLength < 10) {
-      return (long) (steps*steps * Math.pow(2, snakeLength));
-    }
-    return (long) (steps*steps*Math.pow(2, 10) * (snakeLength-9));
-    // .................... original fitness function ....................
-    */
+    return (long) (Math.pow(snakeLength, 4.7) - (steps/snakeLength));
   }
 
   public Cell getHead() {
