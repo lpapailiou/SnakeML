@@ -34,7 +34,9 @@
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
 # .idea/artifacts
-# .idea/compiler.xml
+.idea/compiler.xml
+.idea/misc.xml
+.idea/vcs.xml
 # .idea/jarRepositories.xml
 # .idea/modules.xml
 # .idea/*.iml
@@ -50,10 +52,12 @@ cmake-build-*/
 
 # File-based project format
 *.iws
+*.iml
 
 # IntelliJ
 out/
 target/
+.idea/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -105,5 +109,8 @@ fabric.properties
 # CodeStream plugin
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
+
+.idea
+*.iml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
