@@ -30,153 +30,53 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7ffe357-dc0e-47f1-ab5e-be3b8d94a674" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pa_5_statistics/ui/Cockpit.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pa_5_statistics/ui/asd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ce64eea8-d129-4752-a066-1600a554e5f4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/game/Direction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/game/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/game/element/Cell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/game/element/Food.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/game/element/Snake.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/game/event/GameOverConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/game/event/TickAware.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/neuralnet/Layer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/neuralnet/Matrix.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/neuralnet/NeuralNetwork.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/GameScene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/SnakeMlStage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/painter/IGameInformationPainter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/painter/IGamePainter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/painter/impl/GameInformationPainter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/painter/impl/GamePainter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/neuralnet/MatrixTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/neuralnet/NeuralTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/main/Application.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/main/Controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/main/JsonLoader.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/main/Logging.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/main/logs/2020-10-11_Logs.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/test/LoggingTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/test/logs/2020-10-11_Logs.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/ui/Cockpit.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pa_5_statistics/ui/assets/style.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectId" id="1ijDj987rViunQIbhjd8CnaTOX2" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
   </component>
-  <component name="RunManager" selected="Python.Cockpit">
-    <configuration name="Cockpit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pa-5" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pa_5_statistics/ui" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pa_5_statistics/ui/Cockpit.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="JsonLoader" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pa-5" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pa_5_statistics/main" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pa_5_statistics/main/JsonLoader.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="asd" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pa-5" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pa_5_statistics/ui" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pa_5_statistics/ui/asd.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="kjsb" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pa-5" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pa_5_statistics/main" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pa_5_statistics/main/kjsb.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Unittests for LoggingTest.LoggingTest.test_debug_console" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="pa-5" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pa_5_statistics/test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;LoggingTest.LoggingTest.test_debug_console&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.Cockpit" />
-        <item itemvalue="Python.asd" />
-        <item itemvalue="Python.JsonLoader" />
-        <item itemvalue="Python.kjsb" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="c7ffe357-dc0e-47f1-ab5e-be3b8d94a674" name="Default Changelist" comment="" />
-      <created>1602412240123</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1602412240123</updated>
-    </task>
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,30 +91,7 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="2334" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602412273163">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2334" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602412273163" />
-    <state width="1899" height="343" key="GridCell.Tab.0.bottom" timestamp="1602427163537">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="343" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602427163537" />
-    <state width="1899" height="343" key="GridCell.Tab.0.center" timestamp="1602427163537">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="343" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602427163537" />
-    <state width="1899" height="343" key="GridCell.Tab.0.left" timestamp="1602427163537">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="343" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602427163537" />
-    <state width="1899" height="343" key="GridCell.Tab.0.right" timestamp="1602427163537">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="343" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602427163537" />
-    <state x="2381" y="164" key="SettingsEditor" timestamp="1602412288338">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2381" y="164" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602412288338" />
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

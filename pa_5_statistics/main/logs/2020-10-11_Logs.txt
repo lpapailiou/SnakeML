@@ -1,1 +1,0 @@
-2020-10-11 14:52:43,855 - INFO - Dataframe was read from <_io.TextIOWrapper name='C:\\Users\\ramon\\AppData\\Local\\Temp\\SnakeML_batchData_9116272170257393083.json' mode='r' encoding='cp1252'>
