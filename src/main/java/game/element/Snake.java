@@ -47,8 +47,27 @@ public class Snake {
   }
 
 
+<<<<<<< HEAD
   public List<Cell> getBody() {
     return body;
+=======
+  public String getCauseOfDeath() {
+    return causeOfDeath;
+  }
+
+  public long getFitness() {
+    int snakeLength = body.size();
+    int boardHalf = (Config.getInstance().getBoardWidth() + Config.getInstance().getBoardHeight())/2;
+
+    if (snakeLength < boardHalf * 1.5) {
+      return (long) Math.pow(snakeLength, 3.7) + steps;
+    }
+    return (long) (Math.pow(snakeLength, 4.7) - (steps/snakeLength));
+  }
+
+  public Cell getHead() {
+    return body.get(0);
+>>>>>>> e3027e5ed19fb599ad0a954e6a5c447c8fd3b1ef
   }
 
   public boolean isHeadAt(Cell foodPosition) {
