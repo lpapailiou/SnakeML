@@ -2,7 +2,7 @@ package game.element;
 
 import java.util.Objects;
 
-public class Cell {
+public class Cell {   // TODO: make immutable? encapsulation?
 
   public int x;
   public int y;
@@ -29,4 +29,12 @@ public class Cell {
   public int hashCode() {
     return Objects.hash(x, y);
   }
+
+  @Override
+  public Cell clone() {
+    return new Cell(this.x, this.y);
+  }
+
+  @Override
+  public String toString() { return "(" + x + ", " + y + ")"; }
 }

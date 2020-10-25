@@ -1,4 +1,4 @@
-package neuralnet;
+package ai.neuralnet;
 
 /**
  * This is a helper class to assure a dynamic and configurable architecture for the neural network.
