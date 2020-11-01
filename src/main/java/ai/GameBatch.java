@@ -67,5 +67,4 @@ public class GameBatch {
     JsonFileHandler jfh = new JsonFileHandler(getJsonString());
     jfh.save();
   }
-
 }

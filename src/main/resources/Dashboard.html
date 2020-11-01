@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Snake ML Statistics</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.png"/>
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+  <script data-require="jquery@2.2.4" data-semver="2.2.4" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script data-require="bootstrap@3.3.7" data-semver="3.3.7" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css" />
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<div class="four columns div-user-controls">
+  <h2>SNAKE ML - STATISTICS</h2>
+  <p>Visualising statistics of the Game "Snake ML"</p>
+  <p>Pick one or more statistics from the dropdown below.</p>
+  <div class="div-for-dropdown">
+        <select id="select" multiple data-style="Select-control Select-value #modelselector" class="selectpicker">
+          <div class="eight columns bg-grey">
+            <script src="./js/selectpicker.js"></script>
+            <script src="./js/GenStatistics.js"></script>
+          </div>
+          <option id="generations">Generations</option>
+          <option id="deaths">Death causes</option>
+          <option id="fitness">Fitness</option>
+          <option id="steps">Steps</option>
+          <option>TBD</option>
+        </select>
+      </div>
+  </div>
+
+
+<div class="eight columns bg-grey">
+  <div id="chartdiv"></div>
+  <div id="chartdiv2"></div>
+  <div id="chartdiv3"></div>
+  <div id="chartdiv4"></div>
+  <script src="./js/GenStatistics.js"></script>
+</div>
+
+</body>
+</html>
