@@ -6,7 +6,7 @@ public class WebServer {
 
   void runServer() {
     Javalin webserver = Javalin.create().start(8050);
-    webserver.get("", GameBatchController::run);
+    webserver.get("", HttpClient::runRequest);
   }
 
   public static void main(String[] args) {

@@ -34,6 +34,12 @@
       <version>1.7.30</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.10</version>
+    </dependency>
+
   <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-base &ndash;&gt;-->
   <!--      <dependency>-->
   <!--        <groupId>org.openjfx</groupId>-->
