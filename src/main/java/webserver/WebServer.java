@@ -4,16 +4,16 @@ import io.javalin.Javalin;
 
 public class WebServer {
 
-  void runServer() {
+  public void runServer() {
     Javalin webserver = Javalin.create().start(8050);
     webserver.get("", HttpClient::runGET);
     webserver.post("", HttpClient::runPOST);
   }
 
-  public static void main(String[] args) {
-    WebServer service = new WebServer();
-    service.runServer();
-
-  }
+//  public static void main(String[] args) {
+//    WebServer service = new WebServer();
+//    service.runServer();
+//
+//  }
 
 }

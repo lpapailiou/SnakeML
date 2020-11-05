@@ -20,7 +20,7 @@ public class HttpClient {
   }
 
   public static void runPOST(Context context){
-    context.result("Got GET. But it is only supported for control sequences and heartbeat.");
+    context.result("Got POST. But it is only supported for control sequences and heartbeat.");
   }
 
 
