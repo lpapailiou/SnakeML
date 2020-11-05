@@ -1,7 +1,5 @@
 package ui;
 
-import static main.Config.TITLE_TEXT;
-
 import game.Direction;
 import game.Game;
 import game.event.TickAware;
@@ -30,7 +28,7 @@ public class SnakeMlStage implements TickAware {
     listenToKeyboardEvents(gameScene.scene);
 
     stage.setScene(gameScene.scene);
-    stage.setTitle(TITLE_TEXT);
+    stage.setTitle("Snake ML | FFHS Bern 2020");
     stage.show();
   }
 
