@@ -1,9 +1,9 @@
 package ai.data.storage;
 
-import org.apache.http.HttpEntity;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class TempStorage {
 
@@ -18,8 +18,8 @@ public class TempStorage {
     dataFiles.add(file);
   }
 
-  public HttpEntity getDataFiles() {
-    return (HttpEntity) dataFiles;
+  public List<File> getDataFiles() {
+    return new ArrayList<>(dataFiles);
   }
 
   public static synchronized TempStorage getInstance() {
@@ -28,6 +28,5 @@ public class TempStorage {
     }
     return instance;
   }
-
 
 }

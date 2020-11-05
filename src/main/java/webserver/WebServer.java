@@ -6,7 +6,8 @@ public class WebServer {
 
   void runServer() {
     Javalin webserver = Javalin.create().start(8050);
-    webserver.get("", HttpClient::runRequest);
+    webserver.get("", HttpClient::runGET);
+    webserver.post("", HttpClient::runPOST);
   }
 
   public static void main(String[] args) {
@@ -14,6 +15,5 @@ public class WebServer {
     service.runServer();
 
   }
-
 
 }
