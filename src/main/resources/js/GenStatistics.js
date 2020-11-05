@@ -4,7 +4,7 @@ function loadJSON(callback) {
 
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', './TO_DELETE_AFTER_MAKE_REQ_DYNAMIC/SnakeML_batchData_6459864247669174787.json', true); // TODO: change to request path of localhost server
+    xobj.open('GET', 'http://localhost:8050/', true);
     xobj.onreadystatechange = function() {
         if (xobj.readyState == 4 && xobj.status == "200") {
 
