@@ -121,7 +121,7 @@ public class ApplicationController implements Initializable {
         boolean success = adapter.moveSnake();
         GameController.display(adapter.getGame());
         if (!success) {
-          adapter = null;
+          stopTimer();
         }
       } else {
         stopTimer();
