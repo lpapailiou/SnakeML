@@ -18,7 +18,7 @@ public class InputNodeTest {
   @Test
   public void foodInputNodesTest() {
     IGameConfig config = Config.getInstance();
-    config.setBoardWith(20);
+    config.setBoardWidth(20);
     config.setBoardHeight(20);
 
     Game game = new Game();
@@ -59,7 +59,7 @@ public class InputNodeTest {
   @Test
   public void bodynputNodesTest() {
     IGameConfig config = Config.getInstance();
-    config.setBoardWith(20);
+    config.setBoardWidth(20);
     config.setBoardHeight(20);
 
     // use dummy snake to set custom body
@@ -105,7 +105,7 @@ public class InputNodeTest {
   @Test
   public void wallInputNodesTest() {
     IGameConfig config = Config.getInstance();
-    config.setBoardWith(20);
+    config.setBoardWidth(20);
     config.setBoardHeight(20);
 
     Game game = new Game();

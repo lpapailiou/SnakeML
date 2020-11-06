@@ -29,17 +29,18 @@ public class Game implements TickAware {    // TODO: better encapsulation?
 
   @Override
   public void onTick() {
-    snake.move(nextDirection);
 
     if (snake.isDead()) {
       this.emitGameOver();
       return;
+    } else {
+      snake.move(nextDirection, food);
+
+      if (snake.isHeadAt(food)) {
+        food = findEmptyPosition();
+      }
     }
 
-    if (snake.isHeadAt(food)) {
-      snake.grow();
-      food = findEmptyPosition();
-    }
   }
 
   private void emitGameOver() {

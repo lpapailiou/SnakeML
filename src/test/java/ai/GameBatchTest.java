@@ -13,7 +13,7 @@ public class GameBatchTest {
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
 
-    Config.getInstance().setBoardWith(6);
+    Config.getInstance().setBoardWidth(6);
     Config.getInstance().setBoardHeight(6);
     config.setGenerationCount(1000);
     config.setPopulationSize(2000);

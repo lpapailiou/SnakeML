@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Cell {   // TODO: make immutable? encapsulation?
 
-  public int x;
-  public int y;
+  public final int x;
+  public final int y;
 
   public Cell(int x, int y) {
     this.x = x;

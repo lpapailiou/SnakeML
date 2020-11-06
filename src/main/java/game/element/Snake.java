@@ -9,6 +9,7 @@ public class Snake {
 
   protected LinkedList<Cell> body = new LinkedList<>();
   private int steps;
+  private boolean isDead = false;
   private final int timeoutConstant = Config.getInstance().getSnakeTimeout();
   private int timeout = timeoutConstant;
   private String causeOfDeath = "timeout";
@@ -25,34 +26,39 @@ public class Snake {
     }
   }
 
-  public void move(Direction direction) {
+  public void move(Direction direction, Cell food) {
     if (!isDead()) {
       timeout--;
       Cell snakeHead = body.getFirst();
-      body.addFirst(new Cell(snakeHead.x + direction.x, snakeHead.y + direction.y));
-      body.removeLast();
+      Cell newSegment = new Cell(snakeHead.x + direction.x, snakeHead.y + direction.y);
+      if (isSnakeInWall(newSegment) || isSnakeInItself(newSegment) || timeout < 1) {
+        isDead = true;
+        return;
+      }
+      body.addFirst(newSegment);
+      if (!newSegment.equals(food)) {
+        body.removeLast();
+      } else {
+        timeout = body.size() == (Config.getInstance().getBoardWidth() * Config.getInstance().getBoardHeight()) ? 0 : timeoutConstant;
+      }
       steps++;
     }
   }
 
   public boolean isDead() {
-    return isSnakeInWall() || isSnakeInItself() || timeout < 1;
+    return isDead;
   }
 
-  private boolean isSnakeInItself() {
-    if (body.stream().distinct().count() < (long) body.size()) {
+  private boolean isSnakeInItself(Cell cell) {
+    if (body.stream().anyMatch(c -> c.equals(cell))) {
       causeOfDeath = "body";
       return true;
     }
     return false;
   }
 
-  private boolean isSnakeInWall() {
-    Cell snakeHead = body.get(0);
-    if (snakeHead.x >= Config.getInstance().getBoardWidth() || snakeHead.x < 0) {
-      causeOfDeath = "wall";
-      return true;
-    } else if (snakeHead.y >= Config.getInstance().getBoardHeight() || snakeHead.y < 0) {
+  private boolean isSnakeInWall(Cell cell) {
+    if ((cell.x >= Config.getInstance().getBoardWidth() || cell.x < 0) || (cell.y >= Config.getInstance().getBoardHeight() || cell.y < 0)) {
       causeOfDeath = "wall";
       return true;
     }
@@ -89,8 +95,4 @@ public class Snake {
     return body.get(0).equals(foodPosition);
   }
 
-  public void grow() {
-    body.add(new Cell(-1, -1));
-    timeout = body.size() == (Config.getInstance().getBoardWidth() * Config.getInstance().getBoardHeight()) ? 0 : timeoutConstant;
-  }
 }

@@ -1,5 +1,6 @@
 package main.configuration;
 
+import java.util.List;
 import java.util.Set;
 
 public interface INeuralNetworkConfig {
@@ -23,6 +24,8 @@ public interface INeuralNetworkConfig {
   int[] getLayerConfiguration();
 
   void setLayerConfiguration(int[] layerConfiguration);
+
+  List<Integer> getLayerConfigurationAsList();
 
   int getInitialnputNodeCount();
 

@@ -9,15 +9,9 @@ public interface IGameConfig {
 
   int getBoardHeight();
 
-  void setBoardWith(int boardWith);
+  void setBoardWidth(int boardWidth);
 
   void setBoardHeight(int boardHeight);
-
-  double getCellWidth();
-
-  double getManualSpeedFactor();
-
-  double getBotSpeedFactor();
 
   int getInitialSnakeSize();
 

@@ -3,22 +3,22 @@ package main.configuration;
 import game.element.Cell;
 import game.Direction;
 import javafx.scene.paint.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNetworkConfig {
 
   private static Config instance;
-  private double manualSpeedFactor = 1;
-  private double botSpeedFactor = 1;
-  private double cellWidth = 35;
   private int boardWidth = 20;
-  private int boardHeight = 20;
+  private int boardHeight = 15;
   private int initialSnakeSize = 3;
   private Direction initialDirection = Direction.RIGHT;
   private Cell initialStartingPosition = new Cell(3,3);
 
-  private ColorScheme colorScheme = ColorScheme.NORMAL;
+  private Theme theme = Theme.CLASSIC;
+  private Mode mode = Mode.MANUAL;
 
   private double gameOverFontSize = 100;
   private double scoreFontSize = 30;
@@ -44,19 +44,12 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
     return instance;
   }
 
-  @Override
-  public double getManualSpeedFactor() {
-    return manualSpeedFactor;
+  public void setMode(Mode mode) {
+    this.mode = mode;
   }
 
-  @Override
-  public double getBotSpeedFactor() {
-    return botSpeedFactor;
-  }
-
-  @Override
-  public double getCellWidth() {
-    return cellWidth;
+  public Mode getMode() {
+    return mode;
   }
 
   @Override
@@ -70,8 +63,8 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   }
 
   @Override
-  public void setBoardWith(int boardWith) {
-    this.boardWidth = boardWith;
+  public void setBoardWidth(int boardWidth) {
+    this.boardWidth = boardWidth;
   }   // TODO: update cell dimensions
 
   @Override
@@ -95,38 +88,38 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   }
 
   @Override
-  public ColorScheme getColorScheme() {
-    return colorScheme;
+  public Theme getTheme() {
+    return theme;
   }
 
   @Override
-  public void setColorScheme(ColorScheme colorScheme) {
-    this.colorScheme = colorScheme;
+  public void setTheme(Theme theme) {
+    this.theme = theme;
   }
 
   @Override
   public Color getSnakeBodyColor() {
-    return colorScheme.getSnakeBodyColor();
+    return theme.getSnakeBodyColor();
   }
 
   @Override
   public Color getFoodColor() {
-    return colorScheme.getFoodColor();
+    return theme.getFoodColor();
   }
 
   @Override
   public Color getBackgroundColor() {
-    return colorScheme.getBackgroundColor();
+    return theme.getBackgroundColor();
   }
 
   @Override
   public Color getScoreFontColor() {
-    return colorScheme.getScoreFontColor();
+    return theme.getScoreFontColor();
   }
 
   @Override
   public Color getGameOverFontColor() {
-    return colorScheme.getGameOverFontColor();
+    return theme.getGameOverFontColor();
   }
 
   @Override
@@ -177,6 +170,15 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   @Override
   public int[] getLayerConfiguration() {
     return layerConfiguration.clone();
+  }
+
+  @Override
+  public List<Integer> getLayerConfigurationAsList() {
+    List<Integer> layerConfigurationList = new ArrayList<>();
+    for (int i = 0; i < layerConfiguration.length; i++) {
+      layerConfigurationList.add(new Integer(layerConfiguration[i]));
+    }
+    return layerConfigurationList;
   }
 
   @Override

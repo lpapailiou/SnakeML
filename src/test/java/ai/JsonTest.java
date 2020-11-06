@@ -14,7 +14,7 @@ public class JsonTest {
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
 
-    Config.getInstance().setBoardWith(12);
+    Config.getInstance().setBoardWidth(12);
     Config.getInstance().setBoardHeight(12);
     config.setGenerationCount(400);
     config.setPopulationSize(2000);
