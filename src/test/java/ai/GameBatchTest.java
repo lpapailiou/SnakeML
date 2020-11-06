@@ -3,6 +3,7 @@ package ai;
 import ai.neuralnet.NeuralNetwork;
 import main.configuration.Config;
 import main.configuration.INeuralNetworkConfig;
+import main.configuration.Mode;
 import org.junit.Test;
 
 public class GameBatchTest {
@@ -12,11 +13,11 @@ public class GameBatchTest {
     INeuralNetworkConfig config = Config.getInstance();
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
-
+    Config.getInstance().setMode(Mode.NEURAL_NETWORK);
     Config.getInstance().setBoardWidth(8);
     Config.getInstance().setBoardHeight(8);
     config.setGenerationCount(100); //TODO: why is this not working anymore??
-    config.setPopulationSize(2000);
+    config.setPopulationSize(100);
     GameBatch batch = new GameBatch(new NeuralNetwork(0.6,12,16,4));
     batch.run();
 
