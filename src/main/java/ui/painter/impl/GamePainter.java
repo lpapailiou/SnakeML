@@ -47,7 +47,9 @@ public class GamePainter implements IGamePainter {
   }
 
   public void paintFood(Cell foodPosition) {
-    drawCell(foodPosition.x, foodPosition.y, colors.getFoodColor());
+    if (foodPosition != null) {
+      drawCell(foodPosition.x, foodPosition.y, colors.getFoodColor());
+    }
   }
 
   public void paintBoard(boolean isActive) {
