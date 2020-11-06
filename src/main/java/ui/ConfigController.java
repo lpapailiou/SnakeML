@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import main.Main;
+import main.configuration.INeuralNetworkConfig;
 import main.configuration.Theme;
 import main.configuration.Config;
 import main.configuration.Mode;
@@ -94,6 +95,7 @@ public class ConfigController implements Initializable {
   private Button statisticsButton;
 
   private static ConfigController instance;
+  private INeuralNetworkConfig config = Config.getInstance();
   private NetworkPainter networkPainter;
   private GraphicsContext context;
   private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.stream(
@@ -145,14 +147,14 @@ public class ConfigController implements Initializable {
 
 
   private void updateNetworkPainter() {
-    networkPainter = new NetworkPainter(context, Config.getInstance().getLayerConfigurationAsList(), inputNodeConfiguration);
+    networkPainter = new NetworkPainter(context, config.getLayerConfigurationAsList(), inputNodeConfiguration);
     networkPainter.paintNetwork();
   }
 
   private void initializeBaseControls() {
-    boardWithControl.setText(Config.getInstance().getBoardWidth() + "");
-    boardHeightControl.setText(Config.getInstance().getBoardHeight() + "");
-    AtomicReference<String> tempWidth = new AtomicReference<String>(Config.getInstance().getBoardWidth() + "");
+    boardWithControl.setText(config.getBoardWidth() + "");
+    boardHeightControl.setText(config.getBoardHeight() + "");
+    AtomicReference<String> tempWidth = new AtomicReference<String>(config.getBoardWidth() + "");
     boardWithControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempWidth.toString();
       tempWidth.set(boardWithControl.getText());
@@ -163,7 +165,7 @@ public class ConfigController implements Initializable {
         }
       }
     });
-    AtomicReference<String> tempHeight = new AtomicReference<String>(Config.getInstance().getBoardHeight() + "");
+    AtomicReference<String> tempHeight = new AtomicReference<String>(config.getBoardHeight() + "");
     boardHeightControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempHeight.toString();
       tempHeight.set(boardHeightControl.getText());
@@ -227,7 +229,7 @@ public class ConfigController implements Initializable {
 
   private void initializeLayerControls() {
     hiddenLayerCount.setItems(layerCount);
-    hiddenLayerCount.getSelectionModel().select((Config.getInstance().getLayerConfigurationAsList().size()-2));
+    hiddenLayerCount.getSelectionModel().select((config.getLayerConfigurationAsList().size()-2));
     hiddenLayerCount.setOnAction( e -> updateHiddenLayerSelection());
     //updateHiddenLayerSelection();   // TODO: test
 

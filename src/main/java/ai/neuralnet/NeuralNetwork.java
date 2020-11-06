@@ -1,5 +1,6 @@
 package ai.neuralnet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,12 +11,12 @@ import java.util.List;
  * The architecture can be set by parameters. Input and output values are designed to be double arrays.
  * It supports supervised and unsupervised machine learning.
  */
-public class NeuralNetwork {
+public class NeuralNetwork implements Serializable {
 
+  private static final long serialVersionUID = 2L;
   private List<Layer> layers = new ArrayList<>();
   private int inputLayerNodes;
   private double randomizationRate = 0.1;
-  private String architectureCode;
 
   /**
    * A constructor of the neural network.
@@ -30,7 +31,6 @@ public class NeuralNetwork {
       throw new IllegalArgumentException("every layer must have at least one node!");
     }
     this.inputLayerNodes = layerParams[0];
-    architectureCode = randomizationRate + "_" + Arrays.toString(layerParams);
     for (int i = 1; i < layerParams.length; i++) {
       layers.add(new Layer(layerParams[i], layerParams[i-1]));
     }
@@ -46,7 +46,6 @@ public class NeuralNetwork {
   public NeuralNetwork(double randomizationRate, int... layerParams) {
     this(layerParams);
     this.randomizationRate = randomizationRate;
-    architectureCode = randomizationRate + "_" + Arrays.toString(layerParams);
   }
 
   private NeuralNetwork(int inputLayerNodes, double randomizationRate, List<Layer> layers) {
@@ -56,7 +55,6 @@ public class NeuralNetwork {
     }
     this.layers = newLayerSet;
     this.inputLayerNodes = inputLayerNodes;
-    this.architectureCode = randomizationRate + "_" + Arrays.toString(layers.toArray());
     this.randomizationRate = randomizationRate;
   }
 
@@ -188,10 +186,6 @@ public class NeuralNetwork {
       layer.weight.randomize(factor);
       layer.bias.randomize(factor);
     }
-  }
-
-  public String getArchitectureCode() {
-    return architectureCode;
   }
 
 }

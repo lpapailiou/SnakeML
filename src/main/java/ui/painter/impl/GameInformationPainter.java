@@ -7,7 +7,7 @@ import main.configuration.IColorConfig;
 import main.configuration.IFontConfig;
 import ui.painter.IGameInformationPainter;
 
-public class GameInformationPainter implements IGameInformationPainter {
+public class GameInformationPainter implements IGameInformationPainter {    // TODO: use or remove
 
   public void paintGameOver(GraphicsContext gc) {
     IColorConfig colorConfig = Config.getInstance();

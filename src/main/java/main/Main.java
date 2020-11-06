@@ -10,6 +10,10 @@ import main.configuration.Config;
 
 public class Main extends Application {
 
+  public static void main(String[] args) {
+    launch(args);
+  }
+
   @Override
   public void start(Stage stage) {
     try {
@@ -33,39 +37,4 @@ public class Main extends Application {
     }
   }
 
-  /*
-
-  private AnimationTimer automaticTicker;
-  private SnakeMlStage stage;
-  private Game game;
-
-  public void start(Stage primaryStage) {
-    try {
-
-      automaticTicker = new AnimationTimer() {
-        long lastTick = 0;
-
-        public void handle(long now) {
-          if (lastTick == 0 || now - lastTick > 100000000 / Config.getInstance().getManualSpeedFactor()) {
-            lastTick = now;
-            stage.onTick();
-            game.onTick();
-          }
-        }
-      };
-      automaticTicker.start();
-
-      game = new Game();
-      stage = new SnakeMlStage(primaryStage, game);
-
-      game.onGameOver(() -> automaticTicker.stop());
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  } */
-
-  public static void main(String[] args) {
-    launch(args);
-  }
 }

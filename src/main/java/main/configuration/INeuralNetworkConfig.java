@@ -27,13 +27,10 @@ public interface INeuralNetworkConfig {
 
   List<Integer> getLayerConfigurationAsList();
 
-  int getInitialnputNodeCount();
-
   Set<Integer> getInputNodeSelection();
 
   void addInputNode(int selectedInputNode);
 
   void removeInputNodeFromSelection(int selectedInputNode);
 
-  int getSnakeTimeout();
 }

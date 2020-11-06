@@ -27,12 +27,13 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   private int generationCount = 60;
   private int populationSize = 1000;
   private double randomizationRate = 0.8;
-  private int[] layerConfiguration = {12, 16, 4};
-  private int initialnputNodeCount = layerConfiguration[0];       // may be used for visual representation on gui
+  private final int inputNodes = 12;
+  private final int outputNodes = 4;
+  private int[] layerConfiguration = {inputNodes, 16, outputNodes};
   private Set<Integer> inputNodeSelection = new HashSet<>();
 
   private Config() {
-    for (int i = 0; i < initialnputNodeCount; i++) {
+    for (int i = 0; i < layerConfiguration[0]; i++) {
       inputNodeSelection.add(i);
     }
   }
@@ -65,12 +66,12 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   @Override
   public void setBoardWidth(int boardWidth) {
     this.boardWidth = boardWidth;
-  }   // TODO: update cell dimensions
+  }
 
   @Override
   public void setBoardHeight(int boardHeight) {
     this.boardHeight = boardHeight;
-  }   // TODO: update cell dimensions
+  }
 
   @Override
   public int getInitialSnakeSize() {
@@ -187,11 +188,6 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   }
 
   @Override
-  public int getInitialnputNodeCount() {
-    return initialnputNodeCount;
-  }
-
-  @Override
   public Set<Integer> getInputNodeSelection() {
     return  new HashSet<>(inputNodeSelection);
   }
@@ -208,6 +204,9 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
 
   @Override
   public int getSnakeTimeout() {
+    if (mode == Mode.MANUAL) {
+      return Integer.MAX_VALUE;
+    }
     return boardWidth * boardHeight;
   }
 }

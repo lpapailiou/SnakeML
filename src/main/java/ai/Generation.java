@@ -1,6 +1,7 @@
 package ai;
 
 import ai.data.GenerationEntity;
+import ai.data.storage.Serializer;
 import ai.neuralnet.NeuralNetwork;
 import main.configuration.Config;
 import java.util.ArrayList;
@@ -65,6 +66,10 @@ class Generation {
     populationList.sort(Comparator.nullsLast(Collections.reverseOrder()));
     NeuralNetwork best = populationList.get(0).getNeuralNetwork();
     System.out.println("max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0).getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength()+")");
+
+    //if (populationList.get(0).getSnakeLength() == Config.getInstance().getBoardWidth()*Config.getInstance().getBoardHeight()) {
+      //Serializer.save(best);
+    //}
 
     if (populationList.size() < 2) {
       return best;

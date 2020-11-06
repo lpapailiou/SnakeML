@@ -4,13 +4,15 @@ import game.Direction;
 import java.util.LinkedList;
 import java.util.List;
 import main.configuration.Config;
+import main.configuration.IGameConfig;
 
 public class Snake {
 
   protected LinkedList<Cell> body = new LinkedList<>();
+  private IGameConfig config = Config.getInstance();
   private int steps;
   private boolean isDead = false;
-  private final int timeoutConstant = Config.getInstance().getSnakeTimeout();
+  private final int timeoutConstant = config.getSnakeTimeout();
   private int timeout = timeoutConstant;
   private String causeOfDeath = "timeout";
 
@@ -39,7 +41,7 @@ public class Snake {
       if (!newSegment.equals(food)) {
         body.removeLast();
       } else {
-        timeout = body.size() == (Config.getInstance().getBoardWidth() * Config.getInstance().getBoardHeight()) ? 0 : timeoutConstant;
+        timeout = body.size() == (config.getBoardWidth() * config.getBoardHeight()) ? 0 : timeoutConstant;
       }
       steps++;
     }
@@ -58,7 +60,7 @@ public class Snake {
   }
 
   private boolean isSnakeInWall(Cell cell) {
-    if ((cell.x >= Config.getInstance().getBoardWidth() || cell.x < 0) || (cell.y >= Config.getInstance().getBoardHeight() || cell.y < 0)) {
+    if ((cell.x >= config.getBoardWidth() || cell.x < 0) || (cell.y >= config.getBoardHeight() || cell.y < 0)) {
       causeOfDeath = "wall";
       return true;
     }
@@ -79,7 +81,7 @@ public class Snake {
 
   public long getFitness() {
     int snakeLength = body.size();
-    int boardHalf = (Config.getInstance().getBoardWidth() + Config.getInstance().getBoardHeight())/2;
+    int boardHalf = (config.getBoardWidth() + config.getBoardHeight())/2;
 
     if (snakeLength < boardHalf * 1.5) {
       return (long) Math.pow(snakeLength, 3.7) + steps;

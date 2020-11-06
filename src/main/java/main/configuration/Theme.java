@@ -6,7 +6,7 @@ public enum Theme {
 
   CLASSIC(Color.LIME, Color.LIME, Color.RED, Color.RED, Color.BLACK, Color.WHITE, Color.RED, "themeClassic.css"),
   SANDY(Color.SIENNA, Color.SIENNA, Color.RED, Color.RED, Color.BURLYWOOD, Color.WHITE, Color.RED, "themeSandy.css"),
-  MINIMAL(Color.DARKGRAY, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED, Color.WHITE, Color.WHITE, Color.RED, "themeMinimal.css");
+  MINIMAL(Color.BLACK, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED, Color.WHITE, Color.WHITE, Color.RED, "themeMinimal.css");
 
   private Color snakeBodyColor;
   private Color frameActiveColor;

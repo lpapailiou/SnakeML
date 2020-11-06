@@ -15,6 +15,8 @@ public interface IGameConfig {
 
   int getInitialSnakeSize();
 
+  int getSnakeTimeout();
+
   Direction getInitialDirection();
 
   Cell getInitialStartingPosition();
