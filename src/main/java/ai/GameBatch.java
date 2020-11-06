@@ -15,9 +15,11 @@ import java.util.List;
 public class GameBatch {
 
   private int generationCount;
+  private int currentGeneration;
   private int populationnSize;
   private BatchEntity batchEntity = new BatchEntity();
   private ConfigurationEntity configurationEntity;
+  private List<GenerationEntity> generationEntities = new ArrayList<>();
   private NeuralNetwork neuralNetwork;
   private String jsonData;
 
@@ -35,16 +37,30 @@ public class GameBatch {
 
 
   public void run() {
-    List<GenerationEntity> generationEntities = new ArrayList<>();
     for (int i = 0; i < generationCount; i++) {
       Generation gen = new Generation(i, populationnSize, generationEntities);
       neuralNetwork = gen.run(neuralNetwork);
     }
-
-    System.out.println("batch done");
-
     batchEntity.setConfigurationEntity(configurationEntity);
     batchEntity.setGenerationEntities(generationEntities);
+    saveJsonData();
+  }
+
+  public int getCurrentGeneration() {
+    return currentGeneration;
+  }
+
+  public NeuralNetwork processGeneration() {
+    Generation gen = new Generation(currentGeneration, populationnSize, generationEntities);
+    neuralNetwork = gen.run(neuralNetwork);
+    currentGeneration++;
+    if (currentGeneration == generationCount) {
+      batchEntity.setConfigurationEntity(configurationEntity);
+      batchEntity.setGenerationEntities(generationEntities);
+      saveJsonData();
+      return null;
+    }
+    return neuralNetwork;
   }
 
   public void generateJson() {

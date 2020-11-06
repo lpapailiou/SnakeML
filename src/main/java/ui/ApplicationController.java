@@ -1,5 +1,8 @@
 package ui;
 
+import ai.GameAdapter;
+import ai.GameBatch;
+import ai.neuralnet.NeuralNetwork;
 import game.Direction;
 import game.Game;
 import javafx.animation.KeyFrame;
@@ -26,6 +29,7 @@ public class ApplicationController implements Initializable {
   private Timeline timeline = null;
   private boolean isTimerRunning = false;
   private Direction direction = Config.getInstance().getInitialDirection();
+  private GameAdapter adapter;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -55,18 +59,46 @@ public class ApplicationController implements Initializable {
     direction = Config.getInstance().getInitialDirection();
     int speed = Config.getInstance().getMode().getSpeed();
     Game game = new Game();
+    GameBatch batch = new GameBatch(new NeuralNetwork(Config.getInstance().getRandomizationRate(), Config.getInstance().getLayerConfiguration()));
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      manualGame(game);
+      if (Config.getInstance().getMode() == Mode.MANUAL) {
+        manualGame(game);
+      } else {
+        neuralGame(batch);
+      }
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
 
   private void manualGame(Game game) {
-    game.changeDirection(direction);
-    game.onTick();
-    GameController.display(game);
-    game.onGameOver(this::stopTimer);
+    if (isTimerRunning) {
+      game.changeDirection(direction);
+      game.onTick();
+      GameController.display(game);
+      game.onGameOver(this::stopTimer);
+    }
+  }
+
+  private void neuralGame(GameBatch batch) {
+    if (isTimerRunning) {
+      if (adapter == null) {
+        NeuralNetwork neuralNet = batch.processGeneration();
+        if (neuralNet != null) {
+          adapter = new GameAdapter(neuralNet, null);
+        }
+      }
+      if (adapter != null) {
+        boolean success = adapter.moveSnake();
+        GameController.display(adapter.getGame());
+        ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
+        if (!success) {
+          adapter = null;
+        }
+      } else {
+        stopTimer();
+      }
+    }
   }
 
   private void stopTimer() {

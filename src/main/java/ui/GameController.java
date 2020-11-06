@@ -21,7 +21,7 @@ public class GameController implements Initializable, IGameTicker {
   public void initialize(URL location, ResourceBundle resources) {
     instance = this;
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
-    onTick(new Game());   // TODO: remove
+    onTick(null);
   }
 
   @Override

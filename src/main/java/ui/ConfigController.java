@@ -1,6 +1,7 @@
 package ui;
 
 import ai.InputNode;
+import game.Direction;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -134,6 +135,11 @@ public class ConfigController implements Initializable {
     instance.neuralNetworkControls.setDisable(setDisable);
     instance.startButton.setDisable(setDisable);
     instance.stopButton.setDisable(!setDisable);
+    if (!setDisable) {
+      instance.networkPainter.paintNetwork();
+      instance.generationCounter.setText("0");
+      Platform.runLater(() -> instance.boardWithControl.getParent().requestFocus());
+    }
   }
 
 
@@ -151,8 +157,10 @@ public class ConfigController implements Initializable {
       String previousValue = tempWidth.toString();
       tempWidth.set(boardWithControl.getText());
       if (configureTextField(boardWithControl, 1, 100, tempWidth.toString(), previousValue)) {
-        Config.getInstance().setBoardWidth(Integer.parseInt(tempWidth.toString()));
-        GameController.resetGamePanel();
+        if (!tempWidth.toString().equals(previousValue)) {
+          Config.getInstance().setBoardWidth(Integer.parseInt(tempWidth.toString()));
+          GameController.resetGamePanel();
+        }
       }
     });
     AtomicReference<String> tempHeight = new AtomicReference<String>(Config.getInstance().getBoardHeight() + "");
@@ -160,12 +168,14 @@ public class ConfigController implements Initializable {
       String previousValue = tempHeight.toString();
       tempHeight.set(boardHeightControl.getText());
       if (configureTextField(boardHeightControl, 1, 100, tempHeight.toString(), previousValue)) {
-        Config.getInstance().setBoardHeight(Integer.parseInt(tempHeight.toString()));
-        GameController.resetGamePanel();
+        if (!tempHeight.toString().equals(previousValue)) {
+          Config.getInstance().setBoardHeight(Integer.parseInt(tempHeight.toString()));
+          GameController.resetGamePanel();
+        }
       }
     });
     themeSelector.setItems(colorList);
-    themeSelector.getSelectionModel().select(Config.getInstance().getTheme().ordinal()); // TODO: pick from config
+    themeSelector.getSelectionModel().select(Config.getInstance().getTheme().ordinal());
     themeSelector.setOnAction( e -> updateTheme());
 
 
@@ -206,6 +216,13 @@ public class ConfigController implements Initializable {
         Config.getInstance().setRandomizationRate(Double.parseDouble(tempRate.toString()));
       }
     });
+  }
+
+  static void display(int currentGeneration, Direction direction) {
+    if (instance != null) {
+      instance.networkPainter.flashOutput(direction.ordinal());
+      instance.generationCounter.setText(currentGeneration+"");
+    }
   }
 
   private void initializeLayerControls() {

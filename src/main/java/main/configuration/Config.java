@@ -11,8 +11,8 @@ import java.util.Set;
 public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNetworkConfig {
 
   private static Config instance;
-  private int boardWidth = 20;
-  private int boardHeight = 15;
+  private int boardWidth = 8;
+  private int boardHeight = 8;
   private int initialSnakeSize = 3;
   private Direction initialDirection = Direction.RIGHT;
   private Cell initialStartingPosition = new Cell(3,3);
@@ -26,8 +26,8 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
 
   private int generationCount = 60;
   private int populationSize = 1000;
-  private double randomizationRate = 0.2;
-  private int[] layerConfiguration = {12, 16, 16, 12, 4};
+  private double randomizationRate = 0.8;
+  private int[] layerConfiguration = {12, 16, 4};
   private int initialnputNodeCount = layerConfiguration[0];       // may be used for visual representation on gui
   private Set<Integer> inputNodeSelection = new HashSet<>();
 

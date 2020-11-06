@@ -3,7 +3,7 @@ package main.configuration;
 public enum Mode {
 
   MANUAL("classic arcade mode (manual)", 200),
-  NEURAL_NETWORK("neural network", 30);
+  NEURAL_NETWORK("neural network", 50);
 
   private String label;
   private int speed;
