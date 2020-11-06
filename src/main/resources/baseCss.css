@@ -44,6 +44,10 @@
   -fx-font-size: 16pt;
 }
 
+#baseControlsLabel:disabled, #neuralNetworkControlsLabel:disabled, #actionControlsLabel:disabled, #statisticControlsLabel:disabled {
+  -fx-opacity: 1.0;
+}
+
 #gameOverTitle {
   -fx-font-size: 28pt;
 }
