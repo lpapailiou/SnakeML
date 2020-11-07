@@ -7,6 +7,7 @@ public enum Theme {
   CLASSIC(Color.LIME, Color.LIME, Color.RED, Color.RED, Color.BLACK, Color.WHITE, Color.RED, "themeClassic.css"),
   SANDY(Color.SIENNA, Color.SIENNA, Color.RED, Color.RED, Color.BURLYWOOD, Color.RED, Color.RED, "themeSandy.css"),
   SUNSET(Color.web("#ff7582"), Color.web("#ff7582"), Color.web("#c56d86"), Color.MOCCASIN, Color.web("#2a3950"), Color.RED, Color.RED, "themeSunset.css"),
+  CANDY(Color.web("#ffa7a7"), Color.web("#ffa7a7"), Color.web("#ffcbcb"), Color.MOCCASIN, Color.web("#c9fdff"), Color.RED, Color.RED, "themeCandy.css"),
   MINIMAL(Color.BLACK, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED, Color.WHITE, Color.RED, Color.RED, "themeMinimal.css");
 
   private Color snakeBodyColor;
