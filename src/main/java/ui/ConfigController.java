@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -308,9 +309,15 @@ public class ConfigController implements Initializable {
       } else {
         field.setVisible(false);
       }
-      field.textProperty().addListener((o, oldValue, newValue) -> {
-        if (configureTextField(field, 1, 64, newValue, oldValue)) {
-          updateNetworkParameter();
+      String nodeCount = (Config.getInstance().getLayerConfiguration().length < i+1) ? Config.getInstance().getLayerConfiguration() +"": "4";
+      AtomicReference<String> tempValue = new AtomicReference<String>(nodeCount);
+      field.focusedProperty().addListener((o, oldValue, newValue) -> {
+        String previousValue = tempValue.toString();
+        tempValue.set(field.getText());
+        if (configureTextField(field, 1, 64, tempValue.toString(), previousValue)) {
+          if (!tempValue.equals(previousValue)) {
+            updateNetworkParameter();
+          }
         }});
     }
     for (int i = 0; i < inputNodeConfiguration.getChildren().size(); i++) {
