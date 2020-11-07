@@ -102,7 +102,7 @@ public class NetworkPainter implements INetworkPainter {
   }
 
   private void paintDot(int x, int y, int radius) {
-    context.setFill(colors.getFrameActiveColor());
+    context.setFill(colors.isDarkTheme() ? colors.getFrameActiveColor() : colors.getSnakeBodyColor());
     context.fillOval(x+correctionOffset, y+correctionOffset, radius, radius);
   }
 
@@ -112,7 +112,7 @@ public class NetworkPainter implements INetworkPainter {
   }
 
   private void paintLine(GraphNode a, GraphNode b) {
-    context.setStroke(colors.getSnakeBodyColor().darker());
+    context.setStroke(colors.isDarkTheme() ? colors.getSnakeBodyColor().darker() : colors.getFrameActiveColor());
     context.setLineWidth(2);
     context.strokeLine(a.x+(radius/2)+correctionOffset, a.y+(radius/2)+correctionOffset, b.x+(radius/2)+correctionOffset, b.y+(radius/2)+correctionOffset);
   }
