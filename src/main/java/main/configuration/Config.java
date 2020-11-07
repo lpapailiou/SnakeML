@@ -11,8 +11,8 @@ import java.util.Set;
 public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNetworkConfig {
 
   private static Config instance;
-  private int boardWidth = 8;
-  private int boardHeight = 8;
+  private int boardWidth = 16;
+  private int boardHeight = 12;
   private int initialSnakeSize = 3;
   private Direction initialDirection = Direction.RIGHT;
   private Cell initialStartingPosition = new Cell(3,3);
@@ -20,12 +20,12 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   private Theme theme = Theme.CLASSIC;
   private Mode mode = Mode.MANUAL;
 
-  private double gameOverFontSize = 100;
+  private double gameOverFontSize = 30;
   private double scoreFontSize = 30;
   private String gameOverText = "GAME OVER";    // TODO: font/text could be hardcoded?
 
   private int generationCount = 60;
-  private int populationSize = 1000;
+  private int populationSize = 2000;
   private double randomizationRate = 0.8;
   private final int inputNodes = 12;
   private final int outputNodes = 4;

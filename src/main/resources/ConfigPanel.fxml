@@ -14,17 +14,17 @@
           <Label fx:id="baseControlsLabel"
                  text="base configuration"/>
           <HBox fx:id="hbox1" minWidth="680.0" spacing="20">
-            <Label text="board dimensions (W x H):"/>
+            <Label text="board size (W x H):" prefWidth="140.0"/>
             <TextField fx:id="boardWithControl" text="20" prefWidth="50.0"/>
             <Label text="x"/>
             <TextField fx:id="boardHeightControl" text="20" prefWidth="50.0"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="theme:"/>
-            <ComboBox fx:id="themeSelector" prefWidth="100.0"/>
+            <ComboBox fx:id="themeSelector" prefWidth="120.0"/>
           </HBox>
           <HBox fx:id="hbox2" spacing="20">
             <Label text="mode:" prefWidth="140.0"/>
-            <ComboBox fx:id="modeSelector" prefWidth="310.0"/>
+            <ComboBox fx:id="modeSelector" prefWidth="290.0"/>
           </HBox>
         </VBox>
       </HBox>
@@ -35,7 +35,7 @@
           <HBox fx:id="hiddenLayerConfiguration" spacing="20">
             <Label text="hidden layers:" prefWidth="140.0"/>
             <ComboBox fx:id="hiddenLayerCount" prefWidth="100.0"/>
-            <Region prefWidth="5.0"/>
+            <Region prefWidth="5"/>
             <HBox fx:id="hiddenLayerControls" spacing="20">
               <TextField prefWidth="50.0" text="1"/>
               <TextField prefWidth="50.0" text="1"/>
@@ -56,12 +56,12 @@
           <HBox fx:id="hbox3" spacing="20">
             <Label text="generations:" prefWidth="140.0"/>
             <TextField fx:id="generationControl" text="30" prefWidth="50.0"/>
-            <Region prefWidth="5"/>
+            <Region prefWidth="1"/>
             <Label text="population size:"/>
             <TextField fx:id="populationControl" text="500" prefWidth="50.0"/>
-            <Region prefWidth="5"/>
+            <Region prefWidth="1"/>
             <Label text="randomization rate:"/>
-            <TextField fx:id="randomizationControl" text="0.6" prefWidth="40.0"/>
+            <TextField fx:id="randomizationControl" text="0.6" prefWidth="50.0"/>
           </HBox>
         </VBox>
       </HBox>
