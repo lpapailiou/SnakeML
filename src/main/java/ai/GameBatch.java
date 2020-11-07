@@ -36,6 +36,8 @@ public class GameBatch {
 
   public void run() {
     List<GenerationEntity> generationEntities = new ArrayList<>();
+    batchEntity.setConfigurationEntity(configurationEntity);
+    batchEntity.setGenerationEntities(generationEntities);
     for (int i = 0; i < generationCount; i++) {
       Generation gen = new Generation(i, populationnSize, generationEntities);
       neuralNetwork = gen.run(neuralNetwork);
@@ -43,8 +45,6 @@ public class GameBatch {
 
     System.out.println("batch done");
 
-    batchEntity.setConfigurationEntity(configurationEntity);
-    batchEntity.setGenerationEntities(generationEntities);
   }
 
   public void generateJson() {

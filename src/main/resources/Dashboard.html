@@ -15,17 +15,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css" />
   <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/GenStatistics.js"></script>
+  <script src="./js/RequestGenerator.js"></script>
 </head>
 <body>
 <div class="four columns div-user-controls">
   <h2>SNAKE ML - STATISTICS</h2>
   <p>Visualising statistics of the Game "Snake ML"</p>
   <p>Pick one or more statistics from the dropdown below.</p>
+  <button onclick="loadCurrentState()">Load</button>
+  <button onclick="startGame()">Start</button>
   <div class="div-for-dropdown">
         <select id="select" multiple data-style="Select-control Select-value #modelselector" class="selectpicker">
           <div class="eight columns bg-grey">
             <script src="./js/selectpicker.js"></script>
-            <script src="./js/GenStatistics.js"></script>
           </div>
           <option id="generations">Generations</option>
           <option id="deaths">Death causes</option>
@@ -42,7 +45,6 @@
   <div id="chartdiv2"></div>
   <div id="chartdiv3"></div>
   <div id="chartdiv4"></div>
-  <script src="./js/GenStatistics.js"></script>
 </div>
 
 </body>
