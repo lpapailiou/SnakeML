@@ -21,6 +21,7 @@
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="theme:"/>
             <ComboBox fx:id="themeSelector" prefWidth="120.0"/>
+            <Region prefWidth="1"/>
           </HBox>
           <HBox fx:id="hbox2" spacing="20">
             <Label text="mode:" prefWidth="140.0"/>
@@ -56,12 +57,13 @@
           <HBox fx:id="hbox3" spacing="20">
             <Label text="generations:" prefWidth="140.0"/>
             <TextField fx:id="generationControl" text="30" prefWidth="50.0"/>
-            <Region prefWidth="1"/>
+            <Region HBox.hgrow="ALWAYS"/>
             <Label text="population size:"/>
             <TextField fx:id="populationControl" text="500" prefWidth="50.0"/>
-            <Region prefWidth="1"/>
+            <Region HBox.hgrow="ALWAYS"/>
             <Label text="randomization rate:"/>
             <TextField fx:id="randomizationControl" text="0.6" prefWidth="50.0"/>
+            <Region prefWidth="1"/>
           </HBox>
         </VBox>
       </HBox>

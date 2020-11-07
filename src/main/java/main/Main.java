@@ -21,7 +21,7 @@ public class Main extends Application {
       FXMLLoader loader = new FXMLLoader(classLoader.getResource("ApplicationPanel.fxml"));
       Parent root = loader.load();
       Scene scene = new Scene(root, 1600, 800);
-      scene.getStylesheets().add(classLoader.getResource("baseCss.css").toExternalForm());
+      scene.getStylesheets().add(classLoader.getResource("applicationCss.css").toExternalForm());
       scene.getStylesheets().add(Main.class.getClassLoader().getResource(Config.getInstance().getTheme().getCss()).toExternalForm());
       scene.setFill(Config.getInstance().getTheme().getBackgroundColor());
       stage.setScene(scene);
