@@ -33,12 +33,14 @@ public class ApplicationController implements Initializable {
   private boolean isTimerRunning = false;
   private Direction direction = ((IGameConfig) config).getInitialDirection();
   private GameAdapter adapter;
+  private Scene scene;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     instance = this;
     rootElement.sceneProperty().addListener(n -> {
       if (n != null) {
+        this.scene = rootElement.getScene();
         listenToKeyboardEvents(rootElement.getScene());
       }
     });
@@ -178,6 +180,11 @@ public class ApplicationController implements Initializable {
     }
   }
 
-
+  static Scene getScene() {
+    if (instance != null) {
+      return instance.scene;
+    }
+    return null;
+  }
 
 }

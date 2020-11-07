@@ -40,19 +40,19 @@ public class InputNodeTest {
 
     game.food = new Cell(3,1);
     up = InputNode.UP_FOOD.getInput(game.snake, game.food);
-    assertEquals(1, up, 0.001);
+    assertEquals(1000, up, 0.001);
 
     game.food = new Cell(4,3);
     right = InputNode.RIGHT_FOOD.getInput(game.snake, game.food);
-    assertEquals(1, right, 0.001);
+    assertEquals(1000, right, 0.001);
 
     game.food = new Cell(3,10);
     down = InputNode.DOWN_FOOD.getInput(game.snake, game.food);
-    assertEquals(1, down, 0.001);
+    assertEquals(1000, down, 0.001);
 
     game.food = new Cell(0,3);
     left = InputNode.LEFT_FOOD.getInput(game.snake, game.food);
-    assertEquals(1, left, 0.001);
+    assertEquals(1000, left, 0.001);
 
   }
 
