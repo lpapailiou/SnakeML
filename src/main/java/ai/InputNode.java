@@ -36,8 +36,9 @@ public enum InputNode {
       Cell pos = snake.getHead().clone();
       int index = 0;
       for (int i = pos.y-1; i >= 0; i--) {
-        pos.y = i;
-        if (snake.getBody().stream().anyMatch(c -> c.equals(pos))) {
+        pos = new Cell(pos.x, i);
+        Cell finalPos = pos;
+        if (snake.getBody().stream().anyMatch(c -> c.equals(finalPos))) {
           break;
         }
         index++;
@@ -52,8 +53,9 @@ public enum InputNode {
       int end = Config.getInstance().getBoardWidth();
       int index = 0;
       for (int i = pos.x+1; i < end; i++) {
-        pos.x = i;
-        if (snake.getBody().stream().anyMatch(c -> c.equals(pos))) {
+        pos = new Cell(i, pos.y);
+        Cell finalPos = pos;
+        if (snake.getBody().stream().anyMatch(c -> c.equals(finalPos))) {
           break;
         }
         index++;
@@ -68,8 +70,9 @@ public enum InputNode {
       int end = Config.getInstance().getBoardHeight();
       int index = 0;
       for (int i = pos.y+1; i < end; i++) {
-        pos.y = i;
-        if (snake.getBody().stream().anyMatch(c -> c.equals(pos))) {
+        pos = new Cell(pos.x, i);
+        Cell finalPos = pos;
+        if (snake.getBody().stream().anyMatch(c -> c.equals(finalPos))) {
           break;
         }
         index++;
@@ -83,8 +86,9 @@ public enum InputNode {
       Cell pos = snake.getHead().clone();
       int index = 0;
       for (int i = pos.x-1; i >= 0; i--) {
-        pos.x = i;
-        if (snake.getBody().stream().anyMatch(c -> c.equals(pos))) {
+        pos = new Cell(i, pos.y);
+        Cell finalPos = pos;
+        if (snake.getBody().stream().anyMatch(c -> c.equals(finalPos))) {
           break;
         }
         index++;

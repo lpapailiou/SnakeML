@@ -1,5 +1,6 @@
 package main.configuration;
 
+import java.util.List;
 import java.util.Set;
 
 public interface INeuralNetworkConfig {
@@ -24,7 +25,7 @@ public interface INeuralNetworkConfig {
 
   void setLayerConfiguration(int[] layerConfiguration);
 
-  int getInitialnputNodeCount();
+  List<Integer> getLayerConfigurationAsList();
 
   Set<Integer> getInputNodeSelection();
 
@@ -32,5 +33,4 @@ public interface INeuralNetworkConfig {
 
   void removeInputNodeFromSelection(int selectedInputNode);
 
-  int getSnakeTimeout();
 }

@@ -3,6 +3,7 @@ package ai;
 import ai.neuralnet.NeuralNetwork;
 import main.configuration.Config;
 import main.configuration.INeuralNetworkConfig;
+import main.configuration.Mode;
 import org.junit.Test;
 
 public class JsonTest {
@@ -13,8 +14,8 @@ public class JsonTest {
     INeuralNetworkConfig config = Config.getInstance();
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
-
-    Config.getInstance().setBoardWith(12);
+    Config.getInstance().setMode(Mode.NEURAL_NETWORK);
+    Config.getInstance().setBoardWidth(12);
     Config.getInstance().setBoardHeight(12);
     config.setGenerationCount(400);
     config.setPopulationSize(2000);

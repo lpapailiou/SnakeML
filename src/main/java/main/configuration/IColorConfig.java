@@ -18,7 +18,7 @@ public interface IColorConfig {
 
   Color getGameOverFontColor();
 
-  ColorScheme getColorScheme();
+  Theme getTheme();
 
-  void setColorScheme(ColorScheme colorScheme);
+  void setTheme(Theme theme);
 }

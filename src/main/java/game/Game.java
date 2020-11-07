@@ -14,7 +14,7 @@ public class Game implements TickAware {    // TODO: better encapsulation?
   private final ArrayList<GameOverConsumer> gameOverConsumers = new ArrayList<>();
 
   private IGameConfig config = Config.getInstance();
-  Direction nextDirection = config.getInitialDirection();
+  private Direction nextDirection = config.getInitialDirection();
   public Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection, config.getInitialStartingPosition());
   public Cell food;
   Random rand = new Random();
@@ -29,17 +29,18 @@ public class Game implements TickAware {    // TODO: better encapsulation?
 
   @Override
   public void onTick() {
-    snake.move(nextDirection);
 
     if (snake.isDead()) {
       this.emitGameOver();
       return;
+    } else {
+      snake.move(nextDirection, food);
+
+      if (snake.isHeadAt(food)) {
+        food = findEmptyPosition();
+      }
     }
 
-    if (snake.isHeadAt(food)) {
-      snake.grow();
-      food = findEmptyPosition();
-    }
   }
 
   private void emitGameOver() {
@@ -48,6 +49,10 @@ public class Game implements TickAware {    // TODO: better encapsulation?
 
   public void onGameOver(GameOverConsumer consumer) {
     this.gameOverConsumers.add(consumer);
+  }
+
+  public Direction getDirection() {
+    return nextDirection;
   }
 
   private Cell findEmptyPosition() {

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-class GameAdapter implements Comparable<GameAdapter> {
+public class GameAdapter implements Comparable<GameAdapter> {
 
   private NeuralNetwork neuralNetwork;
   private Game game;
@@ -22,7 +22,7 @@ class GameAdapter implements Comparable<GameAdapter> {
   private GenerationEntity generationEntity;
   private long fitness;
 
-  GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
+  public GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
     INeuralNetworkConfig config = Config.getInstance();
     neuralNetwork = net;
     nodeSelection = config.getInputNodeSelection();
@@ -30,7 +30,7 @@ class GameAdapter implements Comparable<GameAdapter> {
     game = new Game();
   }
 
-  boolean moveSnake() {
+  public boolean moveSnake() {
     game.changeDirection(getDirection(game.snake, game.food));
     game.onTick();
     game.onGameOver(this::setGameOver);
@@ -59,6 +59,10 @@ class GameAdapter implements Comparable<GameAdapter> {
     }
   }
 
+  public Game getGame() {
+    return game;
+  }
+
   long getFitness() {
     return fitness;
   }
@@ -71,7 +75,9 @@ class GameAdapter implements Comparable<GameAdapter> {
     if (!isGameOver) {
       isGameOver = true;
       updateFitness();
-      generationEntity.aggregateSnakeData(game.snake);
+      if (generationEntity != null) {
+        generationEntity.aggregateSnakeData(game.snake);
+      }
     }
   }
 
