@@ -131,6 +131,14 @@ public class ConfigController implements Initializable {
     }
   }
 
+  static void enableStatistics() {
+    instance.statisticsButton.setDisable(false);
+  }
+
+  private void openStatistics() {
+    //TODO: open statistics in browser
+  }
+
   private void updateNetworkPainter() {
     networkPainter = new NetworkPainter(context, config.getLayerConfigurationAsList(), inputNodeConfiguration);
     networkPainter.paintNetwork();
@@ -381,6 +389,10 @@ public class ConfigController implements Initializable {
   }
 
   private void initializeButtons() {
+    statisticsButton.setOnAction(e -> {
+      openStatistics();
+    });
+
     startButton.setOnAction(e -> {
       ApplicationController.start();
     });

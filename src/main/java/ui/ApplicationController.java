@@ -112,6 +112,7 @@ public class ApplicationController implements Initializable {
           adapter = null;
         }
       } else {
+        ConfigController.enableStatistics();
         stopTimer();
       }
     }
