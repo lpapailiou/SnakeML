@@ -68,7 +68,7 @@ class Generation {
     System.out.println("max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0).getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength()+")");
 
     //if (populationList.get(0).getSnakeLength() == Config.getInstance().getBoardWidth()*Config.getInstance().getBoardHeight()) {
-      //Serializer.save(best);
+      //Serializer.save(best);    // TODO: uncomment to generate new serialized NeuralNetworks
     //}
 
     if (populationList.size() < 2) {

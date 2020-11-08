@@ -1,6 +1,5 @@
 package ai.data.storage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,18 +7,20 @@ import java.util.List;
 public class TempStorage {
 
   private static TempStorage instance;
-  private List<File> dataFiles;
+  private List<String> jsonStringList;
 
   private TempStorage() {
-    dataFiles = new ArrayList<>();
+    jsonStringList = new ArrayList<>();
   }
 
-  void addFile(File file) {
-    dataFiles.add(file);
+  void addBatchData(String file) {
+    jsonStringList.add(file);
+
+    // TODO: push file to server
   }
 
-  public List<File> getDataFiles() {
-    return new ArrayList<>(dataFiles);
+  public List<String> getJsonStrings() {
+    return new ArrayList<>(jsonStringList);
   }
 
   public static synchronized TempStorage getInstance() {

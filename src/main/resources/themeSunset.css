@@ -1,0 +1,26 @@
+* {
+  -fx-base: #ff7582;                        /* combobox color */
+  -fx-text-fill: #2a3950;                       /* text color */
+  -fx-text-background-color: #2a3950;           /* text in combobox */
+  -fx-control-inner-background: #ff7582;   /* combobox list background */
+  -fx-accent: #ff7582;                      /* combobox selected background */
+  -fx-focus-color: #725a7a;              /* focus color */
+  -fx-cell-focus-inner-border: #725a7a;
+}
+
+.label {
+  -fx-text-fill: #ff7582;
+}
+
+.tooltip {
+  -fx-text-fill: #ff7582;
+}
+
+#baseControls, #neuralNetworkControls, #actionControls, #statisticControls {
+  -fx-border-color: #725a7a;
+}
+
+#baseControlsLabel, #neuralNetworkControlsLabel, #actionControlsLabel, #statisticControlsLabel {
+  -fx-text-fill: #725a7a;
+  -fx-background-color: #2a3950;
+}

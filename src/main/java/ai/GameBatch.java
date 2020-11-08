@@ -20,6 +20,7 @@ public class GameBatch {
   private int currentGeneration;
   private int populationnSize;
   private BatchEntity batchEntity = new BatchEntity();
+  private List<GenerationEntity> generationEntities = new ArrayList<>();
   private ConfigurationEntity configurationEntity;
   private NeuralNetwork neuralNetwork;
   private String jsonData;
@@ -41,15 +42,10 @@ public class GameBatch {
 
 
   public void run() {
-    List<GenerationEntity> generationEntities = new ArrayList<>();
-    batchEntity.setConfigurationEntity(configurationEntity);
-    batchEntity.setGenerationEntities(generationEntities);
     for (int i = 0; i < generationCount; i++) {
       Generation gen = new Generation(i, populationnSize, generationEntities);
       neuralNetwork = gen.run(neuralNetwork);
     }
-
-    System.out.println("batch done");
     batchEntity.setConfigurationEntity(configurationEntity);
     batchEntity.setGenerationEntities(generationEntities);
     saveJsonData();
@@ -60,7 +56,6 @@ public class GameBatch {
   }
 
   public NeuralNetwork processGeneration() {
-    List<GenerationEntity> generationEntities = new ArrayList<>();
     Generation gen = new Generation(currentGeneration, populationnSize, generationEntities);
     neuralNetwork = gen.run(neuralNetwork);
     currentGeneration++;
@@ -91,6 +86,7 @@ public class GameBatch {
 
   public void saveJsonData() {
     JsonFileHandler jfh = new JsonFileHandler(getJsonString());
-    jfh.save();
+    jfh.saveToTempStorage();
   }
+
 }

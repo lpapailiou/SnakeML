@@ -14,10 +14,10 @@ public class GameBatchTest {
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
     Config.getInstance().setMode(Mode.NEURAL_NETWORK);
-    Config.getInstance().setBoardWidth(8);
-    Config.getInstance().setBoardHeight(8);
-    config.setGenerationCount(100); //TODO: why is this not working anymore??
-    config.setPopulationSize(100);
+    Config.getInstance().setBoardWidth(16);
+    Config.getInstance().setBoardHeight(16);
+    config.setGenerationCount(1000); //TODO: why is this not working anymore??
+    config.setPopulationSize(2000);
     GameBatch batch = new GameBatch(new NeuralNetwork(0.6,12,16,4));
     batch.run();
 

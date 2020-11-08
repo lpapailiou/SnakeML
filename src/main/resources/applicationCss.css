@@ -2,7 +2,13 @@
   /*-fx-font-family: "Courier New";
   -fx-font-size: 10pt;
   -fx-font-weight: bold;*/
+  -fx-font-size: 11pt;  /* 10pt is default */
   -fx-background-color: transparent;
+}
+
+.radio-button, .combo-box {
+  -fx-alignment: center-left;
+  -fx-font-size: 10pt;
 }
 
 .radio-button .radio {
@@ -26,7 +32,7 @@
 
 #baseControls, #neuralNetworkControls, #actionControls, #statisticControls {
   -fx-padding: 10, 10, 10, 10;
-  -fx-border-width: 1;
+  -fx-border-width: 1.5;
   -fx-border-radius: 6;
 }
 

@@ -30,7 +30,7 @@ public class Serializer {
     }
 
     public static NeuralNetwork load() {
-        String filename = "NeuralNet_8x8_12_16_4.ser";
+        String filename = "NeuralNet_16x16_12_15_4_0-8.ser";
         File tempfile = createTempFile("serialized/"+filename, filename);
 
         NeuralNetwork phoenix = null;

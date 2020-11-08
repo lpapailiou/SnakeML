@@ -1,10 +1,11 @@
 * {
-  -fx-base: beige;                                /* combobox color */
+  -fx-base: white;                                /* combobox color */
   -fx-text-fill: black;                           /* no idea but seems important */
   -fx-text-background-color: black;               /* text in combobox */
-  -fx-control-inner-background: beige;            /* combobox list background */
-  -fx-accent: bisque;                             /* combobox selected background */
+  -fx-control-inner-background: white;            /* combobox list background */
+  -fx-accent: white;                              /* combobox selected background */
   -fx-focus-color: pink;                          /* focus color */
+  -fx-faint-focus-color: #ffc2cd22;
   -fx-cell-focus-inner-border: pink;
 }
 
