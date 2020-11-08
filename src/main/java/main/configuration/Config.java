@@ -114,16 +114,6 @@ public class Config implements IGameConfig, IColorConfig, IFontConfig, INeuralNe
   }
 
   @Override
-  public Color getScoreFontColor() {
-    return theme.getScoreFontColor();
-  }
-
-  @Override
-  public Color getGameOverFontColor() {
-    return theme.getGameOverFontColor();
-  }
-
-  @Override
   public double getGameOverFontSize() {
     return gameOverFontSize;
   }

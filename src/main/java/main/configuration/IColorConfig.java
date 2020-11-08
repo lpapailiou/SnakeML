@@ -14,10 +14,6 @@ public interface IColorConfig {
 
   Color getBackgroundColor();
 
-  Color getScoreFontColor();
-
-  Color getGameOverFontColor();
-
   Theme getTheme();
 
   void setTheme(Theme theme);

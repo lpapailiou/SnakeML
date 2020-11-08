@@ -2,6 +2,7 @@ package ui;
 
 import ai.GameAdapter;
 import ai.GameBatch;
+import ai.data.GenerationEntity;
 import ai.data.storage.Serializer;
 import ai.neuralnet.NeuralNetwork;
 import game.Direction;
@@ -106,7 +107,12 @@ public class ApplicationController implements Initializable {
       }
       if (adapter != null) {
         boolean success = adapter.moveSnake();
+        GenerationEntity entity = null;
+        if (batch != null) {
+          entity = batch.getCurrentGenerationEntity();
+        }
         GameController.display(adapter.getGame());
+        GameController.displayStats(entity);
         ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
         if (!success) {
           adapter = null;

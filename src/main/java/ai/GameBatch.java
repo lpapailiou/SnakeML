@@ -58,14 +58,18 @@ public class GameBatch {
   public NeuralNetwork processGeneration() {
     Generation gen = new Generation(currentGeneration, populationnSize, generationEntities);
     neuralNetwork = gen.run(neuralNetwork);
-    currentGeneration++;
     if (currentGeneration == generationCount) {
       batchEntity.setConfigurationEntity(configurationEntity);
       batchEntity.setGenerationEntities(generationEntities);
       saveJsonData();
       return null;
     }
+    currentGeneration++;
     return neuralNetwork;
+  }
+
+  public GenerationEntity getCurrentGenerationEntity() {
+    return generationEntities.isEmpty() ? null : generationEntities.get(generationEntities.size()-1);
   }
 
   public void generateJson() {

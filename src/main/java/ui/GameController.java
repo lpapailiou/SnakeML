@@ -1,10 +1,13 @@
 package ui;
 
+import ai.GameAdapter;
+import ai.data.GenerationEntity;
 import game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import ui.painter.IGameTicker;
+import ui.painter.impl.CurrentStatisticsPainter;
 import ui.painter.impl.GamePainter;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,11 +19,13 @@ public class GameController implements Initializable, IGameTicker {
 
   private static GameController instance;
   private GamePainter gamePainter;
+  private CurrentStatisticsPainter statisticsPainter;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     instance = this;
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
+    statisticsPainter = new CurrentStatisticsPainter(gamePane.getGraphicsContext2D());
     onTick(null);
   }
 
@@ -36,13 +41,17 @@ public class GameController implements Initializable, IGameTicker {
     }
   }
 
-  public static void display(Game game) {
+  static void display(Game game) {
     if (instance != null) {
       instance.onTick(game);
     }
   }
 
-  void reset() {
+  static void displayStats(GenerationEntity entity) {
+    instance.statisticsPainter.paint(entity);
+  }
+
+  private void reset() {
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
     onTick(null);
   }
