@@ -30,11 +30,12 @@ public class ApplicationController implements Initializable {
 
   private INeuralNetworkConfig config = Config.getInstance();
   private static ApplicationController instance;
-  private Timeline timeline = null;
+  private Timeline timeline;
   private boolean isTimerRunning = false;
   private Direction direction = ((IGameConfig) config).getInitialDirection();
   private GameAdapter adapter;
   private Scene scene;
+  private boolean isRealtimeStatisticsVerbose = true;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -47,40 +48,40 @@ public class ApplicationController implements Initializable {
     });
   }
 
-  public static void start() {
+  static void start() {
     if (instance != null) {
-      instance.setUpTimer();
+      switch (Config.getInstance().getMode()) {
+        case MANUAL:
+          instance.setupManualTimer();
+          break;
+        case NEURAL_NETWORK:
+          instance.setupNeuralNetworkTimer();
+          break;
+        case NEURAL_NETWORK_DEMO:
+          instance.setupNeuralNetworkDemoTimer();
+          break;
+      }
     }
   }
 
-  public static void stop() {
+  static void stop() {
     if (instance != null) {
       instance.stopTimer();
     }
   }
 
-  private void setUpTimer() {
+  private void setupManualTimer() {
     isTimerRunning = true;
     ConfigController.disableInputs(true);
     direction = ((IGameConfig) config).getInitialDirection();
     int speed = Config.getInstance().getMode().getSpeed();    // TODO: with interface
     Game game = new Game();
-    adapter = null;
-    if (Config.getInstance().getMode() == Mode.NEURAL_NETWORK_DEMO) {
-      adapter = new GameAdapter(Serializer.load(), null);
-    }
-    GameBatch batch = new GameBatch(new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration()));
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      switch (Config.getInstance().getMode()) {
-        case MANUAL:
-          manualGame(game);
-          break;
-        case NEURAL_NETWORK:
-          neuralGame(batch);
-          break;
-        case NEURAL_NETWORK_DEMO:
-          demoGame(adapter);
-          break;
+      if (isTimerRunning) {
+        game.changeDirection(direction);
+        game.onTick();
+        GameController.display(game);
+        game.onGameOver(this::stopTimer);
       }
 
     }));
@@ -88,54 +89,62 @@ public class ApplicationController implements Initializable {
     timeline.play();
   }
 
-  private void manualGame(Game game) {
-    if (isTimerRunning) {
-      game.changeDirection(direction);
-      game.onTick();
-      GameController.display(game);
-      game.onGameOver(this::stopTimer);
-    }
-  }
-
-  private void neuralGame(GameBatch batch) {
-    if (isTimerRunning) {
-      if (adapter == null) {
-        NeuralNetwork neuralNet = batch.processGeneration();
-        if (neuralNet != null) {
-          adapter = new GameAdapter(neuralNet, null);
+  private void setupNeuralNetworkTimer() {
+    isTimerRunning = true;
+    ConfigController.disableInputs(true);
+    int speed = Config.getInstance().getMode().getSpeed();    // TODO: with interface
+    adapter = null;
+    GameBatch batch = new GameBatch(new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration()));
+    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
+      if (isTimerRunning) {
+        if (adapter == null) {
+          NeuralNetwork neuralNet = batch.processGeneration();
+          if (neuralNet != null) {
+            adapter = new GameAdapter(neuralNet, null);
+          }
         }
-      }
-      if (adapter != null) {
-        boolean success = adapter.moveSnake();
-        GenerationEntity entity = null;
-        if (batch != null) {
+        if (adapter != null) {
+          boolean success = adapter.moveSnake();
+          GenerationEntity entity = null;
           entity = batch.getCurrentGenerationEntity();
-        }
-        GameController.display(adapter.getGame());
-        GameController.displayStats(entity);
-        ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
-        if (!success) {
-          adapter = null;
-        }
-      } else {
-        ConfigController.enableStatistics();
-        stopTimer();
-      }
-    }
-  }
-
-  private void demoGame(GameAdapter adapter) {
-    if (isTimerRunning) {
-      if (adapter != null) {
-        boolean success = adapter.moveSnake();
-        GameController.display(adapter.getGame());
-        if (!success) {
+          GameController.display(adapter.getGame());
+          if (isRealtimeStatisticsVerbose) {
+            GameController.displayStats(entity);
+          }
+          ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
+          if (!success) {
+            adapter = null;
+          }
+        } else {
+          ConfigController.enableStatistics();
           stopTimer();
         }
-      } else {
-        stopTimer();
       }
-    }
+    }));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
+  }
+
+  private void setupNeuralNetworkDemoTimer() {
+    isTimerRunning = true;
+    ConfigController.disableInputs(true);
+    int speed = Config.getInstance().getMode().getSpeed();    // TODO: with interface
+    adapter = new GameAdapter(Serializer.load(), null);
+    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
+      if (isTimerRunning) {
+        if (adapter != null) {
+          boolean success = adapter.moveSnake();
+          GameController.display(adapter.getGame());
+          if (!success) {
+            stopTimer();
+          }
+        } else {
+          stopTimer();
+        }
+      }
+    }));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
   }
 
   private void stopTimer() {
@@ -174,6 +183,10 @@ public class ApplicationController implements Initializable {
         case SPACE:
         case ENTER:
           triggerGame();
+          break;
+
+        case V:
+          isRealtimeStatisticsVerbose = !isRealtimeStatisticsVerbose;
           break;
       }
     });
