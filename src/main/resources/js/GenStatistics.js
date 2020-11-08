@@ -2,6 +2,7 @@ var chart = null
 
 function loadGraph(gen_data) {
 console.log('graph building')
+
 	if (chart != null) {
 	chart.dispose()
 	}

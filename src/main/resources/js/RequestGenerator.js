@@ -7,27 +7,19 @@ function loadJSON(callback) {
     xobj.open('GET', 'http://localhost:8050/?cmd=load', true);
     xobj.onreadystatechange = function() {
         if (xobj.readyState == 4 && xobj.status == "200") {
-
             callback(xobj.responseText);
-
         }
     }
     xobj.send(null);
-
 }
 
 function loadCurrentState(){
-
-// Call to function with anonymous callback
 loadJSON(function(response) {
     jsonresponse = JSON.parse(response);
-    console.log(response);
     var formatted = JSON.stringify(jsonresponse, null, 2);
-    var json_file = ''
-    json_file = jsonresponse.generations;
-    loadGraph(jsonresponse.generations)
-
-    console.log(json_file);
-
+    let chars = jsonresponse['generations']
+    for(let i=0, len=chars.length; i < len; i++){
+      loadGraph(chars[i])
+    }
 });
 }

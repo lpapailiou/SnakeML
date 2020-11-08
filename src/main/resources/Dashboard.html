@@ -23,17 +23,10 @@
   <h2>SNAKE ML - STATISTICS</h2>
   <p>Visualising statistics of the Game "Snake ML"</p>
   <p>Pick one or more statistics from the dropdown below.</p>
-  <button onclick="loadCurrentState()">Load</button>
+  <button onclick="loadCurrentState()">Reload</button>
   <div class="div-for-dropdown">
-        <select id="select" multiple data-style="Select-control Select-value #modelselector" class="selectpicker">
-          <div class="eight columns bg-grey">
-            <script src="./js/selectpicker.js"></script>
-          </div>
-          <option id="generations">Generations</option>
-          <option id="deaths">Death causes</option>
-          <option id="fitness">Fitness</option>
-          <option id="steps">Steps</option>
-          <option>TBD</option>
+        <select class="drop drop-screen" id="sel">
+          <option value="">--- Select Generation ---</option>
         </select>
       </div>
   </div>

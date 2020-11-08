@@ -132,7 +132,7 @@ public class ConfigController implements Initializable {
     }
   }
 
-  static void enableStatistics() {
+  public static void enableStatistics() {
     instance.statisticsButton.setDisable(false);
     instance.openStatistics();
   }

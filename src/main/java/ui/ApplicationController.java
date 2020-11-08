@@ -102,8 +102,6 @@ public class ApplicationController implements Initializable {
 
   private void neuralGame(GameBatch batch) {
 
-    ItemHolder itemHolder = new ItemHolder();
-
     if (isTimerRunning) {
       if (adapter == null) {
         NeuralNetwork neuralNet = batch.processGeneration();

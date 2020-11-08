@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import main.configuration.Config;
 import main.configuration.INeuralNetworkConfig;
+import ui.ConfigController;
 import webserver.ItemHolder;
 import java.util.ArrayList;
 import java.util.Arrays;
