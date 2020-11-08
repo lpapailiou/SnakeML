@@ -145,9 +145,9 @@ public class ConfigController implements Initializable {
   }
 
 
-
   private void updateNetworkPainter() {
-    networkPainter = new NetworkPainter(context, config.getLayerConfigurationAsList(), inputNodeConfiguration);
+    networkPainter = new NetworkPainter(context, config.getLayerConfigurationAsList(),
+        inputNodeConfiguration);
     networkPainter.paintNetwork();
   }
 
@@ -178,12 +178,11 @@ public class ConfigController implements Initializable {
     });
     themeSelector.setItems(colorList);
     themeSelector.getSelectionModel().select(Config.getInstance().getTheme().ordinal());
-    themeSelector.setOnAction( e -> updateTheme());
-
+    themeSelector.setOnAction(e -> updateTheme());
 
     modeSelector.setItems(modeList);
     modeSelector.getSelectionModel().select(Config.getInstance().getMode().ordinal());
-    modeSelector.setOnAction( e -> updateMode());
+    modeSelector.setOnAction(e -> updateMode());
     updateMode();
   }
 
@@ -192,29 +191,35 @@ public class ConfigController implements Initializable {
     populationControl.setText(Config.getInstance().getPopulationSize() + "");
     randomizationControl.setText(Config.getInstance().getRandomizationRate() + "");
 
-    AtomicReference<String> tempGenerations = new AtomicReference<String>(Config.getInstance().getGenerationCount() + "");
+    AtomicReference<String> tempGenerations = new AtomicReference<String>(
+        Config.getInstance().getGenerationCount() + "");
     generationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempGenerations.toString();
       tempGenerations.set(generationControl.getText());
-      if (configureTextField(generationControl, 1, 5000, tempGenerations.toString(), previousValue)) {
+      if (configureTextField(generationControl, 1, 5000, tempGenerations.toString(),
+          previousValue)) {
         Config.getInstance().setGenerationCount(Integer.parseInt(tempGenerations.toString()));
       }
     });
 
-    AtomicReference<String> tempPopulations = new AtomicReference<String>(Config.getInstance().getPopulationSize() + "");
+    AtomicReference<String> tempPopulations = new AtomicReference<String>(
+        Config.getInstance().getPopulationSize() + "");
     populationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempPopulations.toString();
       tempPopulations.set(populationControl.getText());
-      if (configureTextField(populationControl, 1, 5000, tempPopulations.toString(), previousValue)) {
+      if (configureTextField(populationControl, 1, 5000, tempPopulations.toString(),
+          previousValue)) {
         Config.getInstance().setPopulationSize(Integer.parseInt(tempPopulations.toString()));
       }
     });
 
-    AtomicReference<String> tempRate = new AtomicReference<String>(Config.getInstance().getRandomizationRate() + "");
+    AtomicReference<String> tempRate = new AtomicReference<String>(
+        Config.getInstance().getRandomizationRate() + "");
     randomizationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempRate.toString();
       tempRate.set(randomizationControl.getText());
-      if (configureDoubleTextField(randomizationControl, 0, 1, tempRate.toString(), previousValue)) {
+      if (configureDoubleTextField(randomizationControl, 0, 1, tempRate.toString(),
+          previousValue)) {
         Config.getInstance().setRandomizationRate(Double.parseDouble(tempRate.toString()));
       }
     });
@@ -223,14 +228,14 @@ public class ConfigController implements Initializable {
   static void display(int currentGeneration, Direction direction) {
     if (instance != null) {
       instance.networkPainter.flashOutput(direction.ordinal());
-      instance.generationCounter.setText(currentGeneration+"");
+      instance.generationCounter.setText(currentGeneration + "");
     }
   }
 
   private void initializeLayerControls() {
     hiddenLayerCount.setItems(layerCount);
-    hiddenLayerCount.getSelectionModel().select((config.getLayerConfigurationAsList().size()-2));
-    hiddenLayerCount.setOnAction( e -> updateHiddenLayerSelection());
+    hiddenLayerCount.getSelectionModel().select((config.getLayerConfigurationAsList().size() - 2));
+    hiddenLayerCount.setOnAction(e -> updateHiddenLayerSelection());
     //updateHiddenLayerSelection();   // TODO: test
 
     for (int i = 0; i < Config.getInstance().getLayerConfiguration()[0]; i++) {
@@ -242,22 +247,24 @@ public class ConfigController implements Initializable {
     for (int i = 0; i < hiddenLayerControls.getChildren().size(); i++) {
       TextField field = (TextField) hiddenLayerControls.getChildren().get(i);
       List<Integer> layer = Config.getInstance().getLayerConfigurationAsList();
-      if (i < layer.size()-2) {
-        field.setText(layer.get(i+1) + "");
+      if (i < layer.size() - 2) {
+        field.setText(layer.get(i + 1) + "");
       } else {
         field.setVisible(false);
       }
       field.textProperty().addListener((o, oldValue, newValue) -> {
         if (configureTextField(field, 1, 64, newValue, oldValue)) {
           updateNetworkParameter();
-        }});
+        }
+      });
     }
     for (int i = 0; i < inputNodeConfiguration.getChildren().size(); i++) {
       RadioButton box = (RadioButton) inputNodeConfiguration.getChildren().get(i);
       box.setTooltip(new Tooltip(InputNode.values()[i].getTooltipText()));
       box.setOnAction(e -> {
         if (!box.isSelected()) {
-          int activeNodes = (int) inputNodeConfiguration.getChildren().stream().filter(n -> ((RadioButton) n).isSelected()).count();
+          int activeNodes = (int) inputNodeConfiguration.getChildren().stream()
+              .filter(n -> ((RadioButton) n).isSelected()).count();
           if (activeNodes == 0) {
             box.setSelected(true);
           }
@@ -270,7 +277,8 @@ public class ConfigController implements Initializable {
           Config.getInstance().removeInputNodeFromSelection(index);
         }
         int[] netParams = Config.getInstance().getLayerConfiguration();
-        int activeNodes = (int) inputNodeConfiguration.getChildren().stream().filter(n -> ((RadioButton) n).isSelected()).count();
+        int activeNodes = (int) inputNodeConfiguration.getChildren().stream()
+            .filter(n -> ((RadioButton) n).isSelected()).count();
         netParams[0] = activeNodes;
         Config.getInstance().setLayerConfiguration(netParams);
         updateNetworkPainter();
@@ -299,9 +307,9 @@ public class ConfigController implements Initializable {
   void updateNetworkParameter() {
     int[] currentParams = Config.getInstance().getLayerConfiguration();
     int nodes = (int) hiddenLayerControls.getChildren().stream().filter(n -> n.isVisible()).count();
-    int[] network = new int[nodes+2];
+    int[] network = new int[nodes + 2];
     network[0] = currentParams[0];
-    network[network.length-1] = currentParams[currentParams.length-1];
+    network[network.length - 1] = currentParams[currentParams.length - 1];
 
     int index = 1;
     for (Node node : hiddenLayerControls.getChildren()) {
@@ -316,7 +324,8 @@ public class ConfigController implements Initializable {
   }
 
   private void updateTheme() {
-    List<String> cssList = Arrays.stream(Theme.values()).map(Theme::getCss).collect(Collectors.toList());
+    List<String> cssList = Arrays.stream(Theme.values()).map(Theme::getCss)
+        .collect(Collectors.toList());
     for (Object str : cssList) {
       String sheet = (String) str;
       this.boardWithControl.getScene().getStylesheets().removeIf(s -> s.matches(
@@ -328,19 +337,23 @@ public class ConfigController implements Initializable {
     Config.getInstance().setTheme(theme);
     GameController.resetGamePanel();
     scene.setFill(theme.getBackgroundColor());
-    scene.getStylesheets().add(Objects.requireNonNull(Main.class.getClassLoader().getResource(theme.getCss())).toExternalForm());
+    scene.getStylesheets().add(
+        Objects.requireNonNull(Main.class.getClassLoader().getResource(theme.getCss()))
+            .toExternalForm());
     updateNetworkPainter();
   }
 
   private void updateMode() {
-    Mode mode = Arrays.stream(Mode.values()).filter(e -> e.getLabel().equals(modeSelector.getValue())).findFirst().get();
+    Mode mode = Arrays.stream(Mode.values())
+        .filter(e -> e.getLabel().equals(modeSelector.getValue())).findFirst().get();
     neuralNetworkControls.setVisible(mode == Mode.NEURAL_NETWORK);
     statisticControls.setVisible(mode == Mode.NEURAL_NETWORK);
     Config.getInstance().setMode(mode);
   }
 
 
-  private boolean configureTextField(TextField field, int min, int max, String newValue, String oldValue) {
+  private boolean configureTextField(TextField field, int min, int max, String newValue,
+      String oldValue) {
     try {
       int result = Integer.parseInt(newValue);
       if (result >= min && result <= max) {
@@ -355,7 +368,8 @@ public class ConfigController implements Initializable {
     return false;
   }
 
-  private boolean configureDoubleTextField(TextField field, int min, int max, String newValue, String oldValue) {
+  private boolean configureDoubleTextField(TextField field, int min, int max, String newValue,
+      String oldValue) {
     try {
       double result = Double.parseDouble(newValue);
       if (result >= min && result <= max) {

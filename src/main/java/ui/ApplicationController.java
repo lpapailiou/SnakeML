@@ -9,6 +9,8 @@ import game.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -19,8 +21,13 @@ import main.configuration.Config;
 import main.configuration.IGameConfig;
 import main.configuration.INeuralNetworkConfig;
 import main.configuration.Mode;
+import webserver.ItemHolder;
+import webserver.WebServer;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ApplicationController implements Initializable {
 
@@ -33,6 +40,7 @@ public class ApplicationController implements Initializable {
   private boolean isTimerRunning = false;
   private Direction direction = ((IGameConfig) config).getInitialDirection();
   private GameAdapter adapter;
+  ItemHolder itemHolder = new ItemHolder();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -106,6 +114,7 @@ public class ApplicationController implements Initializable {
         boolean success = adapter.moveSnake();
         GameController.display(adapter.getGame());
         ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
+
         if (!success) {
           adapter = null;
         }
@@ -177,7 +186,5 @@ public class ApplicationController implements Initializable {
       stop();
     }
   }
-
-
 
 }

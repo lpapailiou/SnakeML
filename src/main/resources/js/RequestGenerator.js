@@ -15,21 +15,8 @@ function loadJSON(callback) {
     xobj.send(null);
 
 }
-
-function startGame() {
-
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'http://localhost:8050/?cmd=start', true);
-    xobj.onreadystatechange = function() {
-    console.log(xobj)
-    }
-    xobj.send(null);
-
-}
 function loadCurrentState(){
 
-// Call to function with anonymous callback
 loadJSON(function(response) {
     jsonresponse = JSON.parse(response);
     var formatted = JSON.stringify(jsonresponse, null, 2);

@@ -23,7 +23,6 @@ public class Main extends Application {
         return new Task<Void>() {
           @Override
           protected Void call() throws Exception {
-            //Background work
             final CountDownLatch latch = new CountDownLatch(1);
             Platform.runLater(new Runnable() {
               @Override
@@ -37,7 +36,6 @@ public class Main extends Application {
               }
             });
             latch.await();
-            //Keep with the background work
             return null;
           }
         };

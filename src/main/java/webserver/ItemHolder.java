@@ -3,7 +3,7 @@ package webserver;
 
 import ai.GameBatch;
 
-class ItemHolder {
+public class ItemHolder {
     private static GameBatch item;
     public synchronized void produce(GameBatch item) {
       ItemHolder.item = item;
