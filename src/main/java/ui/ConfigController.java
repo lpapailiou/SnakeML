@@ -31,6 +31,7 @@ import main.configuration.Theme;
 import main.configuration.Config;
 import main.configuration.Mode;
 import ui.painter.impl.NetworkPainter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -133,13 +134,37 @@ public class ConfigController implements Initializable {
 
   static void enableStatistics() {
     instance.statisticsButton.setDisable(false);
+    instance.openStatistics();
   }
 
   private void openStatistics() {
-    //TODO: open statistics in browser
+    String url = "http://localhost:63342/pa-5/SnakeML/Dashboard.html?_ijt=t2hl0s5te6ddfuu4fjsbdpivgj";
+    String os = System.getProperty("os.name").toLowerCase();
+    Runtime rt = Runtime.getRuntime();
+
+    try{
+
+      if (os.contains("win")) {
+        rt.exec( "rundll32 url.dll,FileProtocolHandler " + url);
+
+      } else if (os.contains("mac")) {
+        rt.exec( "open " + url);
+      } else if (os.contains("nix") || os.contains("nux")) {
+        String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
+            "netscape","opera","links","lynx"};
+        StringBuffer cmd = new StringBuffer();
+        for (int i=0; i<browsers.length; i++)
+          cmd.append(i == 0 ? "" : " || ").append(browsers[i]).append(" \"").append(url)
+              .append("\" ");
+        rt.exec(new String[] { "sh", "-c", cmd.toString() });
+      }
+
+  } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
-  private void updateNetworkPainter() {
+    private void updateNetworkPainter() {
     networkPainter = new NetworkPainter(context, config.getLayerConfigurationAsList(), inputNodeConfiguration);
     networkPainter.paintNetwork();
   }
@@ -401,8 +426,9 @@ public class ConfigController implements Initializable {
       ApplicationController.stop();
     });
 
-    statisticsButton.setDisable(true);    // TODO: enable as soon as first statistics are available
-    stopButton.setDisable(true);
+    statisticsButton.setDisable(false);
+
+    stopButton.setDisable(false);
   }
 
   static void disableInputs(boolean setDisable) {

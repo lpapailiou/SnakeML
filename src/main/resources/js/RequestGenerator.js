@@ -15,10 +15,13 @@ function loadJSON(callback) {
     xobj.send(null);
 
 }
+
 function loadCurrentState(){
 
+// Call to function with anonymous callback
 loadJSON(function(response) {
     jsonresponse = JSON.parse(response);
+    console.log(response);
     var formatted = JSON.stringify(jsonresponse, null, 2);
     var json_file = ''
     json_file = jsonresponse.generations;

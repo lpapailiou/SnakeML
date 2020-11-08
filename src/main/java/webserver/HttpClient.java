@@ -2,10 +2,9 @@ package webserver;
 
 import ai.GameBatch;
 import ai.neuralnet.NeuralNetwork;
-import game.Game;
 import io.javalin.core.util.Header;
 import io.javalin.http.Context;
-import ui.ApplicationController;
+import java.util.List;
 
 public class HttpClient {
 
@@ -16,17 +15,9 @@ public class HttpClient {
     context.header(Header.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
     context.result(context.queryParam("cmd"));
 
-//    if (context.queryParam("cmd").equals("start")){
-//      GameBatch batch = new GameBatch(new NeuralNetwork(0.999,12,32,32,32,4)); // TODO: change after GUI is implemented
-//      // TODO: Es wird nicht via Button "Start" in JS gestartet sondern via JavaFX Game -> daher verschieben nach dort wo Button ist für Game start mit der gegebenen Config
-//      itemHolder.produce(batch);
-//      batch.run();
-//    }
-
     if (context.queryParam("cmd").equals("load")){
-      GameBatch batch = itemHolder.consume();
-      batch.generateJson();
-      context.result(batch.getJsonString());
+      List<String> statisticsJson = itemHolder.consume();
+      context.result(statisticsJson.toString());
     }
   }
 

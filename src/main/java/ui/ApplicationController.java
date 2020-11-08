@@ -9,6 +9,7 @@ import game.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -19,8 +20,11 @@ import main.configuration.Config;
 import main.configuration.IGameConfig;
 import main.configuration.INeuralNetworkConfig;
 import main.configuration.Mode;
+import webserver.ItemHolder;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ApplicationController implements Initializable {
 
@@ -97,6 +101,9 @@ public class ApplicationController implements Initializable {
   }
 
   private void neuralGame(GameBatch batch) {
+
+    ItemHolder itemHolder = new ItemHolder();
+
     if (isTimerRunning) {
       if (adapter == null) {
         NeuralNetwork neuralNet = batch.processGeneration();
@@ -108,11 +115,11 @@ public class ApplicationController implements Initializable {
         boolean success = adapter.moveSnake();
         GameController.display(adapter.getGame());
         ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
+
         if (!success) {
           adapter = null;
         }
       } else {
-        ConfigController.enableStatistics();
         stopTimer();
       }
     }
@@ -187,5 +194,4 @@ public class ApplicationController implements Initializable {
     }
     return null;
   }
-
 }

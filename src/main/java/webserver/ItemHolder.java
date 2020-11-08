@@ -1,15 +1,14 @@
 package webserver;
 
-
-import ai.GameBatch;
+import java.util.List;
 
 public class ItemHolder {
-    private static GameBatch item;
-    public synchronized void produce(GameBatch item) {
+    private static List<String> item;
+    public synchronized void produce(List<String> item) {
       ItemHolder.item = item;
       notify();
     }
-    public synchronized GameBatch consume() {
+    public synchronized List<String> consume() {
       while (item == null) {
         try {
           wait();

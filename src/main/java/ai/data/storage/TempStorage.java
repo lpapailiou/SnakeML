@@ -1,5 +1,6 @@
 package ai.data.storage;
 
+import webserver.ItemHolder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class TempStorage {
 
   private static TempStorage instance;
   private List<String> jsonStringList;
+  ItemHolder itemHolder = new ItemHolder();
 
   private TempStorage() {
     jsonStringList = new ArrayList<>();
@@ -15,8 +17,7 @@ public class TempStorage {
 
   void addBatchData(String file) {
     jsonStringList.add(file);
-
-    // TODO: push file to server
+    itemHolder.produce(jsonStringList);
   }
 
   public List<String> getJsonStrings() {

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import main.configuration.Config;
 import main.configuration.INeuralNetworkConfig;
+import webserver.ItemHolder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +43,7 @@ public class GameBatch {
 
 
   public void run() {
+
     for (int i = 0; i < generationCount; i++) {
       Generation gen = new Generation(i, populationnSize, generationEntities);
       neuralNetwork = gen.run(neuralNetwork);
@@ -56,9 +58,11 @@ public class GameBatch {
   }
 
   public NeuralNetwork processGeneration() {
+
     Generation gen = new Generation(currentGeneration, populationnSize, generationEntities);
     neuralNetwork = gen.run(neuralNetwork);
     currentGeneration++;
+
     if (currentGeneration == generationCount) {
       batchEntity.setConfigurationEntity(configurationEntity);
       batchEntity.setGenerationEntities(generationEntities);
