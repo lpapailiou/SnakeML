@@ -53,3 +53,7 @@
 #baseControlsLabel:disabled, #neuralNetworkControlsLabel:disabled, #actionControlsLabel:disabled, #statisticControlsLabel:disabled {
   -fx-opacity: 1.0;
 }
+
+.button {
+  -fx-effect:null;
+}

@@ -7,6 +7,13 @@
   -fx-focus-color: pink;                          /* focus color */
   -fx-faint-focus-color: #ffc2cd22;
   -fx-cell-focus-inner-border: pink;
+  -fx-hover-base: pink;
+  -fx-color: white;
+  -fx-pressed-base: pink;
+  -fx-outer-border: white;
+  -fx-inner-border: white;
+  -fx-body-color: white;
+  -fx-focused-base: pink;
 }
 
 .label {
@@ -26,4 +33,44 @@
   -fx-background-color: white;
 }
 
+.combo-box-base, .button, .radio-button .radio {
+  -fx-background-color: -fx-base, -fx-text-fill, -fx-base, -fx-base;
+}
+
+.combo-box-base:hover, .button:hover, .radio-button .radio:hover {
+  -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing, .button:showing, .radio-button .radio:showing {
+  -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused, .button:focused {
+  -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+  -fx-background-radius: 6.4, 4, 5, 3;
+  -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.radio-button:focused > .radio {
+  -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+  -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-base:disabled, .text-field:disabled, .button:disabled, .radio-button:disabled {
+  -fx-opacity: .4;
+}
+
+.text-field {
+  -fx-background-color: -fx-text-fill, -fx-base, -fx-base;
+}
+
+.text-field:focused {
+  -fx-background-color: -fx-base, -fx-base, -fx-focus-color, -fx-base;
+  -fx-background-radius: 6.4, 4, 5, 3;
+  -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-popup > .list-view {
+  -fx-effect: null;
+}
 
