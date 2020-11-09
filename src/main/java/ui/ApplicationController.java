@@ -191,7 +191,7 @@ public class ApplicationController implements Initializable {
           break;
 
         case P:
-          statisticsPosition = statisticsPosition > 1 ? 0 : ++statisticsPosition;
+          statisticsPosition = statisticsPosition > 4 ? 0 : ++statisticsPosition;
           break;
       }
     });

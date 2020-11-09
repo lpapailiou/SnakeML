@@ -1,8 +1,8 @@
 package ui.painter;
 
-import javafx.scene.canvas.GraphicsContext;
+import ai.data.GenerationEntity;
 
 public interface IGameInformationPainter {
 
-  void paintGameOver(GraphicsContext gc);
+  void paintGameInformation(GenerationEntity entity, int snakeLength, int position);
 }

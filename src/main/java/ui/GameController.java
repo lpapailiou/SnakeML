@@ -1,13 +1,12 @@
 package ui;
 
-import ai.GameAdapter;
 import ai.data.GenerationEntity;
 import game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import ui.painter.IGameTicker;
-import ui.painter.impl.CurrentStatisticsPainter;
+import ui.painter.impl.GameInformationPainter;
 import ui.painter.impl.GamePainter;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,13 +18,13 @@ public class GameController implements Initializable, IGameTicker {
 
   private static GameController instance;
   private GamePainter gamePainter;
-  private CurrentStatisticsPainter statisticsPainter;
+  private GameInformationPainter statisticsPainter;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     instance = this;
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
-    statisticsPainter = new CurrentStatisticsPainter(gamePane.getGraphicsContext2D());
+    statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
     onTick(null);
   }
 
@@ -34,7 +33,7 @@ public class GameController implements Initializable, IGameTicker {
     boolean isActive = game == null ? true : !game.snake.isDead();
     if (game == null) {
       gamePainter.paintBoard(isActive);
-      statisticsPainter = new CurrentStatisticsPainter(gamePane.getGraphicsContext2D());
+      statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
     } else {
       gamePainter.paintBoard(isActive);
       gamePainter.paintFood(game.food);
