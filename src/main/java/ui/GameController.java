@@ -34,6 +34,7 @@ public class GameController implements Initializable, IGameTicker {
     boolean isActive = game == null ? true : !game.snake.isDead();
     if (game == null) {
       gamePainter.paintBoard(isActive);
+      statisticsPainter = new CurrentStatisticsPainter(gamePane.getGraphicsContext2D());
     } else {
       gamePainter.paintBoard(isActive);
       gamePainter.paintFood(game.food);
@@ -47,8 +48,8 @@ public class GameController implements Initializable, IGameTicker {
     }
   }
 
-  static void displayStats(GenerationEntity entity, int snakeLength) {
-    instance.statisticsPainter.paint(entity, snakeLength);
+  static void displayStats(GenerationEntity entity, int snakeLength, int position) {
+    instance.statisticsPainter.paint(entity, snakeLength, position);
   }
 
   private void reset() {

@@ -36,6 +36,7 @@ public class ApplicationController implements Initializable {
   private GameAdapter adapter;
   private Scene scene;
   private boolean isRealtimeStatisticsVerbose = true;
+  private int statisticsPosition;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -109,7 +110,7 @@ public class ApplicationController implements Initializable {
           entity = batch.getCurrentGenerationEntity();
           GameController.display(adapter.getGame());
           if (isRealtimeStatisticsVerbose) {
-            GameController.displayStats(entity, adapter.getSnakeLength());
+            GameController.displayStats(entity, adapter.getSnakeLength(), statisticsPosition);
           }
           ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
           if (!success) {
@@ -187,6 +188,10 @@ public class ApplicationController implements Initializable {
 
         case V:
           isRealtimeStatisticsVerbose = !isRealtimeStatisticsVerbose;
+          break;
+
+        case P:
+          statisticsPosition = statisticsPosition > 1 ? 0 : ++statisticsPosition;
           break;
       }
     });
