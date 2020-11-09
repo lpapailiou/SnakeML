@@ -109,7 +109,7 @@ public class ApplicationController implements Initializable {
           entity = batch.getCurrentGenerationEntity();
           GameController.display(adapter.getGame());
           if (isRealtimeStatisticsVerbose) {
-            GameController.displayStats(entity);
+            GameController.displayStats(entity, adapter.getSnakeLength());
           }
           ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
           if (!success) {

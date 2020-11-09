@@ -47,8 +47,8 @@ public class GameController implements Initializable, IGameTicker {
     }
   }
 
-  static void displayStats(GenerationEntity entity) {
-    instance.statisticsPainter.paint(entity);
+  static void displayStats(GenerationEntity entity, int snakeLength) {
+    instance.statisticsPainter.paint(entity, snakeLength);
   }
 
   private void reset() {

@@ -127,7 +127,7 @@ public class ConfigController implements Initializable {
   static void display(int currentGeneration, Direction direction) {
     if (instance != null) {
       instance.networkPainter.flashOutput(direction.ordinal());
-      instance.generationCounter.setText(currentGeneration+"");
+      //instance.generationCounter.setText(currentGeneration+"");
     }
   }
 
@@ -412,7 +412,7 @@ public class ConfigController implements Initializable {
     instance.stopButton.setDisable(!setDisable);
     if (!setDisable) {
       instance.networkPainter.paintNetwork();
-      instance.generationCounter.setText("0");
+      //instance.generationCounter.setText("0");
       Platform.runLater(() -> instance.boardWithControl.getParent().requestFocus());
     }
   }
