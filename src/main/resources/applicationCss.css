@@ -26,6 +26,10 @@
   -fx-max-height: 26;
 }
 
+.combo-box .list-cell {
+  -fx-translate-y: -2px;
+}
+
 .tooltip {
   -fx-font-size: 12pt;
 }
@@ -46,18 +50,6 @@
   -fx-translate-y: -20;
 }
 
-#generationCounter {
-  -fx-font-size: 16pt;
-}
-
 #baseControlsLabel:disabled, #neuralNetworkControlsLabel:disabled, #actionControlsLabel:disabled, #statisticControlsLabel:disabled {
   -fx-opacity: 1.0;
-}
-
-#gameOverTitle {
-  -fx-font-size: 28pt;
-}
-
-#gameOverText {
-  -fx-font-size: 18pt;
 }
