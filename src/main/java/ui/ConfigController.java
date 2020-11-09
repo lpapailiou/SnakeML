@@ -265,7 +265,7 @@ public class ConfigController implements Initializable {
 
   private void updateNetworkParameter() {
     int[] currentParams = Config.getInstance().getLayerConfiguration();
-    int nodes = (int) hiddenLayerControls.getChildren().stream().filter(n -> n.isVisible()).count();
+    int nodes = (int) hiddenLayerControls.getChildren().stream().filter(Node::isVisible).count();
     int[] network = new int[nodes+2];
     network[0] = currentParams[0];
     network[network.length-1] = currentParams[currentParams.length-1];
@@ -289,7 +289,7 @@ public class ConfigController implements Initializable {
     boardWithControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempWidth.toString();
       tempWidth.set(boardWithControl.getText());
-      if (configureTextField(boardWithControl, 1, 100, tempWidth.toString(), previousValue)) {
+      if (configureTextField(boardWithControl, 4, 100, tempWidth.toString(), previousValue)) {    // TODO: make sure minimum fits snake starting position
         if (!tempWidth.toString().equals(previousValue)) {
           Config.getInstance().setBoardWidth(Integer.parseInt(tempWidth.toString()));
           GameController.resetGamePanel();
@@ -301,7 +301,7 @@ public class ConfigController implements Initializable {
     boardHeightControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempHeight.toString();
       tempHeight.set(boardHeightControl.getText());
-      if (configureTextField(boardHeightControl, 1, 100, tempHeight.toString(), previousValue)) {
+      if (configureTextField(boardHeightControl, 4, 100, tempHeight.toString(), previousValue)) {    // TODO: make sure minimum fits snake starting position
         if (!tempHeight.toString().equals(previousValue)) {
           Config.getInstance().setBoardHeight(Integer.parseInt(tempHeight.toString()));
           GameController.resetGamePanel();

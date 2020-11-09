@@ -40,44 +40,44 @@
       <version>4.5.10</version>
     </dependency>
 
-  <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-base &ndash;&gt;-->
-  <!--      <dependency>-->
-  <!--        <groupId>org.openjfx</groupId>-->
-  <!--        <artifactId>javafx-base</artifactId>-->
-  <!--        <version>14.0.2.1</version>-->
-  <!--      </dependency>-->
+    <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-base &ndash;&gt;-->
+    <!--      <dependency>-->
+    <!--        <groupId>org.openjfx</groupId>-->
+    <!--        <artifactId>javafx-base</artifactId>-->
+    <!--        <version>14.0.2.1</version>-->
+    <!--      </dependency>-->
 
-  <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-fxml &ndash;&gt;-->
-  <!--      <dependency>-->
-  <!--        <groupId>org.openjfx</groupId>-->
-  <!--        <artifactId>javafx-fxml</artifactId>-->
-  <!--        <version>14.0.2.1</version>-->
-  <!--      </dependency>-->
+    <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-fxml &ndash;&gt;-->
+    <!--      <dependency>-->
+    <!--        <groupId>org.openjfx</groupId>-->
+    <!--        <artifactId>javafx-fxml</artifactId>-->
+    <!--        <version>14.0.2.1</version>-->
+    <!--      </dependency>-->
 
-  <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-graphics &ndash;&gt;-->
-  <!--      <dependency>-->
-  <!--        <groupId>org.openjfx</groupId>-->
-  <!--        <artifactId>javafx-graphics</artifactId>-->
-  <!--        <version>14.0.2.1</version>-->
-  <!--      </dependency>-->
+    <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-graphics &ndash;&gt;-->
+    <!--      <dependency>-->
+    <!--        <groupId>org.openjfx</groupId>-->
+    <!--        <artifactId>javafx-graphics</artifactId>-->
+    <!--        <version>14.0.2.1</version>-->
+    <!--      </dependency>-->
 
-  <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-controls &ndash;&gt;-->
-  <!--      <dependency>-->
-  <!--        <groupId>org.openjfx</groupId>-->
-  <!--        <artifactId>javafx-controls</artifactId>-->
-  <!--        <version>14.0.2.1</version>-->
-  <!--      </dependency>-->
+    <!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.openjfx/javafx-controls &ndash;&gt;-->
+    <!--      <dependency>-->
+    <!--        <groupId>org.openjfx</groupId>-->
+    <!--        <artifactId>javafx-controls</artifactId>-->
+    <!--        <version>14.0.2.1</version>-->
+    <!--      </dependency>-->
 
-  <dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.9.8</version>
-  </dependency>
-  <dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.13</version>
-    <scope>test</scope>
-  </dependency>
-</dependencies>
-  </project>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.8</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
