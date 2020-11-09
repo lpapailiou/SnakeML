@@ -1,7 +1,5 @@
 package webserver;
 
-import ai.GameBatch;
-import ai.neuralnet.NeuralNetwork;
 import io.javalin.core.util.Header;
 import io.javalin.http.Context;
 import java.util.List;
