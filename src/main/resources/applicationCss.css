@@ -14,8 +14,10 @@
 .radio-button .radio {
   -fx-border-width: 0px;
   -fx-border-radius: 8px;
-  -fx-padding: 4px;
+  -fx-background-radius: 2.0em;
+  -fx-padding: 0.2em;
 }
+
 .radio-button .dot {
   -fx-background-radius: 10px;
   -fx-padding: 6px;

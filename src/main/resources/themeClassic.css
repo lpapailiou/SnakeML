@@ -1,11 +1,19 @@
 * {
-  -fx-base: limegreen;                        /* combobox color */
-  -fx-text-fill: black;                       /* text color */
-  -fx-text-background-color: black;           /* text in combobox */
-  -fx-control-inner-background: lightgreen;   /* combobox list background */
-  -fx-accent: limegreen;                      /* combobox selected background */
-  -fx-focus-color: darkseagreen;              /* focus color */
-  -fx-cell-focus-inner-border: darkseagreen;
+  -fx-base: rgba(50, 205, 50, 0.69);                        /* combobox color */
+  -fx-text-fill: black;                                     /* text color */
+  -fx-text-background-color: black;                         /* text in combobox */
+  -fx-control-inner-background: rgba(144, 238, 144, 0.45);  /* combobox list background */
+  -fx-accent: rgba(50, 205, 50, 0.69);                      /* combobox selected background */
+  -fx-focus-color: rgba(143, 188, 143, 0.69);               /* focus color */
+  -fx-cell-focus-inner-border: rgba(143, 188, 143, 0.69);
+
+  -fx-hover-base: -fx-focus-color;
+  -fx-color: -fx-accent;
+  -fx-pressed-base: -fx-focus-color;
+  -fx-outer-border: -fx-accent;
+  -fx-inner-border: -fx-accent;
+  -fx-body-color: -fx-accent;
+  -fx-focused-base: -fx-accent;
 }
 
 .label {
@@ -23,4 +31,47 @@
 #baseControlsLabel, #neuralNetworkControlsLabel, #actionControlsLabel, #statisticControlsLabel {
   -fx-text-fill: darkgreen;
   -fx-background-color: black;
+}
+
+/* ------------------------- flat design from here ------------------------- */
+
+.combo-box-base, .button, .radio-button .radio {
+  -fx-background-color: -fx-base, -fx-body-color, -fx-base, -fx-base;
+}
+
+.combo-box-base:hover, .button:hover, .radio-button .radio:hover {
+  -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing, .button:showing, .radio-button .radio:showing {
+  -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused, .button:focused {
+  -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+  -fx-background-radius: 6.4, 4, 5, 3;
+  -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.radio-button:focused > .radio {
+  -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+  -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-base:disabled, .text-field:disabled, .button:disabled, .radio-button:disabled {
+  -fx-opacity: .4;
+}
+
+.text-field {
+  -fx-background-color: -fx-body-color, -fx-base, -fx-base;
+}
+
+.text-field:focused {
+  -fx-background-color: -fx-base, -fx-base, -fx-focus-color, -fx-base;
+  -fx-background-radius: 6.4, 4, 5, 3;
+  -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-popup > .list-view {
+  -fx-effect: null;
 }

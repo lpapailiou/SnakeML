@@ -17,7 +17,8 @@ public class NetworkPainter implements INetworkPainter {
   private GraphicsContext context;
   private int width = 520;
   private int height = 290;
-  private double correctionOffset = 1.5;
+  private double correctionOffsetX = -0.3;
+  private double correctionOffsetY = 1.3;
   private int radius = 16;
   List<List<GraphNode>> graph = new ArrayList<>();
 
@@ -103,18 +104,18 @@ public class NetworkPainter implements INetworkPainter {
 
   private void paintDot(int x, int y, int radius) {
     context.setFill(colors.isDarkTheme() ? colors.getFrameActiveColor() : colors.getSnakeBodyColor());
-    context.fillOval(x+correctionOffset, y+correctionOffset, radius, radius);
+    context.fillOval(x+correctionOffsetX, y+correctionOffsetY, radius, radius);
   }
 
   private void paintDot(int x, int y, int radius, Color color) {
     context.setFill(color);
-    context.fillOval(x+correctionOffset, y+correctionOffset, radius, radius);
+    context.fillOval(x+correctionOffsetX, y+correctionOffsetY, radius, radius);
   }
 
   private void paintLine(GraphNode a, GraphNode b) {
     context.setStroke(colors.isDarkTheme() ? colors.getSnakeBodyColor().darker() : colors.getFrameActiveColor());
     context.setLineWidth(2);
-    context.strokeLine(a.x+(radius/2)+correctionOffset, a.y+(radius/2)+correctionOffset, b.x+(radius/2)+correctionOffset, b.y+(radius/2)+correctionOffset);
+    context.strokeLine(a.x+(radius/2)+correctionOffsetX, a.y+(radius/2)+correctionOffsetY, b.x+(radius/2)+correctionOffsetX, b.y+(radius/2)+correctionOffsetY);
   }
 
 

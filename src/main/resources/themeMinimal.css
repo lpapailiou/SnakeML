@@ -4,16 +4,17 @@
   -fx-text-background-color: black;               /* text in combobox */
   -fx-control-inner-background: white;            /* combobox list background */
   -fx-accent: white;                              /* combobox selected background */
-  -fx-focus-color: pink;                          /* focus color */
+  -fx-focus-color: #c71585;                       /* focus color */
   -fx-faint-focus-color: #ffc2cd22;
-  -fx-cell-focus-inner-border: pink;
-  -fx-hover-base: pink;
+  -fx-cell-focus-inner-border: #c71585;
+
+  -fx-hover-base: #c71585;
   -fx-color: white;
-  -fx-pressed-base: pink;
+  -fx-pressed-base: #c71585;
   -fx-outer-border: white;
   -fx-inner-border: white;
   -fx-body-color: white;
-  -fx-focused-base: pink;
+  -fx-focused-base: #c71585;
 }
 
 .label {
@@ -21,7 +22,7 @@
 }
 
 .tooltip {
-  -fx-text-fill: pink;
+  -fx-text-fill: -fx-focus-color;
 }
 
 #baseControls, #neuralNetworkControls, #actionControls, #statisticControls {
@@ -32,6 +33,8 @@
   -fx-text-fill: darkgray;
   -fx-background-color: white;
 }
+
+/* ------------------------- flat design from here ------------------------- */
 
 .combo-box-base, .button, .radio-button .radio {
   -fx-background-color: -fx-base, -fx-text-fill, -fx-base, -fx-base;
