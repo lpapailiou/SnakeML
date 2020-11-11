@@ -30,7 +30,7 @@ public class GameController implements Initializable, IGameTicker {
 
   @Override
   public void onTick(Game game) {
-    boolean isActive = game == null ? true : !game.snake.isDead();
+    boolean isActive = game == null || !game.snake.isDead();
     if (game == null) {
       gamePainter.paintBoard(isActive);
       statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());

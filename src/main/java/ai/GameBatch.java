@@ -41,7 +41,7 @@ public class GameBatch {
   }
 
 
-  public void run() {
+  void run() {
     for (int i = 0; i < generationCount; i++) {
       Generation gen = new Generation(i, populationnSize, generationEntities);
       neuralNetwork = gen.run(neuralNetwork);

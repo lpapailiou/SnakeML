@@ -15,11 +15,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.configuration.Config;
 import main.configuration.IGameConfig;
 import main.configuration.INeuralNetworkConfig;
-import main.configuration.Mode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,6 +28,7 @@ public class ApplicationController implements Initializable {
   @FXML
   private HBox rootElement;
 
+  private Stage stage;
   private INeuralNetworkConfig config = Config.getInstance();
   private static ApplicationController instance;
   private Timeline timeline;
@@ -106,13 +107,13 @@ public class ApplicationController implements Initializable {
         }
         if (adapter != null) {
           boolean success = adapter.moveSnake();
-          GenerationEntity entity = null;
+          GenerationEntity entity;
           entity = batch.getCurrentGenerationEntity();
           GameController.display(adapter.getGame());
           if (isRealtimeStatisticsVerbose) {
             GameController.displayStats(entity, adapter.getSnakeLength(), statisticsPosition);
           }
-          ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
+          ConfigController.display( adapter.getGame().getDirection());
           if (!success) {
             adapter = null;
           }
@@ -129,6 +130,7 @@ public class ApplicationController implements Initializable {
   private void setupNeuralNetworkDemoTimer() {
     isTimerRunning = true;
     ConfigController.disableInputs(true);
+    ConfigController.selectAllRadioButtons();           // necessary as otherwise neural net exception would be thrown
     int speed = Config.getInstance().getMode().getSpeed();    // TODO: with interface
     adapter = new GameAdapter(Serializer.load(), null);
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
@@ -208,6 +210,17 @@ public class ApplicationController implements Initializable {
   static Scene getScene() {
     if (instance != null) {
       return instance.scene;
+    }
+    return null;
+  }
+
+  public void setStage(Stage stage) {
+    this.stage = stage;
+  }
+
+  static Stage getStage() {
+    if (instance != null) {
+      return instance.stage;
     }
     return null;
   }

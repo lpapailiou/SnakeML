@@ -12,15 +12,15 @@ public class TempStorage {
     jsonStringList = new ArrayList<>();
   }
 
-  void addBatchData(String file) {
-    jsonStringList.add(file);
+  void addBatchData(String data) {
+    jsonStringList.add(data);
 
     // TODO: push file to server
   }
 
   public List<String> getJsonStrings() {
     return new ArrayList<>(jsonStringList);
-  }
+  }   // TODO: remove if not used
 
   static synchronized TempStorage getInstance() {
     if (instance == null) {

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import main.configuration.Config;
+import ui.ApplicationController;
 
 public class Main extends Application {
 
@@ -31,6 +32,7 @@ public class Main extends Application {
       stage.setMaxWidth(1616);
       stage.setTitle("Snake ML | FFHS Bern 2020");
       stage.getIcons().add(new Image("snake.png"));
+      ((ApplicationController) loader.getController()).setStage(stage);
       stage.show();
     } catch (Exception e) {
       e.printStackTrace();

@@ -113,7 +113,7 @@ public class NetworkPainter implements INetworkPainter {
   }
 
   private void paintLine(GraphNode a, GraphNode b) {
-    context.setStroke(colors.isDarkTheme() ? colors.getSnakeBodyColor().darker() : colors.getFrameActiveColor());
+    context.setStroke(colors.isDarkTheme() ? colors.getSnakeBodyColor().darker() : colors.getFrameActiveColor().darker());
     context.setLineWidth(2);
     context.strokeLine(a.x+(radius/2)+correctionOffsetX, a.y+(radius/2)+correctionOffsetY, b.x+(radius/2)+correctionOffsetX, b.y+(radius/2)+correctionOffsetY);
   }

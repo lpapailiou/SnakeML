@@ -19,7 +19,7 @@ public class JsonFileHandler {
     storage.addBatchData(data);
   }
 
-  public void saveToFileSystem() {
+  public void saveToFileSystem() {      // TODO: remove if not used
     File tmpFile;
     FileWriter writer = null;
     BufferedReader reader = null;

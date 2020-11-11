@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 import javafx.util.Duration;
 import main.Main;
 import main.configuration.INeuralNetworkConfig;
@@ -36,7 +37,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -85,7 +85,7 @@ public class ConfigController implements Initializable {
   private HBox statisticControls;
 
   @FXML
-  private Label generationCounter;
+  private Label openLabel;
 
   @FXML
   private Button statisticsButton;
@@ -124,14 +124,14 @@ public class ConfigController implements Initializable {
     Platform.runLater(() -> boardWithControl.getParent().requestFocus());
   }
 
-  static void display(int currentGeneration, Direction direction) {
+  static void display(Direction direction) {
     if (instance != null) {
       instance.networkPainter.flashOutput(direction.ordinal());
-      //instance.generationCounter.setText(currentGeneration+"");
     }
   }
 
   static void enableStatistics() {
+    instance.openLabel.setDisable(false);
     instance.statisticsButton.setDisable(false);
   }
 
@@ -260,7 +260,7 @@ public class ConfigController implements Initializable {
   private void initializeBaseControls() {
     boardWithControl.setText(config.getBoardWidth() + "");
     boardHeightControl.setText(config.getBoardHeight() + "");
-    AtomicReference<String> tempWidth = new AtomicReference<String>(config.getBoardWidth() + "");
+    AtomicReference<String> tempWidth = new AtomicReference<>(config.getBoardWidth() + "");
     boardWithControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempWidth.toString();
       tempWidth.set(boardWithControl.getText());
@@ -269,10 +269,12 @@ public class ConfigController implements Initializable {
           Config.getInstance().setBoardWidth(Integer.parseInt(tempWidth.toString()));
           GameController.resetGamePanel();
         }
+      } else {
+        showPopupMessage("min: 4, max: 100", boardWithControl);
       }
     });
 
-    AtomicReference<String> tempHeight = new AtomicReference<String>(config.getBoardHeight() + "");
+    AtomicReference<String> tempHeight = new AtomicReference<>(config.getBoardHeight() + "");
     boardHeightControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempHeight.toString();
       tempHeight.set(boardHeightControl.getText());
@@ -281,6 +283,8 @@ public class ConfigController implements Initializable {
           Config.getInstance().setBoardHeight(Integer.parseInt(tempHeight.toString()));
           GameController.resetGamePanel();
         }
+      } else {
+        showPopupMessage("min: 4, max: 100", boardHeightControl);
       }
     });
 
@@ -317,21 +321,23 @@ public class ConfigController implements Initializable {
       } else {
         field.setVisible(false);
       }
-      String nodeCount = (Config.getInstance().getLayerConfiguration().length < i+1) ? Config.getInstance().getLayerConfiguration() +"": "4";
-      AtomicReference<String> tempValue = new AtomicReference<String>(nodeCount);
+      String nodeCount = (Config.getInstance().getLayerConfiguration().length > i+1) ? Config.getInstance().getLayerConfiguration()[i+1] +"": "4";
+      AtomicReference<String> tempValue = new AtomicReference<>(nodeCount);
       field.focusedProperty().addListener((o, oldValue, newValue) -> {
         String previousValue = tempValue.toString();
         tempValue.set(field.getText());
         if (configureTextField(field, 1, 64, tempValue.toString(), previousValue)) {
-          if (!tempValue.equals(previousValue)) {
+          if (!tempValue.toString().equals(previousValue)) {
             updateNetworkParameter();
           }
+        }  else {
+          showPopupMessage("min: 1, max: 64", field);
         }});
     }
     for (int i = 0; i < inputNodeConfiguration.getChildren().size(); i++) {
       RadioButton box = (RadioButton) inputNodeConfiguration.getChildren().get(i);
       box.setTooltip(new Tooltip(InputNode.values()[i].getTooltipText()));
-      box.setOnAction(e -> {
+      box.selectedProperty().addListener(e -> {
         if (!box.isSelected()) {
           int activeNodes = (int) inputNodeConfiguration.getChildren().stream().filter(n -> ((RadioButton) n).isSelected()).count();
           if (activeNodes == 0) {
@@ -360,48 +366,49 @@ public class ConfigController implements Initializable {
     populationControl.setText(Config.getInstance().getPopulationSize() + "");
     randomizationControl.setText(Config.getInstance().getRandomizationRate() + "");
 
-    AtomicReference<String> tempGenerations = new AtomicReference<String>(Config.getInstance().getGenerationCount() + "");
+    AtomicReference<String> tempGenerations = new AtomicReference<>(Config.getInstance().getGenerationCount() + "");
     generationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempGenerations.toString();
       tempGenerations.set(generationControl.getText());
       if (configureTextField(generationControl, 1, 5000, tempGenerations.toString(), previousValue)) {
         Config.getInstance().setGenerationCount(Integer.parseInt(tempGenerations.toString()));
+      } else {
+        showPopupMessage("min: 1, max: 5000", generationControl);
       }
     });
 
-    AtomicReference<String> tempPopulations = new AtomicReference<String>(Config.getInstance().getPopulationSize() + "");
+    AtomicReference<String> tempPopulations = new AtomicReference<>(Config.getInstance().getPopulationSize() + "");
     populationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempPopulations.toString();
       tempPopulations.set(populationControl.getText());
       if (configureTextField(populationControl, 1, 5000, tempPopulations.toString(), previousValue)) {
         Config.getInstance().setPopulationSize(Integer.parseInt(tempPopulations.toString()));
+      } else {
+        showPopupMessage("min: 1, max: 5000", populationControl);
       }
     });
 
-    AtomicReference<String> tempRate = new AtomicReference<String>(Config.getInstance().getRandomizationRate() + "");
+    AtomicReference<String> tempRate = new AtomicReference<>(Config.getInstance().getRandomizationRate() + "");
     randomizationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempRate.toString();
       tempRate.set(randomizationControl.getText());
       if (configureDoubleTextField(randomizationControl, 0, 1, tempRate.toString(), previousValue)) {
         Config.getInstance().setRandomizationRate(Double.parseDouble(tempRate.toString()));
+      } else {
+        showPopupMessage("min: 0, max: 1", randomizationControl);
       }
     });
   }
 
   private void initializeButtons() {
-    statisticsButton.setOnAction(e -> {
-      openStatistics();
-    });
+    statisticsButton.setOnAction(e -> openStatistics());
 
-    startButton.setOnAction(e -> {
-      ApplicationController.start();
-    });
+    startButton.setOnAction(e -> ApplicationController.start());
 
-    stopButton.setOnAction(e -> {
-      ApplicationController.stop();
-    });
+    stopButton.setOnAction(e -> ApplicationController.stop());
 
-    statisticsButton.setDisable(true);    // TODO: enable as soon as first statistics are available
+    openLabel.setDisable(true);
+    statisticsButton.setDisable(true);    // TODO: enable earlier if we use realtime graphs
     stopButton.setDisable(true);
   }
 
@@ -412,8 +419,13 @@ public class ConfigController implements Initializable {
     instance.stopButton.setDisable(!setDisable);
     if (!setDisable) {
       instance.networkPainter.paintNetwork();
-      //instance.generationCounter.setText("0");
       Platform.runLater(() -> instance.boardWithControl.getParent().requestFocus());
+    }
+  }
+
+  static void selectAllRadioButtons() {
+    for (Node node : instance.inputNodeConfiguration.getChildren()) {
+      ((RadioButton) node).setSelected(true);
     }
   }
 
@@ -445,6 +457,28 @@ public class ConfigController implements Initializable {
       field.setText(oldValue);
     }
     return false;
+  }
+
+  private static Popup createPopup(final String message) {
+    final Popup popup = new Popup();
+    popup.setAutoFix(true);
+    popup.setAutoHide(true);
+    popup.setHideOnEscape(true);
+    Label label = new Label("  " + message);    // space for graphic reasons (padding left did not work)
+    label.setOnMouseReleased(e -> popup.hide());
+    popup.getContent().add(label);
+    return popup;
+  }
+
+  private static void showPopupMessage(final String message, Node node) {
+    final Popup popup = createPopup(message);
+    popup.setOnShown(e -> {
+      popup.setX(node.localToScreen(node.getBoundsInLocal()).getMinX());
+      popup.setY(node.localToScreen(node.getBoundsInLocal()).getMinY()-30);
+    });
+    if (ApplicationController.getStage() != null) {
+      popup.show(ApplicationController.getStage());
+    }
   }
 
 

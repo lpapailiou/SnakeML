@@ -74,7 +74,7 @@
                    text="statistics"/>
             <HBox fx:id="hbox4" alignment="CENTER" prefWidth="310.0" maxWidth="310.0"
                   spacing="20">
-              <Label fx:id="realTimeLabel" text="" wrapText="true" prefWidth="140"></Label>
+              <Label fx:id="openLabel" text="open as graph:" prefWidth="140"></Label>
               <Button fx:id="statisticsButton" text="STATISTICS" prefWidth="100.0"/>
               <Region prefWidth="28.0"/>
             </HBox>

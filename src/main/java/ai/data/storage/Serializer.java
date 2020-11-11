@@ -14,7 +14,7 @@ import java.nio.file.StandardCopyOption;
 
 public class Serializer {
 
-    public static void save(NeuralNetwork net) {
+    public static void save(NeuralNetwork net) {      // TODO: remove if not used? document?
         String fileName = "src/main/resources/serialized/NeuralNet" + System.currentTimeMillis() + ".ser";
         try {
             FileOutputStream file = new FileOutputStream(fileName);
@@ -50,7 +50,7 @@ public class Serializer {
         return phoenix;
     }
 
-    private static File createTempFile(String resource, String fileName) {
+    private static File createTempFile(String resource, String fileName) {    // TODO: remove if not used? document?
         try {
             InputStream htmlFile = Serializer.class.getClassLoader().getResourceAsStream(resource);
             File tempFile = new File(System.getProperty("java.io.tmpdir"), fileName);
