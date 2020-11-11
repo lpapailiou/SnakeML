@@ -7,7 +7,7 @@ import game.Game;
 import game.element.Cell;
 import game.element.Snake;
 import main.configuration.Config;
-import main.configuration.INeuralNetworkConfig;
+import main.configuration.IGameAdapterConfigReader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -23,7 +23,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
   private long fitness;
 
   public GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
-    INeuralNetworkConfig config = Config.getInstance();
+    IGameAdapterConfigReader config = Config.getGameAdapterConfigReader();
     neuralNetwork = net;
     nodeSelection = config.getInputNodeSelection();
     this.generationEntity = generationEntity;
@@ -31,7 +31,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
   }
 
   public boolean moveSnake() {
-    game.changeDirection(getDirection(game.snake, game.food));
+    game.changeDirection(getDirection(game.getSnake(), game.getFood()));
     game.onTick();
     game.onGameOver(this::setGameOver);
     return !isGameOver;
@@ -55,7 +55,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
 
   void updateFitness() {
     if (fitness == 0) {
-      fitness = game.snake.getFitness();
+      fitness = game.getSnake().getFitness();
     }
   }
 
@@ -68,7 +68,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
   }
 
   public int getSnakeLength() {
-    return game.snake.getBody().size();
+    return game.getSnake().getBody().size();
   }
 
   private void setGameOver() {
@@ -76,7 +76,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
       isGameOver = true;
       updateFitness();
       if (generationEntity != null) {
-        generationEntity.aggregateSnakeData(game.snake);
+        generationEntity.aggregateSnakeData(game.getSnake());
       }
     }
   }

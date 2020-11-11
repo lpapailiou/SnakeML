@@ -4,6 +4,7 @@ import ai.data.GenerationEntity;
 import ai.data.storage.Serializer;
 import ai.neuralnet.NeuralNetwork;
 import main.configuration.Config;
+import main.configuration.IGenerationConfigReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,9 +16,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class Generation {
 
+  private static final Logger LOG = Logger.getLogger("generation logger");
+  private IGenerationConfigReader config = Config.getGenerationConfigReader();
   private int populationSize;
   private List<GameAdapter> populationList = new ArrayList<>();
   private final static int THREAD_POOL = 4;
@@ -65,9 +70,10 @@ class Generation {
   private NeuralNetwork evolve() {
     populationList.sort(Comparator.nullsLast(Collections.reverseOrder()));
     NeuralNetwork best = populationList.get(0).getNeuralNetwork();
-    System.out.println("max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0).getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength()+")");
 
-    //if (populationList.get(0).getSnakeLength() == Config.getInstance().getBoardWidth()*Config.getInstance().getBoardHeight()) {
+    LOG.log(Level.INFO, "max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0).getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength()+")");
+
+    //if (populationList.get(0).getSnakeLength() == config.getBoardWidth()*config.getBoardHeight()) {
       //Serializer.save(best);    // TODO: uncomment to generate new serialized NeuralNetworks
     //}
 
@@ -82,9 +88,9 @@ class Generation {
 
     int bound = 8;  // bound is the number of selected snake for possible reproduction
     if (populationList.size() > 100 && populationList.size() < 200) {
-      bound = (int) (Config.getInstance().getPopulationSize()*0.2);
+      bound = (int) (config.getPopulationSize()*0.2);
     } else if (populationList.size() > 1000) {
-      bound = (int) (Config.getInstance().getPopulationSize()*0.01);
+      bound = (int) (config.getPopulationSize()*0.01);
     }
     int choice = 2;  // choice is the number of snakes which will be additionally selected to reproduce with the best snake
 

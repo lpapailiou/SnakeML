@@ -4,12 +4,12 @@ import game.Direction;
 import java.util.LinkedList;
 import java.util.List;
 import main.configuration.Config;
-import main.configuration.IGameConfig;
+import main.configuration.ISnakeConfigReader;
 
 public class Snake {
 
-  protected LinkedList<Cell> body = new LinkedList<>();
-  private IGameConfig config = Config.getInstance();
+  protected LinkedList<Cell> body = new LinkedList<>();   // TODO: is protected because of test, solve differently?
+  private ISnakeConfigReader config = Config.getSnakeConfigReader();
   private int steps;
   private boolean isDead = false;
   private final int timeoutConstant = config.getSnakeTimeout();

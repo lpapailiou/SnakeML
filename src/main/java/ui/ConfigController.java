@@ -27,7 +27,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.util.Duration;
 import main.Main;
-import main.configuration.INeuralNetworkConfig;
+import main.configuration.IConfigReader;
+import main.configuration.IConfigWriter;
 import main.configuration.Theme;
 import main.configuration.Config;
 import main.configuration.Mode;
@@ -100,7 +101,8 @@ public class ConfigController implements Initializable {
   private Button stopButton;
 
   private static ConfigController instance;
-  private INeuralNetworkConfig config = Config.getInstance();
+  private IConfigReader configReader = Config.getConfigReader();
+  private IConfigWriter configWriter = Config.getConfigWriter();
   private NetworkPainter networkPainter;
   private GraphicsContext context;
   private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.stream(
@@ -140,7 +142,7 @@ public class ConfigController implements Initializable {
   }
 
   private void updateNetworkPainter() {
-    networkPainter = new NetworkPainter(context, config.getLayerConfigurationAsList(), inputNodeConfiguration);
+    networkPainter = new NetworkPainter(context, configReader.getLayerConfigurationAsList(), inputNodeConfiguration);
     networkPainter.paintNetwork();
   }
 
@@ -153,8 +155,8 @@ public class ConfigController implements Initializable {
     }
     Scene scene = this.boardWithControl.getScene();
     Theme theme = Theme.valueOf(themeSelector.getValue());
-    scene.getStylesheets().remove(Config.getInstance().getTheme().getCss());
-    Config.getInstance().setTheme(theme);
+    scene.getStylesheets().remove(configReader.getTheme().getCss());
+    configWriter.setTheme(theme);
     GameController.resetGamePanel();
     scene.setFill(theme.getBackgroundColor());
     scene.getStylesheets().add(Objects.requireNonNull(Main.class.getClassLoader().getResource(theme.getCss())).toExternalForm());
@@ -165,7 +167,7 @@ public class ConfigController implements Initializable {
     Mode mode = Arrays.stream(Mode.values()).filter(e -> e.getLabel().equals(modeSelector.getValue())).findFirst().get();
     Scene scene = ApplicationController.getScene();
     final double transitionDuration = 0.3;
-    if (scene != null && (mode == Mode.NEURAL_NETWORK ||(mode == Mode.MANUAL && Config.getInstance().getMode() != Mode.NEURAL_NETWORK_DEMO) || (mode == Mode.NEURAL_NETWORK_DEMO && Config.getInstance().getMode() != Mode.MANUAL))) {
+    if (scene != null && (mode == Mode.NEURAL_NETWORK ||(mode == Mode.MANUAL && configReader.getMode() != Mode.NEURAL_NETWORK_DEMO) || (mode == Mode.NEURAL_NETWORK_DEMO && configReader.getMode() != Mode.MANUAL))) {
       modeSelector.hide();
       TranslateTransition baseControlsTransition = new TranslateTransition(Duration.seconds(transitionDuration), baseControls);
       if (mode == Mode.NEURAL_NETWORK) {
@@ -218,7 +220,7 @@ public class ConfigController implements Initializable {
 
     neuralNetworkControls.setVisible(mode == Mode.NEURAL_NETWORK);
     statisticControls.setVisible(mode == Mode.NEURAL_NETWORK);
-    Config.getInstance().setMode(mode);
+    configWriter.setMode(mode);
   }
 
   private void updateHiddenLayerSelection() {
@@ -239,7 +241,7 @@ public class ConfigController implements Initializable {
   }
 
   private void updateNetworkParameter() {
-    int[] currentParams = Config.getInstance().getLayerConfiguration();
+    int[] currentParams = configReader.getLayerConfiguration();
     int nodes = (int) hiddenLayerControls.getChildren().stream().filter(Node::isVisible).count();
     int[] network = new int[nodes+2];
     network[0] = currentParams[0];
@@ -253,20 +255,20 @@ public class ConfigController implements Initializable {
         index++;
       }
     }
-    Config.getInstance().setLayerConfiguration(network);
+    configWriter.setLayerConfiguration(network);
     updateNetworkPainter();
   }
 
   private void initializeBaseControls() {
-    boardWithControl.setText(config.getBoardWidth() + "");
-    boardHeightControl.setText(config.getBoardHeight() + "");
-    AtomicReference<String> tempWidth = new AtomicReference<>(config.getBoardWidth() + "");
+    boardWithControl.setText(configReader.getBoardWidth() + "");
+    boardHeightControl.setText(configReader.getBoardHeight() + "");
+    AtomicReference<String> tempWidth = new AtomicReference<>(configReader.getBoardWidth() + "");
     boardWithControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempWidth.toString();
       tempWidth.set(boardWithControl.getText());
       if (configureTextField(boardWithControl, 4, 100, tempWidth.toString(), previousValue)) {    // TODO: make sure minimum fits snake starting position
         if (!tempWidth.toString().equals(previousValue)) {
-          Config.getInstance().setBoardWidth(Integer.parseInt(tempWidth.toString()));
+          configWriter.setBoardWidth(Integer.parseInt(tempWidth.toString()));
           GameController.resetGamePanel();
         }
       } else {
@@ -274,13 +276,13 @@ public class ConfigController implements Initializable {
       }
     });
 
-    AtomicReference<String> tempHeight = new AtomicReference<>(config.getBoardHeight() + "");
+    AtomicReference<String> tempHeight = new AtomicReference<>(configReader.getBoardHeight() + "");
     boardHeightControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempHeight.toString();
       tempHeight.set(boardHeightControl.getText());
       if (configureTextField(boardHeightControl, 4, 100, tempHeight.toString(), previousValue)) {    // TODO: make sure minimum fits snake starting position
         if (!tempHeight.toString().equals(previousValue)) {
-          Config.getInstance().setBoardHeight(Integer.parseInt(tempHeight.toString()));
+          configWriter.setBoardHeight(Integer.parseInt(tempHeight.toString()));
           GameController.resetGamePanel();
         }
       } else {
@@ -289,11 +291,11 @@ public class ConfigController implements Initializable {
     });
 
     themeSelector.setItems(colorList);
-    themeSelector.getSelectionModel().select(Config.getInstance().getTheme().ordinal());
+    themeSelector.getSelectionModel().select(configReader.getTheme().ordinal());
     themeSelector.setOnAction( e -> updateTheme());
 
     modeSelector.setItems(modeList);
-    modeSelector.getSelectionModel().select(Config.getInstance().getMode().ordinal());
+    modeSelector.getSelectionModel().select(configReader.getMode().ordinal());
     modeSelector.setOnAction( e -> updateMode());
 
     updateMode();
@@ -304,10 +306,10 @@ public class ConfigController implements Initializable {
 
   private void initializeLayerControls() {
     hiddenLayerCount.setItems(layerCount);
-    hiddenLayerCount.getSelectionModel().select((config.getLayerConfigurationAsList().size()-2));
+    hiddenLayerCount.getSelectionModel().select((configReader.getLayerConfigurationAsList().size()-2));
     hiddenLayerCount.setOnAction( e -> updateHiddenLayerSelection());
 
-    for (int i = 0; i < Config.getInstance().getLayerConfiguration()[0]; i++) {
+    for (int i = 0; i < configReader.getLayerConfiguration()[0]; i++) {
       RadioButton button = new RadioButton();
       button.setSelected(true);
       inputNodeConfiguration.getChildren().add(button);
@@ -315,13 +317,13 @@ public class ConfigController implements Initializable {
 
     for (int i = 0; i < hiddenLayerControls.getChildren().size(); i++) {
       TextField field = (TextField) hiddenLayerControls.getChildren().get(i);
-      List<Integer> layer = Config.getInstance().getLayerConfigurationAsList();
+      List<Integer> layer = configReader.getLayerConfigurationAsList();
       if (i < layer.size()-2) {
         field.setText(layer.get(i+1) + "");
       } else {
         field.setVisible(false);
       }
-      String nodeCount = (Config.getInstance().getLayerConfiguration().length > i+1) ? Config.getInstance().getLayerConfiguration()[i+1] +"": "4";
+      String nodeCount = (configReader.getLayerConfiguration().length > i+1) ? configReader.getLayerConfiguration()[i+1] +"": "4";
       AtomicReference<String> tempValue = new AtomicReference<>(nodeCount);
       field.focusedProperty().addListener((o, oldValue, newValue) -> {
         String previousValue = tempValue.toString();
@@ -347,14 +349,14 @@ public class ConfigController implements Initializable {
 
         int index = inputNodeConfiguration.getChildren().indexOf(box);
         if (box.isSelected()) {
-          Config.getInstance().addInputNode(index);
+          configWriter.addInputNode(index);
         } else {
-          Config.getInstance().removeInputNodeFromSelection(index);
+          configWriter.removeInputNodeFromSelection(index);
         }
-        int[] netParams = Config.getInstance().getLayerConfiguration();
+        int[] netParams = configReader.getLayerConfiguration();
         int activeNodes = (int) inputNodeConfiguration.getChildren().stream().filter(n -> ((RadioButton) n).isSelected()).count();
         netParams[0] = activeNodes;
-        Config.getInstance().setLayerConfiguration(netParams);
+        configWriter.setLayerConfiguration(netParams);
         updateNetworkPainter();
 
       });
@@ -362,38 +364,38 @@ public class ConfigController implements Initializable {
   }
 
   private void initializeGenerationControls() {
-    generationControl.setText(Config.getInstance().getGenerationCount() + "");
-    populationControl.setText(Config.getInstance().getPopulationSize() + "");
-    randomizationControl.setText(Config.getInstance().getRandomizationRate() + "");
+    generationControl.setText(configReader.getGenerationCount() + "");
+    populationControl.setText(configReader.getPopulationSize() + "");
+    randomizationControl.setText(configReader.getRandomizationRate() + "");
 
-    AtomicReference<String> tempGenerations = new AtomicReference<>(Config.getInstance().getGenerationCount() + "");
+    AtomicReference<String> tempGenerations = new AtomicReference<>(configReader.getGenerationCount() + "");
     generationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempGenerations.toString();
       tempGenerations.set(generationControl.getText());
       if (configureTextField(generationControl, 1, 5000, tempGenerations.toString(), previousValue)) {
-        Config.getInstance().setGenerationCount(Integer.parseInt(tempGenerations.toString()));
+        configWriter.setGenerationCount(Integer.parseInt(tempGenerations.toString()));
       } else {
         showPopupMessage("min: 1, max: 5000", generationControl);
       }
     });
 
-    AtomicReference<String> tempPopulations = new AtomicReference<>(Config.getInstance().getPopulationSize() + "");
+    AtomicReference<String> tempPopulations = new AtomicReference<>(configReader.getPopulationSize() + "");
     populationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempPopulations.toString();
       tempPopulations.set(populationControl.getText());
       if (configureTextField(populationControl, 1, 5000, tempPopulations.toString(), previousValue)) {
-        Config.getInstance().setPopulationSize(Integer.parseInt(tempPopulations.toString()));
+        configWriter.setPopulationSize(Integer.parseInt(tempPopulations.toString()));
       } else {
         showPopupMessage("min: 1, max: 5000", populationControl);
       }
     });
 
-    AtomicReference<String> tempRate = new AtomicReference<>(Config.getInstance().getRandomizationRate() + "");
+    AtomicReference<String> tempRate = new AtomicReference<>(configReader.getRandomizationRate() + "");
     randomizationControl.focusedProperty().addListener((o, oldValue, newValue) -> {
       String previousValue = tempRate.toString();
       tempRate.set(randomizationControl.getText());
       if (configureDoubleTextField(randomizationControl, 0, 1, tempRate.toString(), previousValue)) {
-        Config.getInstance().setRandomizationRate(Double.parseDouble(tempRate.toString()));
+        configWriter.setRandomizationRate(Double.parseDouble(tempRate.toString()));
       } else {
         showPopupMessage("min: 0, max: 1", randomizationControl);
       }

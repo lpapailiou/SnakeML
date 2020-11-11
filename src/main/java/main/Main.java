@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import main.configuration.Config;
+import main.configuration.IMainConfigReader;
 import ui.ApplicationController;
 
 public class Main extends Application {
@@ -17,14 +18,17 @@ public class Main extends Application {
 
   @Override
   public void start(Stage stage) {
+
+    IMainConfigReader config = Config.getMainConfigReader();
+
     try {
       ClassLoader classLoader = Main.class.getClassLoader();
       FXMLLoader loader = new FXMLLoader(classLoader.getResource("ApplicationPanel.fxml"));
       Parent root = loader.load();
       Scene scene = new Scene(root, 1600, 800);
       scene.getStylesheets().add(classLoader.getResource("applicationCss.css").toExternalForm());
-      scene.getStylesheets().add(Main.class.getClassLoader().getResource(Config.getInstance().getTheme().getCss()).toExternalForm());
-      scene.setFill(Config.getInstance().getTheme().getBackgroundColor());
+      scene.getStylesheets().add(Main.class.getClassLoader().getResource(config.getTheme().getCss()).toExternalForm());
+      scene.setFill(config.getTheme().getBackgroundColor());
       stage.setScene(scene);
       stage.setMinHeight(839);
       stage.setMinWidth(1616);

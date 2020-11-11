@@ -2,20 +2,19 @@ package ui.painter.impl;
 
 import game.element.Cell;
 import javafx.scene.paint.Color;
+import main.configuration.IPainterConfigReader;
 import main.configuration.Theme;
 import main.configuration.Config;
 import game.element.Snake;
 import javafx.scene.canvas.GraphicsContext;
-import main.configuration.IColorConfig;
-import main.configuration.IGameConfig;
 import ui.painter.IGamePainter;
 import java.util.List;
 
 public class GamePainter implements IGamePainter {
 
   private GraphicsContext context;
-  private IGameConfig config = Config.getInstance();
-  private Theme colors = ((IColorConfig) config).getTheme();
+  private IPainterConfigReader config = Config.getPainterConfigReader();
+  private Theme colors = config.getTheme();
 
   private final double canvasWidth = 800;     // must match fxml
   private double cellWidth;

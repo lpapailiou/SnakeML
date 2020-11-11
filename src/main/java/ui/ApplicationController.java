@@ -18,8 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.configuration.Config;
-import main.configuration.IGameConfig;
-import main.configuration.INeuralNetworkConfig;
+import main.configuration.IApplicationConfigReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,11 +28,11 @@ public class ApplicationController implements Initializable {
   private HBox rootElement;
 
   private Stage stage;
-  private INeuralNetworkConfig config = Config.getInstance();
+  private IApplicationConfigReader config = Config.getApplicationConfigReader();
   private static ApplicationController instance;
   private Timeline timeline;
   private boolean isTimerRunning = false;
-  private Direction direction = ((IGameConfig) config).getInitialDirection();
+  private Direction direction = config.getInitialDirection();
   private GameAdapter adapter;
   private Scene scene;
   private boolean isRealtimeStatisticsVerbose = true;
@@ -52,7 +51,7 @@ public class ApplicationController implements Initializable {
 
   static void start() {
     if (instance != null) {
-      switch (Config.getInstance().getMode()) {
+      switch (instance.config.getMode()) {
         case MANUAL:
           instance.setupManualTimer();
           break;
@@ -75,8 +74,8 @@ public class ApplicationController implements Initializable {
   private void setupManualTimer() {
     isTimerRunning = true;
     ConfigController.disableInputs(true);
-    direction = ((IGameConfig) config).getInitialDirection();
-    int speed = Config.getInstance().getMode().getSpeed();    // TODO: with interface
+    direction = config.getInitialDirection();
+    int speed = config.getMode().getSpeed();
     Game game = new Game();
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (isTimerRunning) {
@@ -94,7 +93,7 @@ public class ApplicationController implements Initializable {
   private void setupNeuralNetworkTimer() {
     isTimerRunning = true;
     ConfigController.disableInputs(true);
-    int speed = Config.getInstance().getMode().getSpeed();    // TODO: with interface
+    int speed = config.getMode().getSpeed();
     adapter = null;
     GameBatch batch = new GameBatch(new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration()));
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
@@ -130,8 +129,8 @@ public class ApplicationController implements Initializable {
   private void setupNeuralNetworkDemoTimer() {
     isTimerRunning = true;
     ConfigController.disableInputs(true);
-    ConfigController.selectAllRadioButtons();           // necessary as otherwise neural net exception would be thrown
-    int speed = Config.getInstance().getMode().getSpeed();    // TODO: with interface
+    ConfigController.selectAllRadioButtons();           // TODO: fix if possible; necessary as otherwise neural net exception would be thrown
+    int speed = config.getMode().getSpeed();
     adapter = new GameAdapter(Serializer.load(), null);
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (isTimerRunning) {

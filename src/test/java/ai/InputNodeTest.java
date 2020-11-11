@@ -5,7 +5,7 @@ import game.Game;
 import game.element.Cell;
 import game.element.Snake;
 import main.configuration.Config;
-import main.configuration.IGameConfig;
+import main.configuration.ITestConfig;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -17,53 +17,48 @@ public class InputNodeTest {
 
   @Test
   public void foodInputNodesTest() {
-    IGameConfig config = Config.getInstance();
+    ITestConfig config = Config.getTestConfig();
     config.setBoardWidth(20);
     config.setBoardHeight(20);
 
     Game game = new Game();
-    game.food = new Cell(1,1);
 
     // assumption that snake head is at (6, 3)
-    assertEquals(3, game.snake.getHead().x);
-    assertEquals(3, game.snake.getHead().y);
+    assertEquals(3, game.getSnake().getHead().x);
+    assertEquals(3, game.getSnake().getHead().y);
 
-    double up = InputNode.UP_FOOD.getInput(game.snake, game.food);
-    double right = InputNode.RIGHT_FOOD.getInput(game.snake, game.food);
-    double down = InputNode.DOWN_FOOD.getInput(game.snake, game.food);
-    double left = InputNode.LEFT_FOOD.getInput(game.snake, game.food);
+    double up = InputNode.UP_FOOD.getInput(game.getSnake(), new Cell(1,1));
+    double right = InputNode.RIGHT_FOOD.getInput(game.getSnake(), new Cell(1,1));
+    double down = InputNode.DOWN_FOOD.getInput(game.getSnake(), new Cell(1,1));
+    double left = InputNode.LEFT_FOOD.getInput(game.getSnake(), new Cell(1,1));
 
     assertEquals(0, up, 0.001);
     assertEquals(0, right, 0.001);
     assertEquals(0, down, 0.001);
     assertEquals(0, left, 0.001);
 
-    game.food = new Cell(3,1);
-    up = InputNode.UP_FOOD.getInput(game.snake, game.food);
+    up = InputNode.UP_FOOD.getInput(game.getSnake(), new Cell(3,1));
     assertEquals(1000, up, 0.001);
 
-    game.food = new Cell(4,3);
-    right = InputNode.RIGHT_FOOD.getInput(game.snake, game.food);
+    right = InputNode.RIGHT_FOOD.getInput(game.getSnake(), new Cell(4,3));
     assertEquals(1000, right, 0.001);
 
-    game.food = new Cell(3,10);
-    down = InputNode.DOWN_FOOD.getInput(game.snake, game.food);
+    down = InputNode.DOWN_FOOD.getInput(game.getSnake(), new Cell(3,10));
     assertEquals(1000, down, 0.001);
 
-    game.food = new Cell(0,3);
-    left = InputNode.LEFT_FOOD.getInput(game.snake, game.food);
+    left = InputNode.LEFT_FOOD.getInput(game.getSnake(), new Cell(0,3));
     assertEquals(1000, left, 0.001);
 
   }
 
   @Test
   public void bodynputNodesTest() {
-    IGameConfig config = Config.getInstance();
+    ITestConfig config = Config.getTestConfig();
     config.setBoardWidth(20);
     config.setBoardHeight(20);
 
     // use dummy snake to set custom body
-    DummySnake snake = new DummySnake(Config.getInstance().getInitialSnakeSize(), Config.getInstance().getInitialDirection(), Config.getInstance().getInitialStartingPosition());
+    DummySnake snake = new DummySnake(Config.getGameConfigReader().getInitialSnakeSize(), Config.getGameConfigReader().getInitialDirection(), Config.getGameConfigReader().getInitialStartingPosition());
     snake.addBodyPart(new Cell(3,3));
     snake.addBodyPart(new Cell(3,2));
     snake.addBodyPart(new Cell(4,2));
@@ -104,24 +99,23 @@ public class InputNodeTest {
 
   @Test
   public void wallInputNodesTest() {
-    IGameConfig config = Config.getInstance();
+    ITestConfig config = Config.getTestConfig();
     config.setBoardWidth(20);
     config.setBoardHeight(20);
 
     Game game = new Game();
-    game.food = new Cell(1,1);
     game.onTick();
     game.onTick();
     game.onTick();
 
     // assumption that snake head is at (6, 3)
-    assertEquals(6, game.snake.getHead().x);
-    assertEquals(3, game.snake.getHead().y);
+    assertEquals(6, game.getSnake().getHead().x);
+    assertEquals(3, game.getSnake().getHead().y);
 
-    double up = InputNode.UP_WALL.getInput(game.snake, game.food);
-    double right = InputNode.RIGHT_WALL.getInput(game.snake, game.food);
-    double down = InputNode.DOWN_WALL.getInput(game.snake, game.food);
-    double left = InputNode.LEFT_WALL.getInput(game.snake, game.food);
+    double up = InputNode.UP_WALL.getInput(game.getSnake(), new Cell(1,1));
+    double right = InputNode.RIGHT_WALL.getInput(game.getSnake(), new Cell(1,1));
+    double down = InputNode.DOWN_WALL.getInput(game.getSnake(), new Cell(1,1));
+    double left = InputNode.LEFT_WALL.getInput(game.getSnake(), new Cell(1,1));
 
     assertEquals((1.0/3), up, 0.001);
     assertEquals((1.0/(19-6)), right, 0.001);

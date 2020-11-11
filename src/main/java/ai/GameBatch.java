@@ -8,14 +8,14 @@ import ai.neuralnet.NeuralNetwork;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import main.configuration.Config;
-import main.configuration.INeuralNetworkConfig;
+import main.configuration.IGameBatchConfigReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GameBatch {
 
-  private INeuralNetworkConfig config = Config.getInstance();
+  private IGameBatchConfigReader config = Config.getGameBatchConfigReader();
   private int generationCount;
   private int currentGeneration;
   private int populationnSize;
