@@ -22,8 +22,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.configuration.Config;
 import main.configuration.IApplicationConfigReader;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class ApplicationController implements Initializable {
 
@@ -98,42 +96,8 @@ public class ApplicationController implements Initializable {
     ConfigController.disableInputs(true);
     int speed = config.getMode().getSpeed();
     adapter = null;
-
-    GameBatch batch = new GameBatch(
-        new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration())
-    );
-
-    TempStorage tempStorage = TempStorage.getInstance();
-    tempStorage.addBatch(batch.getBatchEntity());
-
+    GameBatch batch = new GameBatch(new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration()));
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      if (!isTimerRunning) {
-        return;
-      }
-
-      if (adapter == null) {
-        NeuralNetwork neuralNet = batch.processGeneration();
-        if (neuralNet != null) {
-          adapter = new GameAdapter(neuralNet, null);
-        }
-      }
-
-      if (adapter == null) {
-        ConfigController.enableStatistics();
-        stopTimer();
-        return;
-      }
-
-      boolean isSnakeStillAlive = adapter.moveSnake();
-      GenerationEntity entity = batch.getCurrentGenerationEntity();
-      GameController.display(adapter.getGame());
-      if (isRealtimeStatisticsVerbose) {
-        GameController.displayStats(entity);
-      }
-      ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
-
-      if (!isSnakeStillAlive) {
-        adapter = null;
       if (isTimerRunning) {
         if (adapter == null) {
           NeuralNetwork neuralNet = batch.processGeneration();
@@ -158,11 +122,11 @@ public class ApplicationController implements Initializable {
           stopTimer();
         }
       }
-
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
+
 
   private void setupNeuralNetworkDemoTimer() {
     isTimerRunning = true;
