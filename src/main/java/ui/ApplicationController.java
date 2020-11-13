@@ -4,9 +4,12 @@ import ai.GameAdapter;
 import ai.GameBatch;
 import ai.data.GenerationEntity;
 import ai.data.storage.Serializer;
+import ai.data.storage.TempStorage;
 import ai.neuralnet.NeuralNetwork;
 import game.Direction;
 import game.Game;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -95,8 +98,42 @@ public class ApplicationController implements Initializable {
     ConfigController.disableInputs(true);
     int speed = config.getMode().getSpeed();
     adapter = null;
-    GameBatch batch = new GameBatch(new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration()));
+
+    GameBatch batch = new GameBatch(
+        new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration())
+    );
+
+    TempStorage tempStorage = TempStorage.getInstance();
+    tempStorage.addBatch(batch.getBatchEntity());
+
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
+      if (!isTimerRunning) {
+        return;
+      }
+
+      if (adapter == null) {
+        NeuralNetwork neuralNet = batch.processGeneration();
+        if (neuralNet != null) {
+          adapter = new GameAdapter(neuralNet, null);
+        }
+      }
+
+      if (adapter == null) {
+        ConfigController.enableStatistics();
+        stopTimer();
+        return;
+      }
+
+      boolean isSnakeStillAlive = adapter.moveSnake();
+      GenerationEntity entity = batch.getCurrentGenerationEntity();
+      GameController.display(adapter.getGame());
+      if (isRealtimeStatisticsVerbose) {
+        GameController.displayStats(entity);
+      }
+      ConfigController.display(batch.getCurrentGeneration(), adapter.getGame().getDirection());
+
+      if (!isSnakeStillAlive) {
+        adapter = null;
       if (isTimerRunning) {
         if (adapter == null) {
           NeuralNetwork neuralNet = batch.processGeneration();
@@ -121,6 +158,7 @@ public class ApplicationController implements Initializable {
           stopTimer();
         }
       }
+
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
@@ -145,6 +183,7 @@ public class ApplicationController implements Initializable {
         }
       }
     }));
+
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }

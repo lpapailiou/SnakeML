@@ -1,6 +1,9 @@
 package main;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,11 +12,41 @@ import javafx.stage.Stage;
 import main.configuration.Config;
 import main.configuration.IMainConfigReader;
 import ui.ApplicationController;
+import webserver.WebServer;
+import java.util.concurrent.CountDownLatch;
 
 public class Main extends Application {
 
   public static void main(String[] args) {
+
+    Service<Void> service = new Service<Void>() {
+      @Override
+      protected Task<Void> createTask() {
+        return new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            final CountDownLatch latch = new CountDownLatch(1);
+            Platform.runLater(new Runnable() {
+              @Override
+              public void run() {
+                try {
+                  WebServer webservice = new WebServer();
+                  webservice.runServer();
+                } finally {
+                  latch.countDown();
+                }
+              }
+            });
+            latch.await();
+            return null;
+          }
+        };
+      }
+    };
+    service.start();
+
     launch(args);
+
   }
 
   @Override
