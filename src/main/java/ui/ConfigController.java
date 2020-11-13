@@ -135,7 +135,6 @@ public class ConfigController implements Initializable {
 
   public static void enableStatistics() {
     instance.openLabel.setDisable(false);
-    instance.statisticsButton.setDisable(false);
     instance.openStatistics();
   }
 
@@ -435,7 +434,6 @@ public class ConfigController implements Initializable {
     stopButton.setOnAction(e -> ApplicationController.stop());
 
     openLabel.setDisable(true);
-    statisticsButton.setDisable(false);    // TODO: enable earlier if we use realtime graphs
     stopButton.setDisable(true);
   }
 
