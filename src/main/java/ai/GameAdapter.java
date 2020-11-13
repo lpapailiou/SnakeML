@@ -7,13 +7,13 @@ import game.Game;
 import game.element.Cell;
 import game.element.Snake;
 import main.configuration.Config;
-import main.configuration.INeuralNetworkConfig;
+import main.configuration.IGameAdapterConfigReader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-class GameAdapter implements Comparable<GameAdapter> {
+public class GameAdapter implements Comparable<GameAdapter> {
 
   private NeuralNetwork neuralNetwork;
   private Game game;
@@ -22,16 +22,16 @@ class GameAdapter implements Comparable<GameAdapter> {
   private GenerationEntity generationEntity;
   private long fitness;
 
-  GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
-    INeuralNetworkConfig config = Config.getInstance();
+  public GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
+    IGameAdapterConfigReader config = Config.getGameAdapterConfigReader();
     neuralNetwork = net;
     nodeSelection = config.getInputNodeSelection();
     this.generationEntity = generationEntity;
     game = new Game();
   }
 
-  boolean moveSnake() {
-    game.changeDirection(getDirection(game.snake, game.food));
+  public boolean moveSnake() {
+    game.changeDirection(getDirection(game.getSnake(), game.getFood()));
     game.onTick();
     game.onGameOver(this::setGameOver);
     return !isGameOver;
@@ -55,23 +55,29 @@ class GameAdapter implements Comparable<GameAdapter> {
 
   void updateFitness() {
     if (fitness == 0) {
-      fitness = game.snake.getFitness();
+      fitness = game.getSnake().getFitness();
     }
+  }
+
+  public Game getGame() {
+    return game;
   }
 
   long getFitness() {
     return fitness;
   }
 
-  int getSnakeLength() {
-    return game.snake.getBody().size();
+  public int getSnakeLength() {
+    return game.getSnake().getBody().size();
   }
 
   private void setGameOver() {
     if (!isGameOver) {
       isGameOver = true;
       updateFitness();
-      generationEntity.aggregateSnakeData(game.snake);
+      if (generationEntity != null) {
+        generationEntity.aggregateSnakeData(game.getSnake());
+      }
     }
   }
 

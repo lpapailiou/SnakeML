@@ -5,19 +5,22 @@ import game.element.Snake;
 import game.event.GameOverConsumer;
 import game.event.TickAware;
 import main.configuration.Config;
-import main.configuration.IGameConfig;
+import main.configuration.IGameConfigReader;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Game implements TickAware {    // TODO: better encapsulation?
+public class Game implements TickAware {
 
   private final ArrayList<GameOverConsumer> gameOverConsumers = new ArrayList<>();
 
-  private IGameConfig config = Config.getInstance();
-  Direction nextDirection = config.getInitialDirection();
-  public Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection, config.getInitialStartingPosition());
-  public Cell food;
-  Random rand = new Random();
+  private static final Logger LOG = Logger.getLogger("winning snake logger");
+  private IGameConfigReader config = Config.getGameConfigReader();
+  private Direction nextDirection = config.getInitialDirection();
+  private Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection, config.getInitialStartingPosition());
+  private Cell food;
+  private Random rand = new Random();
 
   public Game() {
     food = findEmptyPosition();
@@ -29,17 +32,18 @@ public class Game implements TickAware {    // TODO: better encapsulation?
 
   @Override
   public void onTick() {
-    snake.move(nextDirection);
 
     if (snake.isDead()) {
       this.emitGameOver();
       return;
+    } else {
+      snake.move(nextDirection, food);
+
+      if (snake.isHeadAt(food)) {
+        food = findEmptyPosition();
+      }
     }
 
-    if (snake.isHeadAt(food)) {
-      snake.grow();
-      food = findEmptyPosition();
-    }
   }
 
   private void emitGameOver() {
@@ -48,6 +52,18 @@ public class Game implements TickAware {    // TODO: better encapsulation?
 
   public void onGameOver(GameOverConsumer consumer) {
     this.gameOverConsumers.add(consumer);
+  }
+
+  public Direction getDirection() {
+    return nextDirection;
+  }
+
+  public Snake getSnake() {
+    return snake;
+  }
+
+  public Cell getFood() {
+    return food;
   }
 
   private Cell findEmptyPosition() {
@@ -66,7 +82,7 @@ public class Game implements TickAware {    // TODO: better encapsulation?
       }
 
       if (snake.getBody().size() == (config.getBoardWidth() * config.getBoardHeight())) {
-        System.out.println("----------------------------------------------> perfect game!!!");
+        LOG.log(Level.INFO, " ********************** perfect game reached ********************** ");
         return null;
       }
     }

@@ -3,6 +3,7 @@ package ai;
 import game.element.Cell;
 import game.element.Snake;
 import main.configuration.Config;
+import main.configuration.INodeConfigReader;
 
 public enum InputNode {
 
@@ -15,13 +16,13 @@ public enum InputNode {
   RIGHT_WALL(1, "distance to right wall") {
     @Override
     public double getInput(Snake snake, Cell food) {
-      return 1/(Math.abs(Config.getInstance().getBoardWidth()-1 - snake.getHead().x)+0.001);
+      return 1/(Math.abs(config.getBoardWidth()-1 - snake.getHead().x)+0.001);
     }
   },
   DOWN_WALL(2, "distance to bottom wall") {
     @Override
     public double getInput(Snake snake, Cell food) {
-      return 1/(Math.abs(Config.getInstance().getBoardHeight()-1 - snake.getHead().y)+0.001);
+      return 1/(Math.abs(config.getBoardHeight()-1 - snake.getHead().y)+0.001);
     }
   },
   LEFT_WALL(3, "distance to left wall") {
@@ -36,8 +37,9 @@ public enum InputNode {
       Cell pos = snake.getHead().clone();
       int index = 0;
       for (int i = pos.y-1; i >= 0; i--) {
-        pos.y = i;
-        if (snake.getBody().stream().anyMatch(c -> c.equals(pos))) {
+        pos = new Cell(pos.x, i);
+        Cell finalPos = pos;
+        if (snake.getBody().stream().anyMatch(c -> c.equals(finalPos))) {
           break;
         }
         index++;
@@ -49,11 +51,12 @@ public enum InputNode {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
-      int end = Config.getInstance().getBoardWidth();
+      int end = config.getBoardWidth();
       int index = 0;
       for (int i = pos.x+1; i < end; i++) {
-        pos.x = i;
-        if (snake.getBody().stream().anyMatch(c -> c.equals(pos))) {
+        pos = new Cell(i, pos.y);
+        Cell finalPos = pos;
+        if (snake.getBody().stream().anyMatch(c -> c.equals(finalPos))) {
           break;
         }
         index++;
@@ -65,11 +68,12 @@ public enum InputNode {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
-      int end = Config.getInstance().getBoardHeight();
+      int end = config.getBoardHeight();
       int index = 0;
       for (int i = pos.y+1; i < end; i++) {
-        pos.y = i;
-        if (snake.getBody().stream().anyMatch(c -> c.equals(pos))) {
+        pos = new Cell(pos.x, i);
+        Cell finalPos = pos;
+        if (snake.getBody().stream().anyMatch(c -> c.equals(finalPos))) {
           break;
         }
         index++;
@@ -83,8 +87,9 @@ public enum InputNode {
       Cell pos = snake.getHead().clone();
       int index = 0;
       for (int i = pos.x-1; i >= 0; i--) {
-        pos.x = i;
-        if (snake.getBody().stream().anyMatch(c -> c.equals(pos))) {
+        pos = new Cell(i, pos.y);
+        Cell finalPos = pos;
+        if (snake.getBody().stream().anyMatch(c -> c.equals(finalPos))) {
           break;
         }
         index++;
@@ -137,6 +142,7 @@ public enum InputNode {
     }
   };
 
+  private static INodeConfigReader config = Config.getNodeConfigReader();
   private int id;
   private String tooltipText;
 

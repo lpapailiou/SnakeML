@@ -3,21 +3,11 @@ package main.configuration;
 import game.Direction;
 import game.element.Cell;
 
-public interface IGameConfig {
+public interface IGameConfigReader {
 
   int getBoardWidth();
 
   int getBoardHeight();
-
-  void setBoardWith(int boardWith);
-
-  void setBoardHeight(int boardHeight);
-
-  double getCellWidth();
-
-  double getManualSpeedFactor();
-
-  double getBotSpeedFactor();
 
   int getInitialSnakeSize();
 

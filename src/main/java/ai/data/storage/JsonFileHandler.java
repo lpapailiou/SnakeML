@@ -14,8 +14,12 @@ public class JsonFileHandler {
     this.data = data;
   }
 
-  public void save() {   // TODO: check if works on mac or other os. decide where data should go anyway
+  public void saveToTempStorage() {
     TempStorage storage = TempStorage.getInstance();
+    storage.addBatchData(data);
+  }
+
+  public void saveToFileSystem() {      // TODO: remove if not used
     File tmpFile;
     FileWriter writer = null;
     BufferedReader reader = null;
@@ -24,7 +28,6 @@ public class JsonFileHandler {
       writer = new FileWriter(tmpFile);
       writer.write(data);
       reader = new BufferedReader(new FileReader(tmpFile));
-      storage.addFile(tmpFile);
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
