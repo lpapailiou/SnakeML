@@ -138,7 +138,7 @@ public class ConfigController implements Initializable {
   }
 
   private void openStatistics() {
-    String url = "http://localhost:63342/pa-5/SnakeML/Dashboard.html?_ijt=t2hl0s5te6ddfuu4fjsbdpivgj";
+    String url = "http://localhost:8050/Dashboard.html";
     String os = System.getProperty("os.name").toLowerCase();
     Runtime rt = Runtime.getRuntime();
 
@@ -150,7 +150,7 @@ public class ConfigController implements Initializable {
       } else if (os.contains("mac")) {
         rt.exec( "open " + url);
       } else if (os.contains("nix") || os.contains("nux")) {
-        String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
+        String[] browsers = {"chromium", "google-chrome", "epiphany", "firefox", "mozilla", "konqueror",
             "netscape","opera","links","lynx"};
         StringBuffer cmd = new StringBuffer();
         for (int i=0; i<browsers.length; i++)
