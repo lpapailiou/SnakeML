@@ -46,13 +46,13 @@ public class WebServerTest {
     config.setGenerationCount(10);
     config.setPopulationSize(10);
     GameBatch batch = new GameBatch(new NeuralNetwork(0.999,12,32,32,32,4));
-    batch.run();
+//    batch.run();
 
     config.setGenerationCount(generations);
     config.setPopulationSize(population);
 
     expectedResultJson = new ArrayList<>();
-    expectedResultJson.add(batch.getJsonString());
+//    expectedResultJson.add(batch.getJsonString());
     HttpResponse response = Unirest.get("http://localhost:8050/?cmd=load").asString();
 
     assertEquals(expectedResultJson.toString(), response.getBody());

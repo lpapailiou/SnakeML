@@ -14,10 +14,10 @@ public class JsonFileHandler {
     this.data = data;
   }
 
-  public void saveToTempStorage() {
-    TempStorage storage = TempStorage.getInstance();
-    storage.addBatchData(data);
-  }
+//  public void saveToTempStorage() {
+//    TempStorage storage = TempStorage.getInstance();
+//    storage.addBatchData(data);
+//  }
 
   public void saveToFileSystem() {
     File tmpFile;
