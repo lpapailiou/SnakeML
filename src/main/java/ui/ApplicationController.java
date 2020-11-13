@@ -97,7 +97,11 @@ public class ApplicationController implements Initializable {
     int speed = config.getMode().getSpeed();
     adapter = null;
     GameBatch batch = new GameBatch(new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration()));
-    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
+
+    TempStorage tempStorage = TempStorage.getInstance();
+    tempStorage.addBatch(batch.getBatchEntity());
+
+    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {   // TODO: refactoring of stats-branch made performance drop/broke something
       if (isTimerRunning) {
         if (adapter == null) {
           NeuralNetwork neuralNet = batch.processGeneration();
