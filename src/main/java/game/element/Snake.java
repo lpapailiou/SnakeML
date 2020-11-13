@@ -3,14 +3,20 @@ package game.element;
 import game.Direction;
 import java.util.LinkedList;
 import java.util.List;
-import main.Config;
+import main.configuration.Config;
+import main.configuration.ISnakeConfigReader;
 
 public class Snake {
 
-  static LinkedList<Cell> body = new LinkedList<>();
+  protected LinkedList<Cell> body = new LinkedList<>();   // TODO: is protected because of test, solve differently?
+  private ISnakeConfigReader config = Config.getSnakeConfigReader();
+  private int steps;
+  private boolean isDead = false;
+  private final int timeoutConstant = config.getSnakeTimeout();
+  private int timeout = timeoutConstant;
+  private String causeOfDeath = "timeout";
 
   public Snake(int size, Direction initialDirection, Cell initialHeadPosition) {
-
     andGodSaidLetThereBeSnake(size, initialDirection, initialHeadPosition);
   }
 
@@ -22,40 +28,73 @@ public class Snake {
     }
   }
 
-  public void move(Direction direction) {
-    body.removeLast();
-
-    Cell snakeHead = body.getFirst();
-    body.addFirst(new Cell(snakeHead.x + direction.x, snakeHead.y + direction.y));
+  public void move(Direction direction, Cell food) {
+    if (!isDead()) {
+      timeout--;
+      Cell snakeHead = body.getFirst();
+      Cell newSegment = new Cell(snakeHead.x + direction.x, snakeHead.y + direction.y);
+      if (isSnakeInWall(newSegment) || isSnakeInItself(newSegment) || timeout < 1) {
+        isDead = true;
+        return;
+      }
+      body.addFirst(newSegment);
+      if (!newSegment.equals(food)) {
+        body.removeLast();
+      } else {
+        timeout = body.size() == (config.getBoardWidth() * config.getBoardHeight()) ? 0 : timeoutConstant;
+      }
+      steps++;
+    }
   }
 
   public boolean isDead() {
-    return isSnakeInWall() || isSnakeInItself();
+    return isDead;
   }
 
-  private boolean isSnakeInItself() {
-    return body.stream().distinct().count() < (long) body.size();
-  }
-
-  private boolean isSnakeInWall() {
-    Cell snakeHead = body.get(0);
-    if (snakeHead.x > Config.NUMBER_OF_CELL_COLUMNS || snakeHead.x < 0) {
+  private boolean isSnakeInItself(Cell cell) {
+    if (body.stream().anyMatch(c -> c.equals(cell))) {
+      causeOfDeath = "body";
       return true;
     }
-
-    return snakeHead.y > Config.NUMBER_OF_CELL_ROWS || snakeHead.y < 0;
+    return false;
   }
 
+  private boolean isSnakeInWall(Cell cell) {
+    if ((cell.x >= config.getBoardWidth() || cell.x < 0) || (cell.y >= config.getBoardHeight() || cell.y < 0)) {
+      causeOfDeath = "wall";
+      return true;
+    }
+    return false;
+  }
 
   public List<Cell> getBody() {
     return body;
   }
 
-  public boolean isHeadAt(Cell foodPosition) {
-    return foodPosition.x == body.get(0).x && foodPosition.y == body.get(0).y;
+  public int getSteps() {
+    return steps;
   }
 
-  public void grow() {
-    body.add(new Cell(-1, -1));
+  public String getCauseOfDeath() {
+    return causeOfDeath;
   }
+
+  public long getFitness() {
+    int snakeLength = body.size();
+    int boardHalf = (config.getBoardWidth() + config.getBoardHeight())/2;
+
+    if (snakeLength < boardHalf * 1.5) {
+      return (long) Math.pow(snakeLength, 3.7) + steps;
+    }
+    return (long) (Math.pow(snakeLength, 4.7) - (steps/snakeLength));
+  }
+
+  public Cell getHead() {
+    return body.get(0);
+  }
+
+  public boolean isHeadAt(Cell foodPosition) {
+    return body.get(0).equals(foodPosition);
+  }
+
 }

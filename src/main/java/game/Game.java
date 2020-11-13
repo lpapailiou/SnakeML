@@ -1,30 +1,29 @@
 package game;
 
-import static main.Config.INITIAL_DIRECTION;
-import static main.Config.INITIAL_SNAKE_SIZE;
-import static main.Config.INITIAL_STARTING_POINT;
-import static main.Config.NUMBER_OF_CELL_COLUMNS;
-import static main.Config.NUMBER_OF_CELL_ROWS;
-
 import game.element.Cell;
-import game.element.Food;
 import game.element.Snake;
 import game.event.GameOverConsumer;
 import game.event.TickAware;
+import main.configuration.Config;
+import main.configuration.IGameConfigReader;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Game implements TickAware {
 
   private final ArrayList<GameOverConsumer> gameOverConsumers = new ArrayList<>();
 
-  Direction nextDirection = INITIAL_DIRECTION;
-  public Snake snake = new Snake(INITIAL_SNAKE_SIZE, INITIAL_DIRECTION, INITIAL_STARTING_POINT);
-  public Food food;
-  Random rand = new Random();
+  private static final Logger LOG = Logger.getLogger("winning snake logger");
+  private IGameConfigReader config = Config.getGameConfigReader();
+  private Direction nextDirection = config.getInitialDirection();
+  private Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection, config.getInitialStartingPosition());
+  private Cell food;
+  private Random rand = new Random();
 
   public Game() {
-    food = spawnFood();
+    food = findEmptyPosition();
   }
 
   public void changeDirection(Direction nextDirection) {
@@ -33,17 +32,18 @@ public class Game implements TickAware {
 
   @Override
   public void onTick() {
-    snake.move(nextDirection);
 
     if (snake.isDead()) {
       this.emitGameOver();
       return;
+    } else {
+      snake.move(nextDirection, food);
+
+      if (snake.isHeadAt(food)) {
+        food = findEmptyPosition();
+      }
     }
 
-    if (snake.isHeadAt(food.position)) {
-      snake.grow();
-      food = spawnFood();
-    }
   }
 
   private void emitGameOver() {
@@ -54,9 +54,15 @@ public class Game implements TickAware {
     this.gameOverConsumers.add(consumer);
   }
 
-  public Food spawnFood() {
-    Food food = new Food();
-    food.position = findEmptyPosition();
+  public Direction getDirection() {
+    return nextDirection;
+  }
+
+  public Snake getSnake() {
+    return snake;
+  }
+
+  public Cell getFood() {
     return food;
   }
 
@@ -64,8 +70,8 @@ public class Game implements TickAware {
     // kein do-while, da die Leserlichkeit stark leiden würde.
     while (true) {
       Cell positionUnderTest = new Cell(
-          rand.nextInt(NUMBER_OF_CELL_COLUMNS - 1),
-          rand.nextInt(NUMBER_OF_CELL_ROWS - 1)
+          rand.nextInt(config.getBoardWidth()),
+          rand.nextInt(config.getBoardHeight())
       );
 
       boolean isEmptyPosition = snake.getBody().stream()
@@ -73,6 +79,11 @@ public class Game implements TickAware {
 
       if (isEmptyPosition) {
         return positionUnderTest;
+      }
+
+      if (snake.getBody().size() == (config.getBoardWidth() * config.getBoardHeight())) {
+        LOG.log(Level.INFO, " ********************** perfect game reached ********************** ");
+        return null;
       }
     }
   }

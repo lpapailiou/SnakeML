@@ -1,46 +1,80 @@
 package main;
 
-import game.Game;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import ui.SnakeMlStage;
+import main.configuration.Config;
+import main.configuration.IMainConfigReader;
+import ui.ApplicationController;
+import webserver.WebServer;
+import java.util.concurrent.CountDownLatch;
 
 public class Main extends Application {
 
-  private
+  public static void main(String[] args) {
+    launch(args);
+  }
 
-  AnimationTimer automaticTicker;
-  SnakeMlStage stage;
-  private Game game;
+  @Override
+  public void start(Stage stage) {
 
-  public void start(Stage primaryStage) {
+    IMainConfigReader config = Config.getMainConfigReader();
+
     try {
-
-      automaticTicker = new AnimationTimer() {
-        long lastTick = 0;
-
-        public void handle(long now) {
-          if (lastTick == 0 || now - lastTick > 100000000 / Config.SPEED_FACTOR) {
-            lastTick = now;
-            stage.onTick();
-            game.onTick();
-          }
-        }
-      };
-      automaticTicker.start();
-
-      game = new Game();
-      stage = new SnakeMlStage(primaryStage, game);
-
-      game.onGameOver(() -> automaticTicker.stop());
-
+      ClassLoader classLoader = Main.class.getClassLoader();
+      FXMLLoader loader = new FXMLLoader(classLoader.getResource("ApplicationPanel.fxml"));
+      Parent root = loader.load();
+      Scene scene = new Scene(root, 1600, 800);
+      scene.getStylesheets().add(classLoader.getResource("applicationCss.css").toExternalForm());
+      scene.getStylesheets().add(Main.class.getClassLoader().getResource(config.getTheme().getCss()).toExternalForm());
+      scene.setFill(config.getTheme().getBackgroundColor());
+      stage.setScene(scene);
+      stage.setMinHeight(839);
+      stage.setMinWidth(1616);
+      stage.setMaxHeight(839);
+      stage.setMaxWidth(1616);
+      stage.setTitle("Snake ML | FFHS Bern 2020");
+      stage.getIcons().add(new Image("snake.png"));
+      ((ApplicationController) loader.getController()).setStage(stage);
+      stage.show();
+      startWebServer();
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  public static void main(String[] args) {
-    launch(args);
+  private void startWebServer() {   // TODO: slows down startup of gui
+    Service<Void> service = new Service<Void>() {
+      @Override
+      protected Task<Void> createTask() {
+        return new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            final CountDownLatch latch = new CountDownLatch(1);
+            Platform.runLater(new Runnable() {
+              @Override
+              public void run() {
+                try {
+                  WebServer webservice = new WebServer();
+                  webservice.runServer();
+                } finally {
+                  latch.countDown();
+                }
+              }
+            });
+            latch.await();
+            return null;
+          }
+        };
+      }
+    };
+    service.start();
   }
+
 }

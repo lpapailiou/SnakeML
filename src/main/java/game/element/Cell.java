@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Cell {
 
-  public int x;
-  public int y;
+  public final int x;
+  public final int y;
 
   public Cell(int x, int y) {
     this.x = x;
@@ -29,4 +29,12 @@ public class Cell {
   public int hashCode() {
     return Objects.hash(x, y);
   }
+
+  @Override
+  public Cell clone() {
+    return new Cell(this.x, this.y);
+  }
+
+  @Override
+  public String toString() { return "(" + x + ", " + y + ")"; }
 }
