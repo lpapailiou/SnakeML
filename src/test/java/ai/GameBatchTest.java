@@ -19,7 +19,7 @@ public class GameBatchTest {
     config.setGenerationCount(1000);
     config.setPopulationSize(2000);
     GameBatch batch = new GameBatch(new NeuralNetwork(0.6,12,16,4));
-    batch.run();
+//    batch.run();
 
     /*
     generations: 1000

@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This is the central class of this library, allowing to create a freely configurable neural network.
- * The architecture can be set by parameters. Input and output values are designed to be double arrays.
- * It supports supervised and unsupervised machine learning.
+ * This is the central class of this library, allowing to create a freely configurable neural
+ * network. The architecture can be set by parameters. Input and output values are designed to be
+ * double arrays. It supports supervised and unsupervised machine learning.
  */
 public class NeuralNetwork implements Serializable {
 
@@ -18,10 +18,13 @@ public class NeuralNetwork implements Serializable {
   private double randomizationRate = 0.1;
 
   /**
-   * A constructor of the neural network.
-   * The varag parameters will define the architecture of the neural network. You need to enter at least two parameters.
-   * Please note there is another constructor which allows to set the randomization rate for clones.
-   * @param layerParams the architecture of the neural network. First argument = node count of input layer; last argument = node count of output layer; arguments between = node count per hidden layer.
+   * A constructor of the neural network. The varag parameters will define the architecture of the
+   * neural network. You need to enter at least two parameters. Please note there is another
+   * constructor which allows to set the randomization rate for clones.
+   *
+   * @param layerParams the architecture of the neural network. First argument = node count of input
+   *                    layer; last argument = node count of output layer; arguments between = node
+   *                    count per hidden layer.
    */
   public NeuralNetwork(int... layerParams) {
     if (layerParams.length < 2) {
@@ -31,16 +34,20 @@ public class NeuralNetwork implements Serializable {
     }
     this.inputLayerNodes = layerParams[0];
     for (int i = 1; i < layerParams.length; i++) {
-      layers.add(new Layer(layerParams[i], layerParams[i-1]));
+      layers.add(new Layer(layerParams[i], layerParams[i - 1]));
     }
   }
 
   /**
-   * A constructor of the neural network.
-   * The varag parameters will define the architecture of the neural network. You need to enter at least two parameters.
-   * Please note there is another constructor which does not require randomization rate (defaults to 0.1).
-   * @param randomizationRate the randomization rate, used for unsupervised machine learning approach where cloning instead of back propagating is used.
-   * @param layerParams the architecture of the neural network. First argument = node count of input layer; last argument = node count of output layer; arguments between = node count per hidden layer.
+   * A constructor of the neural network. The varag parameters will define the architecture of the
+   * neural network. You need to enter at least two parameters. Please note there is another
+   * constructor which does not require randomization rate (defaults to 0.1).
+   *
+   * @param randomizationRate the randomization rate, used for unsupervised machine learning
+   *                          approach where cloning instead of back propagating is used.
+   * @param layerParams       the architecture of the neural network. First argument = node count of
+   *                          input layer; last argument = node count of output layer; arguments
+   *                          between = node count per hidden layer.
    */
   public NeuralNetwork(double randomizationRate, int... layerParams) {
     this(layerParams);
@@ -58,8 +65,10 @@ public class NeuralNetwork implements Serializable {
   }
 
   /**
-   * This method will take input nodes as parameter and return the predicted output nodes.
-   * The neural net will not be modified. This method can be used for testing or the unsupervised machine learning approach.
+   * This method will take input nodes as parameter and return the predicted output nodes. The
+   * neural net will not be modified. This method can be used for testing or the unsupervised
+   * machine learning approach.
+   *
    * @param inputNodes the input nodes as double array
    * @return the predicted output nodes as Double List
    */
@@ -67,7 +76,9 @@ public class NeuralNetwork implements Serializable {
     if (inputNodes == null) {
       throw new NullPointerException("inputNodes must not be null!");
     } else if (inputNodes.length != inputLayerNodes) {
-      throw new IllegalArgumentException("input node count does not match neural network configuration! received " + inputNodes.length + " instead of " + inputLayerNodes + " input nodes.");
+      throw new IllegalArgumentException(
+          "input node count does not match neural network configuration! received "
+              + inputNodes.length + " instead of " + inputLayerNodes + " input nodes.");
     }
 
     Matrix tmp = Matrix.fromArray(inputNodes);
@@ -82,9 +93,12 @@ public class NeuralNetwork implements Serializable {
   }
 
   /**
-   * This method will take input nodes as well as the expected output nodes as parameter and return the predicted output nodes.
-   * The neural net will be modified and back propagate the expected values to adjust the weighed layers. This method can be used for training as supervised machine learning algorithm.
-   * @param inputNodes the input nodes as double array
+   * This method will take input nodes as well as the expected output nodes as parameter and return
+   * the predicted output nodes. The neural net will be modified and back propagate the expected
+   * values to adjust the weighed layers. This method can be used for training as supervised machine
+   * learning algorithm.
+   *
+   * @param inputNodes          the input nodes as double array
    * @param expectedOutputNodes the expected output nodes as double array
    * @return the actual output nodes as Double List
    */
@@ -92,7 +106,9 @@ public class NeuralNetwork implements Serializable {
     if (inputNodes == null || expectedOutputNodes == null) {
       throw new NullPointerException("inputNodes and expectedOutputNodes are required!");
     } else if (inputNodes.length != inputLayerNodes) {
-      throw new IllegalArgumentException("input node count does not match neural network configuration! received " + inputNodes.length + " instead of " + inputLayerNodes + " input nodes.");
+      throw new IllegalArgumentException(
+          "input node count does not match neural network configuration! received "
+              + inputNodes.length + " instead of " + inputLayerNodes + " input nodes.");
     }
 
     Matrix input = Matrix.fromArray(inputNodes);
@@ -111,16 +127,17 @@ public class NeuralNetwork implements Serializable {
 
     // backward propagate to adjust weights in layers
     Matrix error = null;
-    for (int i = steps.size()-1; i >= 0; i--) {
+    for (int i = steps.size() - 1; i >= 0; i--) {
       if (error == null) {
-        error = Matrix.subtract(target, steps.get(steps.size()-1));
+        error = Matrix.subtract(target, steps.get(steps.size() - 1));
       } else {
-        error = Matrix.multiply(Matrix.transponse(layers.get(i+1).weight), error);
+        error = Matrix.multiply(Matrix.transponse(layers.get(i + 1).weight), error);
       }
       Matrix gradient = steps.get(i).dsigmoid();
       gradient.multiplyElementwise(error);
       gradient.multiply(randomizationRate);
-      Matrix delta = Matrix.multiply(gradient, Matrix.transponse((i == 0) ? input : steps.get(i-1)));
+      Matrix delta = Matrix
+          .multiply(gradient, Matrix.transponse((i == 0) ? input : steps.get(i - 1)));
       layers.get(i).weight.add(delta);
       layers.get(i).bias.addBias(gradient);
     }
@@ -129,10 +146,12 @@ public class NeuralNetwork implements Serializable {
   }
 
   /**
-   * This method can be used to batch train the neural net with the supervised machine learning approach.
-   * @param inputSet the input set of possible input node values
+   * This method can be used to batch train the neural net with the supervised machine learning
+   * approach.
+   *
+   * @param inputSet          the input set of possible input node values
    * @param expectedOutputSet the output set of according expected output values
-   * @param rounds the count of repetitions of the batch training
+   * @param rounds            the count of repetitions of the batch training
    */
   public void train(double[][] inputSet, double[][] expectedOutputSet, int rounds) {
     if (inputSet == null || expectedOutputSet == null) {
@@ -145,7 +164,9 @@ public class NeuralNetwork implements Serializable {
   }
 
   /**
-   * This method will merge two neural networks to one. Please note that the first neural network given as parameter will be altered in the process.
+   * This method will merge two neural networks to one. Please note that the first neural network
+   * given as parameter will be altered in the process.
+   *
    * @param a neural network to be altered and merged
    * @param b neural network to be merged
    * @return the neural network a merged with b
@@ -162,7 +183,9 @@ public class NeuralNetwork implements Serializable {
   }
 
   /**
-   * This method will provide a randomized clone of the current neural network. The output neural network will not be connected to the cloned neural network.
+   * This method will provide a randomized clone of the current neural network. The output neural
+   * network will not be connected to the cloned neural network.
+   *
    * @return a randomized clone of this instance
    */
   @Override
@@ -173,7 +196,9 @@ public class NeuralNetwork implements Serializable {
   }
 
   /**
-   * This method will provide an identical copy of the current neural network. The output neural network will not be connected to the copied neural network.
+   * This method will provide an identical copy of the current neural network. The output neural
+   * network will not be connected to the copied neural network.
+   *
    * @return an identical copy of this instance
    */
   public NeuralNetwork copy() {

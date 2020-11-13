@@ -1,10 +1,8 @@
 package ai;
 
 import ai.data.GenerationEntity;
-import ai.data.storage.Serializer;
 import ai.neuralnet.NeuralNetwork;
-import main.configuration.Config;
-import main.configuration.IGenerationConfigReader;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +16,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import main.configuration.Config;
+import main.configuration.IGenerationConfigReader;
 
 class Generation {
 

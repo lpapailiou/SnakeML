@@ -72,12 +72,15 @@ public class GameAdapter implements Comparable<GameAdapter> {
   }
 
   private void setGameOver() {
-    if (!isGameOver) {
-      isGameOver = true;
-      updateFitness();
-      if (generationEntity != null) {
-        generationEntity.aggregateSnakeData(game.getSnake());
-      }
+    if (isGameOver) {
+      return;
+    }
+
+    isGameOver = true;
+    updateFitness();
+
+    if (generationEntity != null) {
+      generationEntity.aggregateSnakeData(game.getSnake());
     }
   }
 

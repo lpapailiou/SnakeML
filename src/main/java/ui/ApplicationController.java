@@ -4,9 +4,12 @@ import ai.GameAdapter;
 import ai.GameBatch;
 import ai.data.GenerationEntity;
 import ai.data.storage.Serializer;
+import ai.data.storage.TempStorage;
 import ai.neuralnet.NeuralNetwork;
 import game.Direction;
 import game.Game;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -19,8 +22,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.configuration.Config;
 import main.configuration.IApplicationConfigReader;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class ApplicationController implements Initializable {
 
@@ -126,6 +127,7 @@ public class ApplicationController implements Initializable {
     timeline.play();
   }
 
+
   private void setupNeuralNetworkDemoTimer() {
     isTimerRunning = true;
     ConfigController.disableInputs(true);
@@ -145,6 +147,7 @@ public class ApplicationController implements Initializable {
         }
       }
     }));
+
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
