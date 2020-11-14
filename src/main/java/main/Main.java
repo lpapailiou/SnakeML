@@ -17,6 +17,8 @@ import java.util.concurrent.CountDownLatch;
 
 public class Main extends Application {
 
+  private WebServer webservice;
+
   public static void main(String[] args) {
     launch(args);
   }
@@ -49,6 +51,15 @@ public class Main extends Application {
     }
   }
 
+  @Override
+  public void stop() {
+    if (webservice!= null) {
+      webservice.stopServer();
+    }
+    Platform.exit();
+    System.exit(0);
+  }
+
   private void startWebServer() {   // TODO: slows down startup of gui
     Service<Void> service = new Service<Void>() {
       @Override
@@ -61,7 +72,7 @@ public class Main extends Application {
               @Override
               public void run() {
                 try {
-                  WebServer webservice = new WebServer();
+                  webservice = new WebServer();
                   webservice.runServer();
                 } finally {
                   latch.countDown();

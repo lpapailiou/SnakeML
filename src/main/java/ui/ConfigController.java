@@ -134,7 +134,7 @@ public class ConfigController implements Initializable {
   }
 
   public static void enableStatistics() {
-    instance.openLabel.setDisable(false);
+    //instance.openLabel.setDisable(false);
     instance.openStatistics();
   }
 
@@ -433,7 +433,7 @@ public class ConfigController implements Initializable {
 
     stopButton.setOnAction(e -> ApplicationController.stop());
 
-    openLabel.setDisable(true);
+    //openLabel.setDisable(true);
     stopButton.setDisable(true);
   }
 
