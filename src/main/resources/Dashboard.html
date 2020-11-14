@@ -9,11 +9,16 @@
   <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
   <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
   <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
-  <script data-require="jquery@2.2.4" data-semver="2.2.4" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <script data-require="bootstrap@3.3.7" data-semver="3.3.7" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css" />
+  <script data-require="jquery@2.2.4" data-semver="2.2.4"
+          src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script data-require="bootstrap@3.3.7" data-semver="3.3.7"
+          src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css"/>
   <link rel="stylesheet" href="./css/style.css">
   <script src="./js/GenStatistics.js"></script>
   <script src="./js/RequestGenerator.js"></script>
@@ -23,21 +28,64 @@
   <h2>SNAKE ML - STATISTICS</h2>
   <p>Visualising statistics of the Game "Snake ML"</p>
   <p>Pick one or more statistics from the dropdown below.</p>
-  <button onclick="loadCurrentState()">Reload</button>
+  <button onclick="loadCurrentBatchData()">Reload</button>
   <div class="div-for-dropdown">
-        <select class="drop drop-screen" id="sel">
-          <option value="">--- Select Generation ---</option>
-        </select>
-      </div>
+    <select class="drop drop-screen" id="sel">
+      <option value="">--- Select Generation ---</option>
+    </select>
   </div>
+</div>
 
 
 <div class="eight columns bg-grey">
-  <div id="chartdiv"></div>
-  <div id="chartdiv2"></div>
-  <div id="chartdiv3"></div>
-  <div id="chartdiv4"></div>
+  <div class="chart-template-div" id="chart__snake-length--batch-"></div>
+  <div class="chart-template-div" id="chart__deaths--batch-"></div>
+  <div class="chart-template-div" id="chart__fitness--batch-"></div>
+  <div class="chart-template-div" id="chart__steps--batch-"></div>
 </div>
+
+<script>
+  function loadCurrentBatchData() {
+    const templateIds = [
+      "chart__snake-length--batch-",
+      "chart__deaths--batch-",
+      "chart__fitness--batch-",
+      "chart__steps--batch-",
+    ];
+
+    loadJSON(response => {
+      const batches = JSON.parse(response);
+
+      console.log(batches);
+
+      let batchNumber = 0;
+      batches.forEach(batch => {
+        batchNumber++;
+
+        templateIds.forEach(templateId => {
+          if (document.getElementById(templateId + batchNumber) === null) {
+            cloneChartDiv(templateId, batchNumber);
+          }
+        });
+
+        loadGraph(batch.generations, batchNumber)
+      });
+    });
+  }
+
+  function cloneChartDiv(templateId, batchNumber) {
+    const chartDivTemplate = document.getElementById(templateId);
+    const chartDivClone = chartDivTemplate.cloneNode();
+    chartDivClone.id = templateId + batchNumber;
+    chartDivClone.classList.remove("chart-template-div")
+    chartDivClone.setAttribute('data-batch-number', batchNumber);
+    chartDivTemplate.after(chartDivClone);
+  }
+
+  window.onload = () => {
+    loadCurrentBatchData();
+  }
+</script>
 
 </body>
 </html>
