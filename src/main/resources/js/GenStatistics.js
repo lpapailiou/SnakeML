@@ -1,7 +1,4 @@
-var chart = null
-
-function loadGraph(gen_data) {
-  console.log('graph building')
+function loadGraph(gen_data, batchNumber) {
 
   if (chart != null) {
     chart.dispose()
@@ -22,10 +19,8 @@ function loadGraph(gen_data) {
 // Themes end
 
 // Create chart instance
-  chart = am4core.create("chartdiv", am4charts.XYChart);
-  console.log(gen_data)
+  var chart = am4core.create(`chart__snake-length--batch-${batchNumber}`, am4charts.XYChart);
   chart.data = gen_data
-  console.log(chart.data)
 // Create axes
   var valueAxisX = chart.xAxes.push(new am4charts.ValueAxis());
   valueAxisX.title.text = 'Generations';
@@ -98,12 +93,10 @@ function loadGraph(gen_data) {
 
 // --------------------------------------------------------------------------------------
 
-  var chart2 = am4core.create("chartdiv2", am4charts.XYChart);
+  var chart2 = am4core.create(`chart__deaths--batch-${batchNumber}`, am4charts.XYChart);
   chart2.paddingRight = 20;
 
-  console.log(gen_data)
   chart2.data = gen_data
-  console.log(chart2.data)
 
   var dateAxis = chart2.xAxes.push(new am4charts.DateAxis());
   dateAxis.renderer.grid.template.location = 0;
@@ -148,7 +141,7 @@ function loadGraph(gen_data) {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-  var chart3 = am4core.create("chartdiv3", am4charts.XYChart);
+  var chart3 = am4core.create(`chart__fitness--batch-${batchNumber}`, am4charts.XYChart);
 
 // Create axes
   var dateAxis = chart3.xAxes.push(new am4charts.DateAxis());
@@ -249,7 +242,7 @@ function loadGraph(gen_data) {
 
 // ------------------------------------------------------------------------------------------
 
-  var chart4 = am4core.create("chartdiv4", am4charts.XYChart);
+  var chart4 = am4core.create(`chart__steps--batch-${batchNumber}`, am4charts.XYChart);
   chart4.paddingRight = 20;
 
   chart4.data = gen_data;

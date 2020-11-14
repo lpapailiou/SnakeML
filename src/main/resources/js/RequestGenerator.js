@@ -11,14 +11,3 @@ const loadJSON = callback => {
   }
   xobj.send(null);
 }
-
-const loadCurrentState = () => {
-  loadJSON(response => {
-    const jsonResponse = JSON.parse(response);
-    console.log(jsonResponse);
-    jsonResponse.forEach(batch => {
-      loadGraph(batch.generations)
-    })
-
-  });
-}

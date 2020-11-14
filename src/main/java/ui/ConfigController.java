@@ -505,6 +505,4 @@ public class ConfigController implements Initializable {
       popup.show(ApplicationController.getStage());
     }
   }
-
-
 }
