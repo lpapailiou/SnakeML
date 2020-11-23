@@ -39,19 +39,6 @@ public class GameBatch {
     configurationEntity.setPopulationSize(populationSize);
   }
 
-
-//  public void run() {
-//    batchEntity.setConfigurationEntity(configurationEntity);
-//    batchEntity.setGenerationEntities(generationEntities);
-//
-//
-//    for (int i = 0; i < generationCount; i++) {
-//      Generation gen = new Generation(i, populationnSize, generationEntities);
-//      neuralNetwork = gen.run(neuralNetwork);
-//    }
-//    saveJsonData();
-//  }
-
   public int getCurrentGeneration() {
     return currentGeneration;
   }
@@ -62,7 +49,6 @@ public class GameBatch {
     batchEntity.setConfigurationEntity(configurationEntity);
     batchEntity.setGenerationEntities(generationEntities);
     if (currentGeneration == generationCount) {
-//      saveJsonData();
       return null;
     }
     currentGeneration++;
@@ -72,28 +58,6 @@ public class GameBatch {
   public GenerationEntity getCurrentGenerationEntity() {
     return generationEntities.isEmpty() ? null : generationEntities.get(generationEntities.size()-1);
   }
-
-//  public void generateJson() {
-//    ObjectMapper mapper = new ObjectMapper();
-//    try {
-//      jsonData = mapper.writeValueAsString(batchEntity);
-//    } catch (JsonProcessingException e) {
-//      e.printStackTrace();
-//    }
-//  }
-//
-//  public String getJsonString() {
-//    if (jsonData == null) {
-//      generateJson();
-//    }
-//    return jsonData;
-//  }
-
-//  public void saveJsonData() {
-//    JsonFileHandler jfh = new JsonFileHandler(getJsonString());
-//    jfh.saveToTempStorage();
-//  }
-
 
   public BatchEntity getBatchEntity() {
     return batchEntity;

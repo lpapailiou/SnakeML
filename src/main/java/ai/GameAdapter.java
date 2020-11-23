@@ -28,20 +28,24 @@ public class GameAdapter implements Comparable<GameAdapter> {
     nodeSelection = config.getInputNodeSelection();
     this.generationEntity = generationEntity;
     game = new Game();
-  }
-
-  public boolean moveSnake() {
-    game.changeDirection(getDirection(game.getSnake(), game.getFood()));
-    game.onTick();
     game.onGameOver(this::setGameOver);
-    return !isGameOver;
   }
 
-  Direction getDirection(Snake snake, Cell food) {
+  public void moveSnake() {
+    game.changeDirection(determineNextDirection(game.getSnake(), game.getFood()));
+    game.onTick();
+  }
+
+  public boolean isGameOver() {
+    return isGameOver;
+  }
+
+  Direction determineNextDirection(Snake snake, Cell food) {
     if (food == null) {
-      return Direction.values()[new Random().nextInt(4)];
+      return Direction.values()[new Random().nextInt(Direction.values().length)];
     }
 
+    // TODO: rewrite to stream api?
     int arrayIndex = 0;
     double[] inputValues = new double[nodeSelection.size()];
     for (Integer nodeIndex : nodeSelection) {

@@ -133,18 +133,12 @@ public class ConfigController implements Initializable {
     }
   }
 
-  public static void enableStatistics() {
-    //instance.openLabel.setDisable(false);
-    instance.openStatistics();
-  }
-
   private void openStatistics() {
     String url = "http://localhost:8050/Dashboard.html";
     String os = System.getProperty("os.name").toLowerCase();
     Runtime rt = Runtime.getRuntime();
 
     try{
-
       if (os.contains("win")) {
         rt.exec( "rundll32 url.dll,FileProtocolHandler " + url);
 
@@ -190,8 +184,17 @@ public class ConfigController implements Initializable {
   private void updateMode() {
     Mode mode = Arrays.stream(Mode.values()).filter(e -> e.getLabel().equals(modeSelector.getValue())).findFirst().get();
     Scene scene = ApplicationController.getScene();
+    animateModeSwitch(mode, scene);
+
+    neuralNetworkControls.setVisible(mode == Mode.NEURAL_NETWORK);
+    statisticControls.setVisible(mode == Mode.NEURAL_NETWORK);
+    configWriter.setMode(mode);
+  }
+
+  private void animateModeSwitch(Mode mode, Scene scene) {
     final double transitionDuration = 0.3;
-    if (scene != null && (mode == Mode.NEURAL_NETWORK ||(mode == Mode.MANUAL && configReader.getMode() != Mode.NEURAL_NETWORK_DEMO) || (mode == Mode.NEURAL_NETWORK_DEMO && configReader.getMode() != Mode.MANUAL))) {
+    if (scene != null && (mode == Mode.NEURAL_NETWORK || (
+        mode == Mode.MANUAL && configReader.getMode() != Mode.NEURAL_NETWORK_DEMO) || (mode == Mode.NEURAL_NETWORK_DEMO && configReader.getMode() != Mode.MANUAL))) {
       modeSelector.hide();
       TranslateTransition baseControlsTransition = new TranslateTransition(Duration.seconds(transitionDuration), baseControls);
       if (mode == Mode.NEURAL_NETWORK) {
@@ -241,10 +244,6 @@ public class ConfigController implements Initializable {
       seq.getChildren().addAll(para1, para2);
       seq.play();
     }
-
-    neuralNetworkControls.setVisible(mode == Mode.NEURAL_NETWORK);
-    statisticControls.setVisible(mode == Mode.NEURAL_NETWORK);
-    configWriter.setMode(mode);
   }
 
   private void updateHiddenLayerSelection() {
@@ -427,22 +426,22 @@ public class ConfigController implements Initializable {
   }
 
   private void initializeButtons() {
+
     statisticsButton.setOnAction(e -> openStatistics());
-
     startButton.setOnAction(e -> ApplicationController.start());
-
     stopButton.setOnAction(e -> ApplicationController.stop());
 
-    //openLabel.setDisable(true);
+    //openLabel.disable(true);
     stopButton.setDisable(true);
   }
 
-  static void disableInputs(boolean setDisable) {
-    instance.baseControls.setDisable(setDisable);
-    instance.neuralNetworkControls.setDisable(setDisable);
-    instance.startButton.setDisable(setDisable);
-    instance.stopButton.setDisable(!setDisable);
-    if (!setDisable) {
+  static void setDisable(boolean disable) {
+    instance.baseControls.setDisable(disable);
+    instance.neuralNetworkControls.setDisable(disable);
+    instance.startButton.setDisable(disable);
+    instance.stopButton.setDisable(!disable);
+
+    if (!disable) {
       instance.networkPainter.paintNetwork();
       Platform.runLater(() -> instance.boardWithControl.getParent().requestFocus());
     }

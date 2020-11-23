@@ -5,7 +5,6 @@ import game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import ui.painter.IGameTicker;
 import ui.painter.impl.GameInformationPainter;
 import ui.painter.impl.GamePainter;
 import java.net.URL;
@@ -32,7 +31,7 @@ public class GameController implements Initializable, IGameTicker {
   public void onTick(Game game) {
     boolean isActive = game == null || !game.getSnake().isDead();
     if (game == null) {
-      gamePainter.paintBoard(isActive);
+      gamePainter.paintBoard(true);
       statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
     } else {
       gamePainter.paintBoard(isActive);

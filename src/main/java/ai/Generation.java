@@ -140,8 +140,8 @@ class Generation {
     @Override
     public void run() {
       boolean running = true;
-      while (running) {
-        running = adapter.moveSnake();
+      while (!adapter.isGameOver()) {
+        adapter.moveSnake();
       }
     }
   }

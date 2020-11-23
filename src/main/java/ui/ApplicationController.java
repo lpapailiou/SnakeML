@@ -54,13 +54,13 @@ public class ApplicationController implements Initializable {
     if (instance != null) {
       switch (instance.config.getMode()) {
         case MANUAL:
-          instance.setupManualTimer();
+          instance.startManualGame();
           break;
         case NEURAL_NETWORK:
-          instance.setupNeuralNetworkTimer();
+          instance.startNewNeuralNetwork();
           break;
         case NEURAL_NETWORK_DEMO:
-          instance.setupNeuralNetworkDemoTimer();
+          instance.startTrainedNeuralNetworkDemo();
           break;
       }
     }
@@ -72,59 +72,70 @@ public class ApplicationController implements Initializable {
     }
   }
 
-  private void setupManualTimer() {
+  private void startManualGame() {
     isTimerRunning = true;
-    ConfigController.disableInputs(true);
     direction = config.getInitialDirection();
     int speed = config.getMode().getSpeed();
     Game game = new Game();
+
+    ConfigController.setDisable(true);
+    game.onGameOver(this::stopTimer);
+
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      if (isTimerRunning) {
-        game.changeDirection(direction);
-        game.onTick();
-        GameController.display(game);
-        game.onGameOver(this::stopTimer);
+      if (!isTimerRunning) {
+        return;
       }
+
+      game.changeDirection(direction);
+      game.onTick();
+      GameController.display(game);
 
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
 
-  private void setupNeuralNetworkTimer() {
+  private void startNewNeuralNetwork() {
     isTimerRunning = true;
-    ConfigController.disableInputs(true);
     int speed = config.getMode().getSpeed();
     adapter = null;
-    GameBatch batch = new GameBatch(new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration()));
+    GameBatch batch = new GameBatch(
+        new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration())
+    );
 
+    ConfigController.setDisable(true);
     TempStorage tempStorage = TempStorage.getInstance();
     tempStorage.addBatch(batch.getBatchEntity());
 
-    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {   // TODO: refactoring of stats-branch made performance drop/broke something
-      if (isTimerRunning) {
-        if (adapter == null) {
-          NeuralNetwork neuralNet = batch.processGeneration();
-          if (neuralNet != null) {
-            adapter = new GameAdapter(neuralNet, null);
-          }
+    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
+      if (!isTimerRunning) {
+
+        return;
+      }
+
+      if (adapter == null) {
+        NeuralNetwork neuralNet = batch.processGeneration();
+        if (neuralNet != null) {
+          adapter = new GameAdapter(neuralNet, null);
         }
-        if (adapter != null) {
-          boolean success = adapter.moveSnake();
-          GenerationEntity entity;
-          entity = batch.getCurrentGenerationEntity();
-          GameController.display(adapter.getGame());
-          if (isRealtimeStatisticsVerbose) {
-            GameController.displayStats(entity, adapter.getSnakeLength(), statisticsPosition);
-          }
-          ConfigController.display( adapter.getGame().getDirection());
-          if (!success) {
-            adapter = null;
-          }
-        } else {
-          ConfigController.enableStatistics();
-          stopTimer();
-        }
+      }
+
+      if (adapter == null) {
+        stopTimer();
+
+        return;
+      }
+
+      adapter.moveSnake();
+      GenerationEntity entity;
+      entity = batch.getCurrentGenerationEntity();
+      GameController.display(adapter.getGame());
+      if (isRealtimeStatisticsVerbose) {
+        GameController.displayStats(entity, adapter.getSnakeLength(), statisticsPosition);
+      }
+      ConfigController.display(adapter.getGame().getDirection());
+      if (adapter.isGameOver()) {
+        adapter = null;
       }
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
@@ -132,23 +143,27 @@ public class ApplicationController implements Initializable {
   }
 
 
-  private void setupNeuralNetworkDemoTimer() {
+  private void startTrainedNeuralNetworkDemo() {
     isTimerRunning = true;
-    ConfigController.disableInputs(true);
-    ConfigController.selectAllRadioButtons();           // TODO: fix if possible; necessary as otherwise neural net exception would be thrown
+    ConfigController.setDisable(true);
+    ConfigController
+        .selectAllRadioButtons(); // TODO: fix if possible; necessary as otherwise neural net exception would be thrown
     int speed = config.getMode().getSpeed();
     adapter = new GameAdapter(Serializer.load(), null);
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      if (isTimerRunning) {
-        if (adapter != null) {
-          boolean success = adapter.moveSnake();
-          GameController.display(adapter.getGame());
-          if (!success) {
-            stopTimer();
-          }
-        } else {
-          stopTimer();
-        }
+      if (!isTimerRunning) {
+
+        return;
+      }
+      if (adapter == null) {
+        stopTimer();
+
+        return;
+      }
+      adapter.moveSnake();
+      GameController.display(adapter.getGame());
+      if (adapter.isGameOver()) {
+        stopTimer();
       }
     }));
 
@@ -158,7 +173,7 @@ public class ApplicationController implements Initializable {
 
   private void stopTimer() {
     isTimerRunning = false;
-    ConfigController.disableInputs(false);
+    ConfigController.setDisable(false);
     Platform.runLater(() -> {
       if (timeline != null) {
         timeline.stop();

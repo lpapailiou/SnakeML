@@ -18,7 +18,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
   private int boardWidth = 16;
   private int boardHeight = 12;
   private int initialSnakeSize = 3;
-  private Direction initialDirection = Direction.RIGHT;
+  private final Direction initialDirection = Direction.RIGHT;
   private Cell initialStartingPosition = new Cell(3, 3);
 
   private Theme theme = Theme.CLASSIC;
@@ -213,8 +213,8 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
   @Override
   public List<Integer> getLayerConfigurationAsList() {
     List<Integer> layerConfigurationList = new ArrayList<>();
-    for (int i = 0; i < layerConfiguration.length; i++) {
-      layerConfigurationList.add(new Integer(layerConfiguration[i]));
+    for (int j : layerConfiguration) {
+      layerConfigurationList.add(j);
     }
     return layerConfigurationList;
   }
@@ -236,7 +236,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   @Override
   public void removeInputNodeFromSelection(int selectedInputNode) {
-    this.inputNodeSelection.remove(new Integer(selectedInputNode));
+    this.inputNodeSelection.remove(selectedInputNode);
   }
 
   @Override

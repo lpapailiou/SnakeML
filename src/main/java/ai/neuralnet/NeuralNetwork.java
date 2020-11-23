@@ -131,13 +131,13 @@ public class NeuralNetwork implements Serializable {
       if (error == null) {
         error = Matrix.subtract(target, steps.get(steps.size() - 1));
       } else {
-        error = Matrix.multiply(Matrix.transponse(layers.get(i + 1).weight), error);
+        error = Matrix.multiply(Matrix.transpose(layers.get(i + 1).weight), error);
       }
       Matrix gradient = steps.get(i).dsigmoid();
       gradient.multiplyElementwise(error);
       gradient.multiply(randomizationRate);
       Matrix delta = Matrix
-          .multiply(gradient, Matrix.transponse((i == 0) ? input : steps.get(i - 1)));
+          .multiply(gradient, Matrix.transpose((i == 0) ? input : steps.get(i - 1)));
       layers.get(i).weight.add(delta);
       layers.get(i).bias.addBias(gradient);
     }

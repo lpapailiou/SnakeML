@@ -29,7 +29,7 @@ public class GameInformationPainter {
     double deathWall = entity.getNumber_of_wall_deaths();
     double deathBody = entity.getNumber_of_body_deaths();
     double deathTimeout = entity.getNumber_of_timeout_deaths();
-    double deathcount = deathBody+deathWall+deathTimeout;
+    double deathCount = deathBody+deathWall+deathTimeout;
     int generation = entity.getId()+1;       // start counting from 1?
     double fontSizeLarge = 32;
     double fontSize = 12;
@@ -38,6 +38,7 @@ public class GameInformationPainter {
     double height = 70;
     double offsetY = (canvasWidth - offsetX) - height;
     double width = 570;
+    // TODO: refactor into generic associative array: text -> position ?
     switch (position) {
       case 0:
         context.setFont(new Font("", fontSize));
@@ -47,13 +48,13 @@ public class GameInformationPainter {
         context.fillText("max. snake length:   \t" + entity.getMax_snake_length(), offsetX + padding, offsetY
             +40);
         context.fillText("max. steps:   \t\t\t" + entity.getMax_steps(), offsetX + padding, offsetY +60);
-        context.fillText("death by wall:   \t\t" + (int) (100/deathcount*deathWall) + " %", offsetX
+        context.fillText("death by wall:   \t\t" + (int) (100/deathCount*deathWall) + " %", offsetX
             + padding
             +200, offsetY +20);
-        context.fillText("death by body:   \t\t" + (int) (100/deathcount*deathBody) + " %", offsetX
+        context.fillText("death by body:   \t\t" + (int) (100/deathCount*deathBody) + " %", offsetX
             + padding
             +200, offsetY +40);
-        context.fillText("death by timeout:   \t\t" + (int) (100/deathcount*deathTimeout) + " %", offsetX
+        context.fillText("death by timeout:   \t\t" + (int) (100/deathCount*deathTimeout) + " %", offsetX
             + padding
             +200, offsetY +60);
         context.fillText("generation:", offsetX + padding +400, offsetY +60);
@@ -69,11 +70,11 @@ public class GameInformationPainter {
         context.fillText("current snake length:   \t" + snakeLength, offsetX + padding, y+20);
         context.fillText("max. snake length:   \t" + entity.getMax_snake_length(), offsetX + padding, y+40);
         context.fillText("max. steps:   \t\t\t" + entity.getMax_steps(), offsetX + padding, y+60);
-        context.fillText("death by wall:   \t\t" + (int) (100/deathcount*deathWall) + " %", offsetX
+        context.fillText("death by wall:   \t\t" + (int) (100/deathCount*deathWall) + " %", offsetX
             + padding, y+90);
-        context.fillText("death by body:   \t\t" + (int) (100/deathcount*deathBody) + " %", offsetX
+        context.fillText("death by body:   \t\t" + (int) (100/deathCount*deathBody) + " %", offsetX
             + padding, y+110);
-        context.fillText("death by timeout:   \t\t" + (int) (100/deathcount*deathTimeout) + " %", offsetX
+        context.fillText("death by timeout:   \t\t" + (int) (100/deathCount*deathTimeout) + " %", offsetX
             + padding, y+130);
         context.fillText("generation:", offsetX + padding, y+180);
         context.setFont(new Font("", fontSizeLarge));
@@ -96,11 +97,11 @@ public class GameInformationPainter {
         context.fillText("current snake length:   \t" + snakeLength, x+ padding, y+20);
         context.fillText("max. snake length:   \t" + entity.getMax_snake_length(), x+ padding, y+40);
         context.fillText("max. steps:   \t\t\t" + entity.getMax_steps(), x+ padding, y+60);
-        context.fillText("death by wall:   \t\t" + (int) (100/deathcount*deathWall) + " %", x+ padding
+        context.fillText("death by wall:   \t\t" + (int) (100/deathCount*deathWall) + " %", x+ padding
             +200, y+20);
-        context.fillText("death by body:   \t\t" + (int) (100/deathcount*deathBody) + " %", x+ padding
+        context.fillText("death by body:   \t\t" + (int) (100/deathCount*deathBody) + " %", x+ padding
             +200, y+40);
-        context.fillText("death by timeout:   \t\t" + (int) (100/deathcount*deathTimeout) + " %", x+ padding
+        context.fillText("death by timeout:   \t\t" + (int) (100/deathCount*deathTimeout) + " %", x+ padding
             +200, y+60);
         context.fillText("generation:", x+ padding +400, y+60);
         context.setFont(new Font("", fontSizeLarge));
@@ -115,9 +116,9 @@ public class GameInformationPainter {
         context.fillText("current snake length:   \t" + snakeLength, x+ padding, y+20);
         context.fillText("max. snake length:   \t" + entity.getMax_snake_length(), x+ padding, y+40);
         context.fillText("max. steps:   \t\t\t" + entity.getMax_steps(), x+ padding, y+60);
-        context.fillText("death by wall:   \t\t" + (int) (100/deathcount*deathWall) + " %", x+ padding, y+90);
-        context.fillText("death by body:   \t\t" + (int) (100/deathcount*deathBody) + " %", x+ padding, y+110);
-        context.fillText("death by timeout:   \t\t" + (int) (100/deathcount*deathTimeout) + " %", x+ padding, y+130);
+        context.fillText("death by wall:   \t\t" + (int) (100/deathCount*deathWall) + " %", x+ padding, y+90);
+        context.fillText("death by body:   \t\t" + (int) (100/deathCount*deathBody) + " %", x+ padding, y+110);
+        context.fillText("death by timeout:   \t\t" + (int) (100/deathCount*deathTimeout) + " %", x+ padding, y+130);
         context.fillText("generation:", x+ padding, y+180);
         context.setFont(new Font("", fontSizeLarge));
         context.fillText(generation+"", x+ padding +130, y+180);    // starts counting from 1

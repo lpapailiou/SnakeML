@@ -31,15 +31,15 @@ public class Serializer {
 
     public static NeuralNetwork load() {
         String filename = "NeuralNet_16x16_12_15_4_0-8.ser";    // TODO: put String to config file?
-        File tempfile = createTempFile("serialized/"+filename, filename);
+        File tempFile = createTempFile("serialized/"+filename, filename);
 
         NeuralNetwork phoenix = null;
         try {
-            InputStream inputStrean = new FileInputStream(tempfile);
-            ObjectInputStream in = new ObjectInputStream(inputStrean);
+            InputStream inputStream = new FileInputStream(tempFile);
+            ObjectInputStream in = new ObjectInputStream(inputStream);
             phoenix = (NeuralNetwork) in.readObject();
 
-            inputStrean.close();
+            inputStream.close();
             in.close();
 
             //System.out.println("success? " + phoenix != null);

@@ -4,12 +4,12 @@ import game.element.Cell;
 import game.element.Snake;
 import game.event.GameOverConsumer;
 import game.event.TickAware;
-import main.configuration.Config;
-import main.configuration.IGameConfigReader;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main.configuration.Config;
+import main.configuration.IGameConfigReader;
 
 public class Game implements TickAware {
 
@@ -18,7 +18,8 @@ public class Game implements TickAware {
   private static final Logger LOG = Logger.getLogger("winning snake logger");
   private IGameConfigReader config = Config.getGameConfigReader();
   private Direction nextDirection = config.getInitialDirection();
-  private Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection, config.getInitialStartingPosition());
+  private Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection,
+      config.getInitialStartingPosition());
   private Cell food;
   private Random rand = new Random();
 
@@ -36,14 +37,13 @@ public class Game implements TickAware {
     if (snake.isDead()) {
       this.emitGameOver();
       return;
-    } else {
-      snake.move(nextDirection, food);
-
-      if (snake.isHeadAt(food)) {
-        food = findEmptyPosition();
-      }
     }
 
+    snake.move(nextDirection, food);
+
+    if (snake.isHeadAt(food)) {
+      food = findEmptyPosition();
+    }
   }
 
   private void emitGameOver() {

@@ -10,9 +10,9 @@ import java.util.List;
 public class Matrix implements Serializable {
 
   private static final long serialVersionUID = 2L;
-  private double[][] data;
-  private int rows;
-  private int cols;
+  private final double[][] data;
+  private final int rows;
+  private final int cols;
 
   /**
    * The constructor to create a randomized matrix for given type.
@@ -81,10 +81,10 @@ public class Matrix implements Serializable {
       return a;
   }
 
-  void multiply(double scaler) {
+  void multiply(double scalar) {
       for (int i = 0; i < rows; i++) {
           for (int j = 0; j < cols; j++) {
-              data[i][j] *= scaler;
+              data[i][j] *= scalar;
           }
       }
   }
@@ -117,7 +117,7 @@ public class Matrix implements Serializable {
       return tmp;
   }
 
-  static Matrix transponse(Matrix m) {
+  static Matrix transpose(Matrix m) {
       Matrix tmp = new Matrix(m.cols, m.rows);
       for (int i = 0; i < m.rows; i++) {
           for (int j = 0; j < m.cols; j++) {

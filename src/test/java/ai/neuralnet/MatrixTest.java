@@ -106,7 +106,7 @@ public class MatrixTest {
     double[][] dt = new double[][] {{2,3,7},{1,5,4}};
     Matrix a = new Matrix(d);
     a.print();
-    Matrix b = Matrix.transponse(a);
+    Matrix b = Matrix.transpose(a);
     b.print();
     Matrix c = new Matrix(dt);
     assertEquals(b, c);

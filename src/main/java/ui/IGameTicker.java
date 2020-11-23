@@ -1,4 +1,4 @@
-package ui.painter;
+package ui;
 
 import game.Game;
 
