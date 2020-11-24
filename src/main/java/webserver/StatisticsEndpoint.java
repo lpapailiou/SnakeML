@@ -8,15 +8,12 @@ import io.javalin.core.util.Header;
 import io.javalin.http.Context;
 import java.util.List;
 
-public class HttpClient {
+public class StatisticsEndpoint {
 
-  public static void runGET(Context context) {
-
-    ItemHolder itemHolder = new ItemHolder();
+  public static void listAllBatches(Context context) {
 
     context.header(Header.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 
-//    List<String> statisticsJson = itemHolder.consume();
     List<BatchEntity> batches = TempStorage.getInstance().getBatches();
 
     ObjectMapper mapper = new ObjectMapper();
@@ -30,8 +27,4 @@ public class HttpClient {
 
   }
 
-
-  public static void runPOST(Context context) {
-    context.result("Got POST. But it is only supported for control sequences and heartbeat.");
-  }
 }

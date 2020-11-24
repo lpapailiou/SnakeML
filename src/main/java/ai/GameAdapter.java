@@ -41,7 +41,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
   }
 
   Direction determineNextDirection(Snake snake, Cell food) {
-    if (food == null) {
+    if (food == null) { // TODO: Refactor into GameWin Event?
       return Direction.values()[new Random().nextInt(Direction.values().length)];
     }
 

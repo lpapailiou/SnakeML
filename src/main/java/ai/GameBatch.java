@@ -43,7 +43,7 @@ public class GameBatch {
     return currentGeneration;
   }
 
-  public NeuralNetwork processGeneration() {
+  public NeuralNetwork processNewGeneration() {
     Generation gen = new Generation(currentGeneration, populationSize, generationEntities);
     neuralNetwork = gen.run(neuralNetwork);
     batchEntity.setConfigurationEntity(configurationEntity);

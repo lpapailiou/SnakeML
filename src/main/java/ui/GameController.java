@@ -18,21 +18,25 @@ public class GameController implements Initializable, IGameTicker {
   private static GameController instance;
   private GamePainter gamePainter;
   private GameInformationPainter statisticsPainter;
+  private Game displayedGame;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     instance = this;
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
     statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
-    onTick(null);
+    onTick();
   }
 
   @Override
-  public void onTick(Game game) {
+  public void onTick() {
+    display(displayedGame);
+  }
+
+  void display(Game game) {
     boolean isActive = game == null || !game.getSnake().isDead();
     if (game == null) {
       gamePainter.paintBoard(true);
-      statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
     } else {
       gamePainter.paintBoard(isActive);
       gamePainter.paintFood(game.getFood());
@@ -40,19 +44,13 @@ public class GameController implements Initializable, IGameTicker {
     }
   }
 
-  static void display(Game game) {
-    if (instance != null) {
-      instance.onTick(game);
-    }
-  }
-
-  static void displayStats(GenerationEntity entity, int snakeLength, int position) {
-    instance.statisticsPainter.paint(entity, snakeLength, position);
+  void displayStats(GenerationEntity entity, int snakeLength, int position) {
+    statisticsPainter.paint(entity, snakeLength, position);
   }
 
   private void reset() {
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
-    onTick(null);
+    onTick();
   }
 
   static void resetGamePanel() {
@@ -61,4 +59,7 @@ public class GameController implements Initializable, IGameTicker {
     }
   }
 
+  public void setDisplayedGame(Game displayedGame) {
+    this.displayedGame = displayedGame;
+  }
 }

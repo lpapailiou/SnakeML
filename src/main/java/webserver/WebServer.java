@@ -10,11 +10,10 @@ public class WebServer {
     webserver.config.enableCorsForAllOrigins();
     webserver.config.enableDevLogging();
     webserver.config.addStaticFiles("/");
-    webserver.get("", HttpClient::runGET);
-    webserver.post("", HttpClient::runPOST);
+    webserver.get("", StatisticsEndpoint::listAllBatches);
   }
 
-  public void stopServer(){
+  public void stopServer() {
     webserver.stop();
   }
 }

@@ -64,10 +64,6 @@ class Generation {
     return evolve();
   }
 
-  public List<GameAdapter> getPopulationList() {    // could be used to visualize running game
-    return new ArrayList<>(populationList);
-  }
-
   private NeuralNetwork evolve() {
     populationList.sort(Comparator.nullsLast(Collections.reverseOrder()));
     NeuralNetwork best = populationList.get(0).getNeuralNetwork();
@@ -87,24 +83,24 @@ class Generation {
 
     // do roulette wheel selection algorithm
 
-    int bound = 8;  // bound is the number of selected snake for possible reproduction
+    int numberOfSnakesForReproduction = 8;
     if (populationList.size() > 100 && populationList.size() < 200) {
-      bound = (int) (config.getPopulationSize()*0.2);
+      numberOfSnakesForReproduction = (int) (config.getPopulationSize()*0.2);
     } else if (populationList.size() > 1000) {
-      bound = (int) (config.getPopulationSize()*0.01);
+      numberOfSnakesForReproduction = (int) (config.getPopulationSize()*0.01);
     }
     int choice = 2;  // choice is the number of snakes which will be additionally selected to reproduce with the best snake
 
     Map<Integer, Long> map = new HashMap();
     double sum = 0;   // sum is the sum of fitness of all pre-selected snakes
-    for (int i = 0; i < bound; i++) {
-      GameAdapter adaapter = populationList.get(i);
-      sum += adaapter.getFitness();
-      map.put(i, adaapter.getFitness());
+    for (int i = 0; i < numberOfSnakesForReproduction; i++) {
+      GameAdapter adapter = populationList.get(i);
+      sum += adapter.getFitness();
+      map.put(i, adapter.getFitness());
     }
 
     for (int i = 0; i < choice; i++) {
-      best = NeuralNetwork.merge(best, spinRouletteWheel(populationList, map, bound, sum));   // selection after roulette wheel principle
+      best = NeuralNetwork.merge(best, spinRouletteWheel(populationList, map, numberOfSnakesForReproduction, sum));   // selection after roulette wheel principle
     }
 
     return best;

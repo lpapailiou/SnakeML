@@ -521,6 +521,44 @@ a {
   padding: 5px;
 }
 
+#reload-button, #loading-button {
+  margin-top: 20px;
+}
+
+.reload-button--loading {
+  display: none;
+}
+
+.loading-button {
+  display: none;
+}
+
+.loading-button--loading {
+  display: inline-block;
+}
+
+.empty-message {
+  position: absolute;
+  right: 200px;
+  top: 30%;
+  transform: translateY(-50%);
+
+  padding: 30px;
+  font-size: 32px;
+  width: 40%;
+  display: none;
+
+  background-color: #8CACD750;
+
+  border: 2px solid #8CACD7;
+  border-radius: 8px;
+}
+
+.empty-message--visible {
+  display: block;
+}
+
+
 /* Graph Layout ––––––––––––––––––––––––––––––––––––––––––––––––––*/
 .chart-template-div {
   display: none !important;
@@ -561,9 +599,19 @@ a {
   padding-top: 64px;
 }
 
-.div-for-dropdown {
+#batch-selection-form {
   padding-top: 12px;
   padding-bottom: 12px;
+  margin-top: 20px;
+}
+
+.batch-selection__label {
+  display: inline-flex;
+  flex-direction: row-reverse;
+}
+
+.batch-selection__label input {
+  margin-right: 8px;
 }
 
 .div-for-slider {
@@ -596,7 +644,6 @@ a {
 .has-value.Select--single > .Select-control .Select-value .Select-value-label, .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
   color: white;
   background: #1E1E1E;
-  background-color: #1E1E1E;
 }
 
 ._dash-app-content {

@@ -28,11 +28,9 @@
   <h2>SNAKE ML - STATISTICS</h2>
   <p>Visualising statistics of the Game "Snake ML"</p>
   <p>Pick one or more statistics from the dropdown below.</p>
-  <button onclick="loadCurrentBatchData()">Reload</button>
-  <div class="div-for-dropdown">
-    <select class="drop drop-screen" id="sel">
-      <option value="">--- Select Generation ---</option>
-    </select>
+  <button id="reload-button" onclick="loadCurrentBatchData()">Reload</button>
+  <button id="loading-button" class="loading-button" disabled>Loading...</button>
+  <div id="batch-selection-form">
   </div>
 </div>
 
@@ -44,32 +42,89 @@
   <div class="chart-template-div" id="chart__steps--batch-"></div>
 </div>
 
+<div id="empty-message" class="empty-message">Noch keine Speildaten einer AI vorhanden. Bitte starten Sie in der Applikation ein neuronales Netz.</div>
+
 <script>
+
+  const templateIds = [
+    "chart__snake-length--batch-",
+    "chart__deaths--batch-",
+    "chart__fitness--batch-",
+    "chart__steps--batch-",
+  ];
+
   function loadCurrentBatchData() {
-    const templateIds = [
-      "chart__snake-length--batch-",
-      "chart__deaths--batch-",
-      "chart__fitness--batch-",
-      "chart__steps--batch-",
-    ];
+    console.log('oi');
+    setLoadingState(true)
 
     loadJSON(response => {
+      setLoadingState(false);
       const batches = JSON.parse(response);
 
       console.log(batches);
 
-      let batchNumber = 0;
-      batches.forEach(batch => {
-        batchNumber++;
 
-        templateIds.forEach(templateId => {
-          if (document.getElementById(templateId + batchNumber) === null) {
-            cloneChartDiv(templateId, batchNumber);
-          }
-        });
+      handleEmptyMessage(batches)
+      displayBatchSelectionForm(batches)
+      displayCharts(batches);
 
-        loadGraph(batch.generations, batchNumber)
+    });
+  }
+
+  function displayBatchSelectionForm(batches) {
+    let batchSelectionForm = document.getElementById('batch-selection-form');
+    batchSelectionForm.textContent = null;
+
+    batches.forEach((batch, batchNumber) => {
+      let label = document.createElement('label');
+      label.classList.add('batch-label');
+      label.innerText = 'Batch #' + batchNumber;
+
+      let radioButton = document.createElement('input');
+      radioButton.type = 'radio';
+      radioButton.id = 'batch-radio--id-' + batchNumber;
+      radioButton.classList.add('batch-radio')
+
+      label.appendChild(radioButton)
+      batchSelectionForm.appendChild(label);
+    });
+  }
+
+  function handleEmptyMessage(batches) {
+    if(batches.length === 0) {
+      document.getElementById('empty-message').classList.add('empty-message--visible');
+    } else {
+      document.getElementById('empty-message').classList.remove('empty-message--visible');
+    }
+  }
+
+  function setLoadingState(isLoading) {
+    let reloadButton = document.getElementById('reload-button')
+    let loadingButton = document.getElementById('loading-button');
+    if (isLoading) {
+      reloadButton.disabled = true;
+      reloadButton.classList.add('reload-button--loading');
+      loadingButton.classList.add('loading-button--loading');
+    }
+    else
+    {
+      reloadButton.disabled = false;
+      reloadButton.classList.remove('reload-button--loading')
+      loadingButton.classList.remove('loading-button--loading');
+    }
+  }
+
+  function displayCharts(batches) {
+    batches.forEach((batch, batchNumber) => {
+      batchNumber++;
+
+      templateIds.forEach(templateId => {
+        if (document.getElementById(templateId + batchNumber) === null) {
+          cloneChartDiv(templateId, batchNumber);
+        }
       });
+
+      loadGraph(batch.generations, batchNumber)
     });
   }
 

@@ -28,6 +28,9 @@ public class ApplicationController implements Initializable {
   @FXML
   private HBox rootElement;
 
+  @FXML
+  private GameController gameController;
+
   private Stage stage;
   private IApplicationConfigReader config = Config.getApplicationConfigReader();
   private static ApplicationController instance;
@@ -80,6 +83,7 @@ public class ApplicationController implements Initializable {
 
     ConfigController.setDisable(true);
     game.onGameOver(this::stopTimer);
+    gameController.setDisplayedGame(game);
 
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (!isTimerRunning) {
@@ -88,7 +92,7 @@ public class ApplicationController implements Initializable {
 
       game.changeDirection(direction);
       game.onTick();
-      GameController.display(game);
+      gameController.display(game);
 
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
@@ -109,12 +113,11 @@ public class ApplicationController implements Initializable {
 
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (!isTimerRunning) {
-
         return;
       }
 
       if (adapter == null) {
-        NeuralNetwork neuralNet = batch.processGeneration();
+        NeuralNetwork neuralNet = batch.processNewGeneration();
         if (neuralNet != null) {
           adapter = new GameAdapter(neuralNet, null);
         }
@@ -129,9 +132,9 @@ public class ApplicationController implements Initializable {
       adapter.moveSnake();
       GenerationEntity entity;
       entity = batch.getCurrentGenerationEntity();
-      GameController.display(adapter.getGame());
+      gameController.display(adapter.getGame());
       if (isRealtimeStatisticsVerbose) {
-        GameController.displayStats(entity, adapter.getSnakeLength(), statisticsPosition);
+        gameController.displayStats(entity, adapter.getSnakeLength(), statisticsPosition);
       }
       ConfigController.display(adapter.getGame().getDirection());
       if (adapter.isGameOver()) {
@@ -161,7 +164,7 @@ public class ApplicationController implements Initializable {
         return;
       }
       adapter.moveSnake();
-      GameController.display(adapter.getGame());
+      gameController.display(adapter.getGame());
       if (adapter.isGameOver()) {
         stopTimer();
       }
@@ -206,7 +209,7 @@ public class ApplicationController implements Initializable {
 
         case SPACE:
         case ENTER:
-          triggerGame();
+          toggleGame();
           break;
 
         case V:
@@ -220,7 +223,7 @@ public class ApplicationController implements Initializable {
     });
   }
 
-  private void triggerGame() {
+  private void toggleGame() {
     if (!isTimerRunning) {
       start();
     } else {

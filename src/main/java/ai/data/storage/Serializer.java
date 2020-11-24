@@ -42,8 +42,6 @@ public class Serializer {
             inputStream.close();
             in.close();
 
-            //System.out.println("success? " + phoenix != null);
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
