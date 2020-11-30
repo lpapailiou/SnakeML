@@ -23,6 +23,7 @@ public class GameInformationPainter {
   }
 
   public void paint(GenerationEntity entity, int snakeLength, int position) {
+    colors = config.getTheme();
     Color background = config.getTheme().isDarkTheme() ? colors.getBackgroundColor().brighter() : colors.getBackgroundColor().brighter();
     background = background.deriveColor(1,1,1,0.8);
     context.setFill(background);
