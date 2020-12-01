@@ -21,8 +21,8 @@ public class NetworkPainter implements INetworkPainter {
   private GraphicsContext context;
   private int width = 520;
   private int height = 290;
-  private double correctionOffsetX = -0.3;
-  private double correctionOffsetY = 1.3;
+  private double correctionOffsetX = 0.8;
+  private double correctionOffsetY = 1.9;
   private int radius = 16;
   List<List<GraphNode>> graph = new ArrayList<>();
 
