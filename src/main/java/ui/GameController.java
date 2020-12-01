@@ -56,6 +56,7 @@ public class GameController implements Initializable, IGameTicker {
   static void resetGamePanel() {
     if (instance != null) {
       instance.reset();
+      instance.statisticsPainter = new GameInformationPainter(instance.gamePane.getGraphicsContext2D());
     }
   }
 
