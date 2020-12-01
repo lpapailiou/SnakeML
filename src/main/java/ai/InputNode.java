@@ -1,37 +1,37 @@
 package ai;
 
-import game.element.Cell;
-import game.element.Snake;
+import game.Cell;
+import game.Snake;
 import main.configuration.Config;
 import main.configuration.INodeConfigReader;
 
 public enum InputNode {
 
-  UP_WALL(0, "distance to upper wall") {
+  UP_WALL("distance to upper wall") {
     @Override
     public double getInput(Snake snake, Cell food) {
       return 1 / (snake.getHead().y + 0.001);
     }
   },
-  RIGHT_WALL(1, "distance to right wall") {
+  RIGHT_WALL( "distance to right wall") {
     @Override
     public double getInput(Snake snake, Cell food) {
       return 1 / (Math.abs(config.getBoardWidth() - 1 - snake.getHead().x) + 0.001);
     }
   },
-  DOWN_WALL(2, "distance to bottom wall") {
+  DOWN_WALL("distance to bottom wall") {
     @Override
     public double getInput(Snake snake, Cell food) {
       return 1 / (Math.abs(config.getBoardHeight() - 1 - snake.getHead().y) + 0.001);
     }
   },
-  LEFT_WALL(3, "distance to left wall") {
+  LEFT_WALL("distance to left wall") {
     @Override
     public double getInput(Snake snake, Cell food) {
       return 1 / (snake.getHead().x + 0.001);
     }
   },
-  UP_BODY(4, "distance to body upwards") {
+  UP_BODY( "distance to body upwards") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
@@ -47,7 +47,7 @@ public enum InputNode {
       return 1 / (index + 0.001);
     }
   },
-  RIGHT_BODY(5, "distance to body right hand side") {
+  RIGHT_BODY( "distance to body right hand side") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
@@ -64,7 +64,7 @@ public enum InputNode {
       return 1 / (index + 0.001);
     }
   },
-  DOWN_BODY(6, "distance to body downwards") {
+  DOWN_BODY("distance to body downwards") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
@@ -81,7 +81,7 @@ public enum InputNode {
       return 1 / (index + 0.001);
     }
   },
-  LEFT_BODY(7, "distance to body left hand side") {
+  LEFT_BODY( "distance to body left hand side") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
@@ -97,7 +97,7 @@ public enum InputNode {
       return 1 / (index + 0.001);
     }
   },
-  UP_FOOD(8, "vision of food upwards") {
+  UP_FOOD("vision of food upwards") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell snakeHead = snake.getHead().clone();
@@ -108,7 +108,7 @@ public enum InputNode {
       return 0;
     }
   },
-  RIGHT_FOOD(9, "vision of food right hand side") {
+  RIGHT_FOOD("vision of food right hand side") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell snakeHead = snake.getHead().clone();
@@ -119,7 +119,7 @@ public enum InputNode {
       return 0;
     }
   },
-  DOWN_FOOD(10, "vision of food downwards") {
+  DOWN_FOOD("vision of food downwards") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell snakeHead = snake.getHead().clone();
@@ -130,7 +130,7 @@ public enum InputNode {
       return 0;
     }
   },
-  LEFT_FOOD(11, "vision of food left hand side") {
+  LEFT_FOOD("vision of food left hand side") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell snakeHead = snake.getHead().clone();
@@ -143,16 +143,14 @@ public enum InputNode {
   };
 
   private static final INodeConfigReader config = Config.getNodeConfigReader();
-  private final int id;
   private final String tooltipText;
 
-  InputNode(int id, String tooltipText) {
-    this.id = id;
+  InputNode(String tooltipText) {
     this.tooltipText = tooltipText;
   }
 
   public int getId() {
-    return id;
+    return this.ordinal();
   }
 
   public String getTooltipText() {

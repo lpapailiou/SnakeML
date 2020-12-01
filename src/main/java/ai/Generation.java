@@ -28,7 +28,7 @@ class Generation {
   private GenerationEntity generationEntity = new GenerationEntity();
   private List<GenerationEntity> generationEntities;
 
-  public Generation(int id, int populationSize, List<GenerationEntity> generationEntites) {
+  Generation(int id, int populationSize, List<GenerationEntity> generationEntites) {
     if (populationSize < 1) {
       throw new IllegalArgumentException("minimum size of a population is 1.");
     }
@@ -37,7 +37,7 @@ class Generation {
     this.generationEntities = generationEntites;
   }
 
-  public NeuralNetwork run(NeuralNetwork net) {
+  NeuralNetwork run(NeuralNetwork net) {
     ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL);
 
     List<Runnable> tasks = new ArrayList<>();

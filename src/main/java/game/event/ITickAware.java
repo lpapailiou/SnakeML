@@ -1,5 +1,5 @@
 package game.event;
 
-public interface TickAware {
+public interface ITickAware {
   void onTick();
 }

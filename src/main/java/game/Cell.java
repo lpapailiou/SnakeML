@@ -1,4 +1,4 @@
-package game.element;
+package game;
 
 import java.util.Objects;
 
