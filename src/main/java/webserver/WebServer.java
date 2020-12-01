@@ -9,7 +9,7 @@ public class WebServer {
   public void runServer() {
     webserver.config.enableCorsForAllOrigins();
     webserver.config.enableDevLogging();
-    webserver.config.addStaticFiles("/");
+    webserver.config.addStaticFiles("/www");
     webserver.get("", StatisticsEndpoint::listAllBatches);
   }
 
