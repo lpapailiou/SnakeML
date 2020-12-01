@@ -10,7 +10,7 @@ import java.util.List;
 
 public class StatisticsEndpoint {
 
-  public static void listAllBatches(Context context) {
+  static void listAllBatches(Context context) {
 
     context.header(Header.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 
