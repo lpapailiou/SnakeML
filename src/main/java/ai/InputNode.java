@@ -1,7 +1,7 @@
 package ai;
 
-import game.element.Cell;
-import game.element.Snake;
+import game.Cell;
+import game.Snake;
 import main.configuration.Config;
 import main.configuration.INodeConfigReader;
 

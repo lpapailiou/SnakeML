@@ -1,6 +1,6 @@
 package ai.data;
 
-import game.element.Snake;
+import game.Snake;
 
 public class GenerationEntity {
 

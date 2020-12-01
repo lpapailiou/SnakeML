@@ -1,7 +1,7 @@
 package main.configuration;
 
 import game.Direction;
-import game.element.Cell;
+import game.Cell;
 
 import java.util.ArrayList;
 import java.util.HashSet;

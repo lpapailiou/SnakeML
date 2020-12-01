@@ -1,6 +1,5 @@
-package game.element;
+package game;
 
-import game.Direction;
 import java.util.LinkedList;
 import java.util.List;
 import main.configuration.Config;
@@ -28,7 +27,7 @@ public class Snake {
     }
   }
 
-  public void move(Direction direction, Cell food) {
+  void move(Direction direction, Cell food) {
     if (!isDead()) {
       timeout--;
       Cell snakeHead = body.getFirst();
@@ -93,7 +92,7 @@ public class Snake {
     return body.get(0);
   }
 
-  public boolean isHeadAt(Cell foodPosition) {
+  boolean isHeadAt(Cell foodPosition) {
     return body.get(0).equals(foodPosition);
   }
 

@@ -1,9 +1,7 @@
 package game;
 
-import game.element.Cell;
-import game.element.Snake;
-import game.event.GameOverConsumer;
-import game.event.TickAware;
+import game.event.IGameOverConsumer;
+import game.event.ITickAware;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -11,9 +9,9 @@ import java.util.logging.Logger;
 import main.configuration.Config;
 import main.configuration.IGameConfigReader;
 
-public class Game implements TickAware {
+public class Game implements ITickAware {
 
-  private final ArrayList<GameOverConsumer> gameOverConsumers = new ArrayList<>();
+  private final ArrayList<IGameOverConsumer> gameOverConsumers = new ArrayList<>();
 
   private static final Logger LOG = Logger.getLogger("winning snake logger");
   private IGameConfigReader config = Config.getGameConfigReader();
@@ -47,10 +45,10 @@ public class Game implements TickAware {
   }
 
   private void emitGameOver() {
-    gameOverConsumers.forEach(GameOverConsumer::handle);
+    gameOverConsumers.forEach(IGameOverConsumer::handle);
   }
 
-  public void onGameOver(GameOverConsumer consumer) {
+  public void onGameOver(IGameOverConsumer consumer) {
     this.gameOverConsumers.add(consumer);
   }
 

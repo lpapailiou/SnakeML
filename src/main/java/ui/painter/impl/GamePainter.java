@@ -1,7 +1,7 @@
 package ui.painter.impl;
 
-import game.element.Cell;
-import game.element.Snake;
+import game.Cell;
+import game.Snake;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

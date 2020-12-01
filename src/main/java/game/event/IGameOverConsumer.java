@@ -1,7 +1,7 @@
 package game.event;
 
 
-public interface GameOverConsumer {
+public interface IGameOverConsumer {
 
   void handle();
 }

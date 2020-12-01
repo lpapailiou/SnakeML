@@ -1,9 +1,7 @@
 package ui.painter;
 
-import ai.GameAdapter;
-import ai.data.GenerationEntity;
-import game.element.Cell;
-import game.element.Snake;
+import game.Cell;
+import game.Snake;
 
 public interface IGamePainter {
 
