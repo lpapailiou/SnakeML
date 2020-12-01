@@ -2,7 +2,6 @@ package ai;
 
 import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,7 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import main.configuration.Config;
 import main.configuration.IGenerationConfigReader;
 
@@ -68,10 +66,12 @@ class Generation {
     populationList.sort(Comparator.nullsLast(Collections.reverseOrder()));
     NeuralNetwork best = populationList.get(0).getNeuralNetwork();
 
-    LOG.log(Level.INFO, "max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0).getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength()+")");
+    LOG.log(Level.INFO,
+        "max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0)
+            .getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength() + ")");
 
     //if (populationList.get(0).getSnakeLength() == config.getBoardWidth()*config.getBoardHeight()) {
-      //Serializer.save(best);    // TODO: uncomment to generate new serialized NeuralNetworks
+    //Serializer.save(best);    // TODO: uncomment to generate new serialized NeuralNetworks
     //}
 
     if (populationList.size() < 2) {
@@ -85,9 +85,11 @@ class Generation {
 
     int numberOfSnakesForReproduction = 8;
     if (populationList.size() > 100 && populationList.size() < 200) {
-      numberOfSnakesForReproduction = (int) (config.getPopulationSize()*0.2);
+      numberOfSnakesForReproduction = (int) (config.getPopulationSize() * 0.2);
+    } else if (populationList.size() > 200 && populationList.size() < 1000) {
+      numberOfSnakesForReproduction = (int) (config.getPopulationSize() * 0.1);
     } else if (populationList.size() > 1000) {
-      numberOfSnakesForReproduction = (int) (config.getPopulationSize()*0.01);
+      numberOfSnakesForReproduction = (int) (config.getPopulationSize() * 0.01);
     }
     int choice = 2;  // choice is the number of snakes which will be additionally selected to reproduce with the best snake
 
@@ -100,13 +102,16 @@ class Generation {
     }
 
     for (int i = 0; i < choice; i++) {
-      best = NeuralNetwork.merge(best, spinRouletteWheel(populationList, map, numberOfSnakesForReproduction, sum));   // selection after roulette wheel principle
+      best = NeuralNetwork.merge(best,
+          spinRouletteWheel(populationList, map, numberOfSnakesForReproduction,
+              sum));   // selection after roulette wheel principle
     }
 
     return best;
   }
 
-  private NeuralNetwork spinRouletteWheel(List<GameAdapter> generations, Map<Integer, Long> map, int bound, double sum) {
+  private NeuralNetwork spinRouletteWheel(List<GameAdapter> generations, Map<Integer, Long> map,
+      int bound, double sum) {
     long checksum = 0;
     NeuralNetwork chosen = null;
     for (int i = 0; i < bound; i++) {
@@ -120,12 +125,14 @@ class Generation {
   }
 
   static class BackgroundGame implements Runnable {
+
     NeuralNetwork net;
     List<GameAdapter> populationList;
     GenerationEntity generationEntity;
     GameAdapter adapter;
 
-    BackgroundGame(NeuralNetwork net, List<GameAdapter> populationList, GenerationEntity generationEntity) {
+    BackgroundGame(NeuralNetwork net, List<GameAdapter> populationList,
+        GenerationEntity generationEntity) {
       this.net = net;
       this.generationEntity = generationEntity;
       this.populationList = populationList;
