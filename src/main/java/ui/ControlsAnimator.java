@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import main.configuration.Mode;
 
-public class ControlsAnimator {
+class ControlsAnimator {
 
   private final ComboBox<String> modeSelector;
   private final HBox baseControls;
@@ -30,7 +30,7 @@ public class ControlsAnimator {
     this.statisticsControls = statisticControls;
   }
 
-  public void animateModeTransition(Mode newMode, Mode oldMode, Scene scene) {
+  void animateModeTransition(Mode newMode, Mode oldMode, Scene scene) {
     if(scene == null) {
       return;
     }

@@ -45,22 +45,23 @@ public class GameController implements Initializable, IGameTicker {
   }
 
   void displayStats(GenerationEntity entity, int snakeLength, int position) {
-    statisticsPainter.paint(entity, snakeLength, position);
+    statisticsPainter.paintGameInformation(entity, snakeLength, position);
   }
 
-  private void reset() {
+  void reset() {
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
+    statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
+    displayedGame = null;
     onTick();
   }
 
   static void resetGamePanel() {
     if (instance != null) {
       instance.reset();
-      instance.statisticsPainter = new GameInformationPainter(instance.gamePane.getGraphicsContext2D());
     }
   }
 
-  public void setDisplayedGame(Game displayedGame) {
+  void setDisplayedGame(Game displayedGame) {
     this.displayedGame = displayedGame;
   }
 }

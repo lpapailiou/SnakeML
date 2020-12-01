@@ -7,8 +7,9 @@ import javafx.scene.text.Font;
 import main.configuration.Config;
 import main.configuration.IPainterConfigReader;
 import main.configuration.Theme;
+import ui.painter.IGameInformationPainter;
 
-public class GameInformationPainter {
+public class GameInformationPainter implements IGameInformationPainter {
 
   private GraphicsContext context;
   private IPainterConfigReader config = Config.getPainterConfigReader();
@@ -22,8 +23,7 @@ public class GameInformationPainter {
     initializeDimensions();
   }
 
-  public void paint(GenerationEntity entity, int snakeLength, int position) {
-    colors = config.getTheme();
+  public void paintGameInformation(GenerationEntity entity, int snakeLength, int position) {
     Color background = config.getTheme().isDarkTheme() ? colors.getBackgroundColor().brighter() : colors.getBackgroundColor().brighter();
     background = background.deriveColor(1,1,1,0.8);
     context.setFill(background);

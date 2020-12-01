@@ -81,9 +81,6 @@ public class ConfigController implements Initializable {
   private HBox statisticControls;
 
   @FXML
-  private Label openLabel;
-
-  @FXML
   private Button statisticsButton;
 
   @FXML
@@ -389,12 +386,9 @@ public class ConfigController implements Initializable {
   }
 
   private void initializeButtons() {
-
     statisticsButton.setOnAction(e -> openStatistics());
     startButton.setOnAction(e -> ApplicationController.start());
     stopButton.setOnAction(e -> ApplicationController.stop());
-
-    //openLabel.disable(true);
     stopButton.setDisable(true);
   }
 
