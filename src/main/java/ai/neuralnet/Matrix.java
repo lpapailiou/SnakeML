@@ -25,26 +25,26 @@ public class Matrix implements Serializable, Cloneable {
       this.cols = cols;
   }
 
-  /**
-   * Constructor used for testing
-   * @param input the input 2d array to be converted to a matrix
-   */
-  Matrix(double[][] input) {
-      data = input;
-      rows = input.length;
-      cols = input[0].length;
-  }
+//  /**
+//   * Constructor used for testing
+//   * @param input the input 2d array to be converted to a matrix
+//   */
+//  Matrix(double[][] input) {
+//      data = input;
+//      rows = input.length;
+//      cols = input[0].length;
+//  }
 
-  void add(Matrix m) {
-      if (cols != m.cols || rows != m.rows) {
-          throw new IllegalArgumentException("wrong input matrix dimensions for addition!");
-      }
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              data[i][j] += m.data[i][j];
-          }
-      }
-  }
+//  void add(Matrix m) {
+//      if (cols != m.cols || rows != m.rows) {
+//          throw new IllegalArgumentException("wrong input matrix dimensions for addition!");
+//      }
+//      for (int i = 0; i < rows; i++) {
+//          for (int j = 0; j < cols; j++) {
+//              data[i][j] += m.data[i][j];
+//          }
+//      }
+//  }
 
   void addBias(Matrix m) {
       if (cols != m.cols) {
@@ -57,17 +57,17 @@ public class Matrix implements Serializable, Cloneable {
       }
   }
 
-  static Matrix subtract(Matrix a, Matrix b) {
-      if (a.cols != b.cols) {
-          throw new IllegalArgumentException("wrong input matrix dimensions! " + a.getType() + " vs. " + b.getType());
-      }
-      for (int i = 0; i < a.rows; i++) {
-          for (int j = 0; j < a.cols; j++) {
-              a.data[i][j] -= b.data[i][j];
-          }
-      }
-      return a;
-  }
+//  static Matrix subtract(Matrix a, Matrix b) {
+//      if (a.cols != b.cols) {
+//          throw new IllegalArgumentException("wrong input matrix dimensions! " + a.getType() + " vs. " + b.getType());
+//      }
+//      for (int i = 0; i < a.rows; i++) {
+//          for (int j = 0; j < a.cols; j++) {
+//              a.data[i][j] -= b.data[i][j];
+//          }
+//      }
+//      return a;
+//  }
 
   static Matrix merge(Matrix a, Matrix b) {
       if (a.rows != b.rows || a.cols != b.cols) {
@@ -81,24 +81,24 @@ public class Matrix implements Serializable, Cloneable {
       return a;
   }
 
-  void multiply(double scalar) {
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              data[i][j] *= scalar;
-          }
-      }
-  }
-
-  void multiplyElementwise(Matrix m) {
-      if (cols != m.cols || rows != m.rows) {
-          throw new IllegalArgumentException("wrong input matrix dimensions!");
-      }
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              data[i][j] *= m.data[i][j];
-          }
-      }
-  }
+//  void multiply(double scalar) {
+//      for (int i = 0; i < rows; i++) {
+//          for (int j = 0; j < cols; j++) {
+//              data[i][j] *= scalar;
+//          }
+//      }
+//  }
+//
+//  void multiplyElementwise(Matrix m) {
+//      if (cols != m.cols || rows != m.rows) {
+//          throw new IllegalArgumentException("wrong input matrix dimensions!");
+//      }
+//      for (int i = 0; i < rows; i++) {
+//          for (int j = 0; j < cols; j++) {
+//              data[i][j] *= m.data[i][j];
+//          }
+//      }
+//  }
 
   static Matrix multiply(Matrix a, Matrix b) {
       if (a.cols != b.rows) {
@@ -117,15 +117,15 @@ public class Matrix implements Serializable, Cloneable {
       return tmp;
   }
 
-  static Matrix transpose(Matrix m) {
-      Matrix tmp = new Matrix(m.cols, m.rows);
-      for (int i = 0; i < m.rows; i++) {
-          for (int j = 0; j < m.cols; j++) {
-              tmp.data[j][i] = m.data[i][j];
-          }
-      }
-      return tmp;
-  }
+//  static Matrix transpose(Matrix m) {
+//      Matrix tmp = new Matrix(m.cols, m.rows);
+//      for (int i = 0; i < m.rows; i++) {
+//          for (int j = 0; j < m.cols; j++) {
+//              tmp.data[j][i] = m.data[i][j];
+//          }
+//      }
+//      return tmp;
+//  }
 
   void sigmoid() {
       for (int i = 0; i < rows; i++) {
@@ -135,15 +135,15 @@ public class Matrix implements Serializable, Cloneable {
       }
   }
 
-  Matrix dsigmoid() {
-      Matrix tmp = new Matrix(rows, cols);
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              tmp.data[i][j] = data[i][j] * (1 - data[i][j]);
-          }
-      }
-      return tmp;
-  }
+//  Matrix dsigmoid() {
+//      Matrix tmp = new Matrix(rows, cols);
+//      for (int i = 0; i < rows; i++) {
+//          for (int j = 0; j < cols; j++) {
+//              tmp.data[i][j] = data[i][j] * (1 - data[i][j]);
+//          }
+//      }
+//      return tmp;
+//  }
 
   private String getType() {
       return "(" + rows + ", " + cols + ")";
@@ -193,15 +193,15 @@ public class Matrix implements Serializable, Cloneable {
       }
   }
 
-  void print() {
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              System.out.print(data[i][j] + "  ");
-          }
-          System.out.println();
-      }
-      System.out.println();
-  }
+//  void print() {
+//      for (int i = 0; i < rows; i++) {
+//          for (int j = 0; j < cols; j++) {
+//              System.out.print(data[i][j] + "  ");
+//          }
+//          System.out.println();
+//      }
+//      System.out.println();
+//  }
 
   @Override
   protected Matrix clone() throws CloneNotSupportedException {
