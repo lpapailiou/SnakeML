@@ -4,6 +4,8 @@ import game.Snake;
 
 public class GenerationEntity {
 
+  // note: method names may not apply to coding guidelines, because jackson library will use method names to generate variable names for JSON file.
+
   private final static Object LOCK = new Object();
   private int id;
   private int populationSize;

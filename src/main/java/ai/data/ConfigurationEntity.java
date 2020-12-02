@@ -2,6 +2,8 @@ package ai.data;
 
 public class ConfigurationEntity {
 
+  // note: method names may not apply to coding guidelines, because jackson library will use method names to generate variable names for JSON file.
+
   private int boardWidth;
   private int boardHeight;
   private String algorithm;
