@@ -122,10 +122,12 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
     return instance;
   }
 
+  @Override
   public void setMode(Mode mode) {
     this.mode = mode;
   }
 
+  @Override
   public Mode getMode() {
     return mode;
   }
