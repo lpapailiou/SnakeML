@@ -92,76 +92,78 @@ public class NeuralNetwork implements Serializable {
     return Matrix.asList(tmp);
   }
 
-  /**
-   * This method will take input nodes as well as the expected output nodes as parameter and return
-   * the predicted output nodes. The neural net will be modified and back propagate the expected
-   * values to adjust the weighed layers. This method can be used for training as supervised machine
-   * learning algorithm.
-   *
-   * @param inputNodes          the input nodes as double array
-   * @param expectedOutputNodes the expected output nodes as double array
-   * @return the actual output nodes as Double List
-   */
-  public List<Double> learn(double[] inputNodes, double[] expectedOutputNodes) {
-    if (inputNodes == null || expectedOutputNodes == null) {
-      throw new NullPointerException("inputNodes and expectedOutputNodes are required!");
-    } else if (inputNodes.length != inputLayerNodes) {
-      throw new IllegalArgumentException(
-          "input node count does not match neural network configuration! received "
-              + inputNodes.length + " instead of " + inputLayerNodes + " input nodes.");
-    }
+// *********************** commented out because not in used in this project ***********************
+//  /**
+//   * This method will take input nodes as well as the expected output nodes as parameter and return
+//   * the predicted output nodes. The neural net will be modified and back propagate the expected
+//   * values to adjust the weighed layers. This method can be used for training as supervised machine
+//   * learning algorithm.
+//   *
+//   * @param inputNodes          the input nodes as double array
+//   * @param expectedOutputNodes the expected output nodes as double array
+//   * @return the actual output nodes as Double List
+//   */
+//  public List<Double> learn(double[] inputNodes, double[] expectedOutputNodes) {
+//    if (inputNodes == null || expectedOutputNodes == null) {
+//      throw new NullPointerException("inputNodes and expectedOutputNodes are required!");
+//    } else if (inputNodes.length != inputLayerNodes) {
+//      throw new IllegalArgumentException(
+//          "input node count does not match neural network configuration! received "
+//              + inputNodes.length + " instead of " + inputLayerNodes + " input nodes.");
+//    }
+//
+//    Matrix input = Matrix.fromArray(inputNodes);
+//
+//    // forward propagate and prepare output
+//    List<Matrix> steps = new ArrayList<>();
+//    Matrix tmp = input;
+//    for (Layer layer : layers) {
+//      tmp = Matrix.multiply(layer.weight, tmp);
+//      tmp.addBias(layer.bias);
+//      tmp.sigmoid();
+//      steps.add(tmp);
+//    }
+//
+//    Matrix target = Matrix.fromArray(expectedOutputNodes);
+//
+//    // backward propagate to adjust weights in layers
+//    Matrix error = null;
+//    for (int i = steps.size() - 1; i >= 0; i--) {
+//      if (error == null) {
+//        error = Matrix.subtract(target, steps.get(steps.size() - 1));
+//      } else {
+//        error = Matrix.multiply(Matrix.transpose(layers.get(i + 1).weight), error);
+//      }
+//      Matrix gradient = steps.get(i).dsigmoid();
+//      gradient.multiplyElementwise(error);
+//      gradient.multiply(randomizationRate);
+//      Matrix delta = Matrix
+//          .multiply(gradient, Matrix.transpose((i == 0) ? input : steps.get(i - 1)));
+//      layers.get(i).weight.add(delta);
+//      layers.get(i).bias.addBias(gradient);
+//    }
+//
+//    return Matrix.asList(tmp);
+//  }
 
-    Matrix input = Matrix.fromArray(inputNodes);
-
-    // forward propagate and prepare output
-    List<Matrix> steps = new ArrayList<>();
-    Matrix tmp = input;
-    for (Layer layer : layers) {
-      tmp = Matrix.multiply(layer.weight, tmp);
-      tmp.addBias(layer.bias);
-      tmp.sigmoid();
-      steps.add(tmp);
-    }
-
-    Matrix target = Matrix.fromArray(expectedOutputNodes);
-
-    // backward propagate to adjust weights in layers
-    Matrix error = null;
-    for (int i = steps.size() - 1; i >= 0; i--) {
-      if (error == null) {
-        error = Matrix.subtract(target, steps.get(steps.size() - 1));
-      } else {
-        error = Matrix.multiply(Matrix.transpose(layers.get(i + 1).weight), error);
-      }
-      Matrix gradient = steps.get(i).dsigmoid();
-      gradient.multiplyElementwise(error);
-      gradient.multiply(randomizationRate);
-      Matrix delta = Matrix
-          .multiply(gradient, Matrix.transpose((i == 0) ? input : steps.get(i - 1)));
-      layers.get(i).weight.add(delta);
-      layers.get(i).bias.addBias(gradient);
-    }
-
-    return Matrix.asList(tmp);
-  }
-
-  /**
-   * This method can be used to batch train the neural net with the supervised machine learning
-   * approach.
-   *
-   * @param inputSet          the input set of possible input node values
-   * @param expectedOutputSet the output set of according expected output values
-   * @param rounds            the count of repetitions of the batch training
-   */
-  public void train(double[][] inputSet, double[][] expectedOutputSet, int rounds) {
-    if (inputSet == null || expectedOutputSet == null) {
-      throw new NullPointerException("inputSet and expectedOutputSet are required!");
-    }
-    for (int i = 0; i < rounds; i++) {
-      int sampleIndex = (int) (Math.random() * inputSet.length);
-      learn(inputSet[sampleIndex], expectedOutputSet[sampleIndex]);
-    }
-  }
+// *********************** commented out because not in used in this project ***********************
+//  /**
+//   * This method can be used to batch train the neural net with the supervised machine learning
+//   * approach.
+//   *
+//   * @param inputSet          the input set of possible input node values
+//   * @param expectedOutputSet the output set of according expected output values
+//   * @param rounds            the count of repetitions of the batch training
+//   */
+//  public void train(double[][] inputSet, double[][] expectedOutputSet, int rounds) {
+//    if (inputSet == null || expectedOutputSet == null) {
+//      throw new NullPointerException("inputSet and expectedOutputSet are required!");
+//    }
+//    for (int i = 0; i < rounds; i++) {
+//      int sampleIndex = (int) (Math.random() * inputSet.length);
+//      learn(inputSet[sampleIndex], expectedOutputSet[sampleIndex]);
+//    }
+//  }
 
   /**
    * This method will merge two neural networks to one. Please note that the first neural network
@@ -188,22 +190,22 @@ public class NeuralNetwork implements Serializable {
    *
    * @return a randomized clone of this instance
    */
-  @Override
-  public NeuralNetwork clone() {
+  public NeuralNetwork getRandomizedClone() {
     NeuralNetwork net = new NeuralNetwork(inputLayerNodes, randomizationRate, layers);
     net.randomize(randomizationRate);
     return net;
   }
 
-  /**
-   * This method will provide an identical copy of the current neural network. The output neural
-   * network will not be connected to the copied neural network.
-   *
-   * @return an identical copy of this instance
-   */
-  public NeuralNetwork copy() {
-    return new NeuralNetwork(inputLayerNodes, randomizationRate, layers);
-  }
+// *********************** commented out because not in used in this project ***********************
+//  /**
+//   * This method will provide an identical copy of the current neural network. The output neural
+//   * network will not be connected to the copied neural network.
+//   *
+//   * @return an identical copy of this instance
+//   */
+//  public NeuralNetwork copy() {
+//    return new NeuralNetwork(inputLayerNodes, randomizationRate, layers);
+//  }
 
   private void randomize(double factor) {
     for (Layer layer : layers) {

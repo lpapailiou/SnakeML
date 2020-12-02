@@ -42,7 +42,7 @@ class Generation {
 
     List<Runnable> tasks = new ArrayList<>();
     for (int i = 0; i < populationSize; i++) {
-      tasks.add(new BackgroundGame(i == 0 ? net : net.clone(), populationList, generationEntity));
+      tasks.add(new BackgroundGame(i == 0 ? net : net.getRandomizedClone(), populationList, generationEntity));
     }
 
     CompletableFuture<?>[] futures = tasks.stream()

@@ -155,15 +155,19 @@ public class MatrixTest {
     double[][] d = new double[][] {{1,1},{1,1},{1,1}};
     Matrix a = new Matrix(d);
     a.print();
-    Matrix b = a.clone();
-    Matrix c = a.clone();
-    b.print();
-    assertEquals(a, b);
-    b.randomize(0.9);
-    b.print();
-    assertNotEquals(a, b);
-    c.randomize();
-    assertNotEquals(a, c);
+    try {
+      Matrix b = a.clone();
+      Matrix c = a.clone();
+      b.print();
+      assertEquals(a, b);
+      b.randomize(0.9);
+      b.print();
+      assertNotEquals(a, b);
+      c.randomize();
+      assertNotEquals(a, c);
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
   }
 
 

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This is a helper class to build the layers of the neural network.
  */
-public class Matrix implements Serializable {
+public class Matrix implements Serializable, Cloneable {
 
   private static final long serialVersionUID = 2L;
   private final double[][] data;
@@ -204,7 +204,8 @@ public class Matrix implements Serializable {
   }
 
   @Override
-  protected Matrix clone() {
+  protected Matrix clone() throws CloneNotSupportedException {
+    super.clone();
       Matrix m = new Matrix(rows, cols);
       for (int i = 0; i < m.rows; i++) {
           if (m.cols >= 0) System.arraycopy(this.data[i], 0, m.data[i], 0, m.cols);
@@ -217,7 +218,7 @@ public class Matrix implements Serializable {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        sb.append(data[i][j] + "  ");
+        sb.append(data[i][j]).append("  ");
       }
       sb.append("\n");
     }
