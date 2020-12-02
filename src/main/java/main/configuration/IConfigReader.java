@@ -2,7 +2,11 @@ package main.configuration;
 
 import java.util.List;
 
-public interface IConfigReader {    // used in ConfigController
+public interface IConfigReader {
+
+  static IConfigReader getInstance() {
+    return Config.getInstance();
+  }
 
   int getBoardWidth();
 

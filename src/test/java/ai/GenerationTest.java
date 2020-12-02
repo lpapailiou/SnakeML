@@ -11,7 +11,7 @@ public class GenerationTest {
 
   @Test
   public void generationTest() {
-    ITestConfig config = Config.getTestConfig();
+    ITestConfig config = ITestConfig.getInstance();
     config.setMode(Mode.NEURAL_NETWORK);
     NeuralNetwork net = new NeuralNetwork(12,8,8,4);
     Generation gen = new Generation(1,100, new ArrayList<>());

@@ -142,7 +142,7 @@ public enum InputNode {
     }
   };
 
-  private static final INodeConfigReader config = Config.getNodeConfigReader();
+  private static final INodeConfigReader config = INodeConfigReader.getInstance();
   private final String tooltipText;
 
   InputNode(String tooltipText) {

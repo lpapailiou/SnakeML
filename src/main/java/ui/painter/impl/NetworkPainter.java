@@ -16,7 +16,7 @@ import ui.painter.INetworkPainter;
 
 public class NetworkPainter implements INetworkPainter {
 
-  private IPainterConfigReader config = Config.getPainterConfigReader();
+  private IPainterConfigReader config = IPainterConfigReader.getInstance();
   private Theme colors = config.getTheme();
   private GraphicsContext context;
   private int width = 520;

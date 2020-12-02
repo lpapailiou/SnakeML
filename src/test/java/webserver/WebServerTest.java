@@ -37,7 +37,7 @@ public class WebServerTest {
 
     List<String> expectedResultJson;
 
-    ITestConfig config = Config.getTestConfig();
+    ITestConfig config = ITestConfig.getInstance();
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
     config.setMode(Mode.NEURAL_NETWORK);

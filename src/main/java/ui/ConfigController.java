@@ -93,8 +93,8 @@ public class ConfigController implements Initializable {
   private Button stopButton;
 
   private static ConfigController instance;
-  private IConfigReader configReader = Config.getConfigReader();
-  private IConfigWriter configWriter = Config.getConfigWriter();
+  private IConfigReader configReader = IConfigReader.getInstance();
+  private IConfigWriter configWriter = IConfigWriter.getInstance();
   private NetworkPainter networkPainter;
   private GraphicsContext context;
   private ObservableList<String> colorList = FXCollections.observableArrayList(Arrays.stream(

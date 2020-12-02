@@ -26,7 +26,7 @@ public class Main extends Application {
   @Override
   public void start(Stage stage) {
 
-    IMainConfigReader config = Config.getMainConfigReader();
+    IMainConfigReader config = IMainConfigReader.getInstance();
 
     try {
       createApplicationWindow(stage, config);

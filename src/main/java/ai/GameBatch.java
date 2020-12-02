@@ -13,7 +13,7 @@ import java.util.List;
 
 public class GameBatch {
 
-  private IGameBatchConfigReader config = Config.getGameBatchConfigReader();
+  private IGameBatchConfigReader config = IGameBatchConfigReader.getInstance();
   private int generationCount;
   private int currentGeneration;
   private int populationSize;

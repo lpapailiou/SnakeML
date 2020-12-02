@@ -2,6 +2,10 @@ package main.configuration;
 
 public interface ITestConfig {
 
+  static ITestConfig getInstance() {
+    return Config.getInstance();
+  }
+
   int getBoardWidth();
 
   int getBoardHeight();

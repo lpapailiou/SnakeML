@@ -10,7 +10,7 @@ public class GameBatchTest {
 
   @Test
   public void integrationTest() {
-    ITestConfig config = Config.getTestConfig();
+    ITestConfig config = ITestConfig.getInstance();
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
     config.setMode(Mode.NEURAL_NETWORK);

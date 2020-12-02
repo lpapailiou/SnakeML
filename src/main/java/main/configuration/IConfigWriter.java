@@ -1,6 +1,10 @@
 package main.configuration;
 
-public interface IConfigWriter {   // used in ConfigController
+public interface IConfigWriter {
+
+  static IConfigWriter getInstance() {
+    return Config.getInstance();
+  }
 
   void setBoardWidth(int boardWidth);
 

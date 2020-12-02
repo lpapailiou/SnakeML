@@ -12,7 +12,7 @@ import ui.painter.IGameInformationPainter;
 public class GameInformationPainter implements IGameInformationPainter {
 
   private GraphicsContext context;
-  private IPainterConfigReader config = Config.getPainterConfigReader();
+  private IPainterConfigReader config = IPainterConfigReader.getInstance();
   private Theme colors = config.getTheme();
   private final double canvasWidth = 800;     // must match fxml
   private double paddingWidth;

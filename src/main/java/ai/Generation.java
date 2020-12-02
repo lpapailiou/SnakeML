@@ -21,7 +21,7 @@ import main.configuration.IGenerationConfigReader;
 class Generation {
 
   private static final Logger LOG = Logger.getLogger("generation logger");
-  private IGenerationConfigReader config = Config.getGenerationConfigReader();
+  private IGenerationConfigReader config = IGenerationConfigReader.getInstance();
   private int populationSize;
   private List<GameAdapter> populationList = new ArrayList<>();
   private final static int THREAD_POOL = 4;

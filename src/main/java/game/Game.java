@@ -14,7 +14,7 @@ public class Game implements ITickAware {
   private final ArrayList<IGameOverConsumer> gameOverConsumers = new ArrayList<>();
 
   private static final Logger LOG = Logger.getLogger("winning snake logger");
-  private IGameConfigReader config = Config.getGameConfigReader();
+  private IGameConfigReader config = IGameConfigReader.getInstance();
   private Direction nextDirection = config.getInitialDirection();
   private Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection,
       config.getInitialStartingPosition());

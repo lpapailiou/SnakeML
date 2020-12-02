@@ -32,7 +32,7 @@ public class ApplicationController implements Initializable {
   private GameController gameController;
 
   private Stage stage;
-  private IApplicationConfigReader config = Config.getApplicationConfigReader();
+  private IApplicationConfigReader config = IApplicationConfigReader.getInstance();
   private static ApplicationController instance;
   private Timeline timeline;
   private boolean isTimerRunning = false;

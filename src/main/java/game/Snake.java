@@ -8,7 +8,7 @@ import main.configuration.ISnakeConfigReader;
 public class Snake {
 
   protected LinkedList<Cell> body = new LinkedList<>();   // TODO: is protected because of test, solve differently?
-  private ISnakeConfigReader config = Config.getSnakeConfigReader();
+  private ISnakeConfigReader config = ISnakeConfigReader.getInstance();
   private int steps;
   private boolean isDead = false;
   private final int timeoutConstant = config.getSnakeTimeout();

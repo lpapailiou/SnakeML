@@ -23,7 +23,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
   private long fitness;
 
   public GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
-    IGameAdapterConfigReader config = Config.getGameAdapterConfigReader();
+    IGameAdapterConfigReader config = IGameAdapterConfigReader.getInstance();
     neuralNetwork = net;
     nodeSelection = config.getInputNodeSelection();
     this.generationEntity = generationEntity;

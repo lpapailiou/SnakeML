@@ -11,7 +11,7 @@ public class JsonTest {
 
   @Test
   public void jsonTest() {
-    ITestConfig config = Config.getTestConfig();
+    ITestConfig config = ITestConfig.getInstance();
     int generations = config.getGenerationCount();
     int population = config.getPopulationSize();
     config.setMode(Mode.NEURAL_NETWORK);
