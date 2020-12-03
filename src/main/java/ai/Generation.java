@@ -84,11 +84,11 @@ class Generation {
     // do roulette wheel selection algorithm
 
     int numberOfSnakesForReproduction = 8;
-    if (populationList.size() > 100 && populationList.size() < 200) {
+    if (populationList.size() >= 100 && populationList.size() < 200) {
       numberOfSnakesForReproduction = (int) (config.getPopulationSize() * 0.2);
-    } else if (populationList.size() > 200 && populationList.size() < 1000) {
+    } else if (populationList.size() >= 200 && populationList.size() < 1000) {
       numberOfSnakesForReproduction = (int) (config.getPopulationSize() * 0.1);
-    } else if (populationList.size() > 1000) {
+    } else if (populationList.size() >= 1000) {
       numberOfSnakesForReproduction = (int) (config.getPopulationSize() * 0.01);
     }
     int choice = 2;  // choice is the number of snakes which will be additionally selected to reproduce with the best snake
