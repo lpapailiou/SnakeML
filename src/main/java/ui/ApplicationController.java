@@ -44,7 +44,7 @@ public class ApplicationController implements Initializable {
     state.addGameListener(e -> {
       gameController.display(state.getGame());
       if (configuration.getMode() == Mode.NEURAL_NETWORK) {
-        configController.display(state.getGame().getDirection());
+        configController.displayDirection(state.getGame().getDirection());
         if (isRealtimeStatisticsVerbose) {
           gameController.displayStats(state.getGenerationEntity(), state.getGame().getSnakeLength(),
               statisticsPosition);
@@ -60,8 +60,7 @@ public class ApplicationController implements Initializable {
     });
     configController.setApplicationController(this);
     configController.setGameController(gameController);
-    gameController.setApplicationController(this);
-    gameController.setConfigController(configController);
+
   }
 
   void launchGame() {

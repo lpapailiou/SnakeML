@@ -121,7 +121,7 @@ public class ConfigController implements Initializable {
     Platform.runLater(() -> boardWithControl.getParent().requestFocus());
   }
 
-  void display(Direction direction) {
+  void displayDirection(Direction direction) {
     networkPainter.flashOutput(direction.ordinal());
   }
 
@@ -183,8 +183,10 @@ public class ConfigController implements Initializable {
     Mode newMode = Arrays.stream(Mode.values())
         .filter(e -> e.getLabel().equals(modeSelector.getValue())).findFirst().get();
     Mode oldMode = configReader.getMode();
-    Scene scene = applicationController.getScene();
-    controlsAnimator.animateModeTransition(newMode, oldMode, scene);
+    if (applicationController != null) {
+      Scene scene = applicationController.getScene();
+      controlsAnimator.animateModeTransition(newMode, oldMode, scene);
+    }
 
     neuralNetworkControls.setVisible(newMode == Mode.NEURAL_NETWORK);
     statisticControls.setVisible(newMode == Mode.NEURAL_NETWORK);

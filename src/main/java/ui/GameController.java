@@ -15,8 +15,6 @@ public class GameController implements Initializable {
   @FXML
   private Canvas gamePane;
 
-  private ApplicationController applicationController;
-  private ConfigController configController;
   private GamePainter gamePainter;
   private GameInformationPainter statisticsPainter;
 
@@ -46,11 +44,4 @@ public class GameController implements Initializable {
     display(null);
   }
 
-  void setApplicationController(ApplicationController applicationController) {
-    this.applicationController = applicationController;
-  }
-
-  void setConfigController(ConfigController configController) {
-    this.configController = configController;
-  }
 }
