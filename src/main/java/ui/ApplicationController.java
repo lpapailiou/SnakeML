@@ -15,9 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import main.State;
-import main.agent.DemoAgent;
-import main.agent.ManualAgent;
-import main.agent.NeuralNetworkAgent;
+import main.agent.Agent;
 import main.configuration.IApplicationConfigReader;
 import main.configuration.Mode;
 
@@ -54,9 +52,7 @@ public class ApplicationController implements Initializable {
         }
       }
     });
-    state.addTimelineListener(e -> {
-      stop();
-    });
+    state.addTimelineListener(e -> stop());
     rootElement.sceneProperty().addListener(n -> {
       if (n != null) {
         this.scene = rootElement.getScene();
@@ -67,19 +63,31 @@ public class ApplicationController implements Initializable {
 
   static void start() {
     if (instance != null) {
-      instance.configController.setDisable(true);
-      switch (instance.configuration.getMode()) {
-        case MANUAL:
-          instance.startManualGame();
-          break;
-        case NEURAL_NETWORK:
-          instance.startNewNeuralNetwork();
-          break;
-        case NEURAL_NETWORK_DEMO:
-          instance.startTrainedNeuralNetworkDemo();
-          break;
-      }
+      instance.launchGame();
     }
+  }
+
+  private void launchGame() {
+    configController.setDisable(true);
+    Agent agent = configuration.getMode().getAgent().setState(state).setSpeed(configuration.getMode().getSpeed());
+    switch (instance.configuration.getMode()) {
+      case MANUAL:
+        state.setDirection(configuration.getInitialDirection());
+        state.setGame(new Game());
+        break;
+      case NEURAL_NETWORK:
+        GameBatch batch = new GameBatch(
+            new NeuralNetwork(configuration.getRandomizationRate(), configuration.getLayerConfiguration())
+        );
+        TempStorage tempStorage = TempStorage.getInstance();
+        tempStorage.addBatch(batch.getBatchEntity());
+        agent.setGameBatch(batch);
+        break;
+      case NEURAL_NETWORK_DEMO:
+        configController.selectAllRadioButtons();
+        break;
+    }
+    agent.build();
   }
 
   static void stop() {
@@ -87,27 +95,6 @@ public class ApplicationController implements Initializable {
       instance.state.stopTimeline();
       instance.configController.setDisable(false);
     }
-  }
-
-  private void startManualGame() {
-    state.setDirection(configuration.getInitialDirection());
-    state.setGame(new Game());
-    configuration.getMode().getAgent().setState(state).setSpeed(configuration.getMode().getSpeed()).build();
-  }
-
-  private void startNewNeuralNetwork() {
-    GameBatch batch = new GameBatch(
-        new NeuralNetwork(configuration.getRandomizationRate(), configuration.getLayerConfiguration())
-    );
-    TempStorage tempStorage = TempStorage.getInstance();
-    tempStorage.addBatch(batch.getBatchEntity());
-    configuration.getMode().getAgent().setState(state).setSpeed(configuration.getMode().getSpeed()).setGameBatch(batch).build();
-  }
-
-
-  private void startTrainedNeuralNetworkDemo() {
-    configController.selectAllRadioButtons();
-    configuration.getMode().getAgent().setState(state).setSpeed(configuration.getMode().getSpeed()).build();
   }
 
   private void listenToKeyboardEvents(Scene scene) {
