@@ -1,23 +1,33 @@
 package main.agent;
 
 import ai.GameAdapter;
+import ai.GameBatch;
 import javafx.animation.Timeline;
 import main.State;
 
-abstract class Agent {
+public abstract class Agent {
 
   Timeline timeline;
+  int speed;
   State state;
   GameAdapter adapter;
 
+  public void build() {
+  }
 
-  Agent(State state) {
+  public Agent setState(State state) {
     this.state = state;
+    return this;
   }
 
-  protected void startTimeline(int speed) {
+  public Agent setSpeed(int speed) {
+    this.speed = speed;
+    return this;
   }
 
+  public Agent setGameBatch(GameBatch gameBatch) {
+    return this;
+  }
 
   void stopTimer() {
     if (timeline != null) {

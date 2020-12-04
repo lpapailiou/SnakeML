@@ -6,25 +6,19 @@ import ai.neuralnet.NeuralNetwork;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import main.State;
 
 public class NeuralNetworkAgent extends Agent {
 
-  private GameBatch batch;
-
-  public NeuralNetworkAgent(State state, GameBatch batch) {   // TODO: or use default constructor and factory pattern, so instance can be provided by mode from producer?
-    super(state);
-    this.batch = batch;
-  }
+  private GameBatch gameBatch;
 
   @Override
-  public void startTimeline(int speed) {
+  public void build() {
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (adapter == null) {
-        NeuralNetwork neuralNet = batch.processNewGeneration();
+        NeuralNetwork neuralNet = gameBatch.processNewGeneration();
         if (neuralNet != null) {
           adapter = new GameAdapter(neuralNet, null);
-          state.setGenerationEntity(batch.getCurrentGenerationEntity());
+          state.setGenerationEntity(gameBatch.getCurrentGenerationEntity());
           state.setGame(adapter.getGame());
         }
       }
@@ -43,6 +37,11 @@ public class NeuralNetworkAgent extends Agent {
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
     state.setTimeline(timeline);
+  }
+
+  public Agent setGameBatch(GameBatch gameBatch) {
+    this.gameBatch = gameBatch;
+    return this;
   }
 
 }

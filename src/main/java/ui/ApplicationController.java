@@ -92,8 +92,7 @@ public class ApplicationController implements Initializable {
   private void startManualGame() {
     state.setDirection(configuration.getInitialDirection());
     state.setGame(new Game());
-    new ManualAgent(state).startTimeline(configuration.getMode().getSpeed());
-
+    configuration.getMode().getAgent().setState(state).setSpeed(configuration.getMode().getSpeed()).build();
   }
 
   private void startNewNeuralNetwork() {
@@ -102,13 +101,13 @@ public class ApplicationController implements Initializable {
     );
     TempStorage tempStorage = TempStorage.getInstance();
     tempStorage.addBatch(batch.getBatchEntity());
-    new NeuralNetworkAgent(state, batch).startTimeline(configuration.getMode().getSpeed());
+    configuration.getMode().getAgent().setState(state).setSpeed(configuration.getMode().getSpeed()).setGameBatch(batch).build();
   }
 
 
   private void startTrainedNeuralNetworkDemo() {
     configController.selectAllRadioButtons();
-    new DemoAgent(state).startTimeline(configuration.getMode().getSpeed());
+    configuration.getMode().getAgent().setState(state).setSpeed(configuration.getMode().getSpeed()).build();
   }
 
   private void listenToKeyboardEvents(Scene scene) {

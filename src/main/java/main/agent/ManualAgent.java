@@ -4,20 +4,15 @@ import game.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import main.State;
 
 public class ManualAgent extends Agent {
 
   private Game game;
 
-  public ManualAgent(State state) {
-    super(state);
+  @Override
+  public void build() {
     game = state.getGame();
     game.onGameOver(this::stopTimer);
-  }
-
-  @Override
-  public void startTimeline(int speed) {
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       game.changeDirection(state.getDirection());
       game.onTick();
