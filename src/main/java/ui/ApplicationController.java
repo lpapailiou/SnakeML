@@ -70,7 +70,7 @@ public class ApplicationController implements Initializable {
   private void launchGame() {
     configController.setDisable(true);
     Agent agent = configuration.getMode().getAgent().setState(state);
-    switch (instance.configuration.getMode()) {
+    switch (configuration.getMode()) {
       case MANUAL:
         state.setDirection(configuration.getInitialDirection());
         state.setGame(new Game());

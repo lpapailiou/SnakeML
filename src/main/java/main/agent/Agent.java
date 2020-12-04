@@ -24,6 +24,9 @@ public abstract class Agent {
   }
 
   public Agent setSpeed(int speed) {
+    if (speed < 0) {
+      throw new IllegalArgumentException("speed must not be null!");
+    }
     this.speed = speed;
     return this;
   }
