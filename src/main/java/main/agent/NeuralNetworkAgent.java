@@ -13,6 +13,10 @@ public class NeuralNetworkAgent extends Agent {
 
   @Override
   public void build() {
+    super.build();
+    if (gameBatch == null) {
+      throw new RuntimeException("incomplete build! gameBatch ist not set!");
+    }
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (adapter == null) {
         NeuralNetwork neuralNet = gameBatch.processNewGeneration();

@@ -13,6 +13,9 @@ public abstract class Agent {
   GameAdapter adapter;
 
   public void build() {
+    if (state == null) {
+      throw new RuntimeException("incomplete build! state ist not set!");
+    }
   }
 
   public Agent setState(State state) {
