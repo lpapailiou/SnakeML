@@ -26,11 +26,7 @@ public enum Mode {
     return label;
   }
 
-  public int getSpeed() {
-    return speed;
-  }
-
   public Agent getAgent() {
-    return agent.get();
+    return agent.get().setSpeed(speed);
   }
 }
