@@ -11,6 +11,7 @@ public class ManualAgent extends Agent {
 
   @Override
   public void build() {
+    super.build();
     game = state.getGame();
     game.onGameOver(this::stopTimer);
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
