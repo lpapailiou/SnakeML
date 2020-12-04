@@ -12,7 +12,7 @@ public class NeuralNetworkAgent extends Agent {
 
   private GameBatch batch;
 
-  public NeuralNetworkAgent(State state, GameBatch batch) {
+  public NeuralNetworkAgent(State state, GameBatch batch) {   // TODO: or use default constructor and factory pattern, so instance can be provided by mode from producer?
     super(state);
     this.batch = batch;
   }
