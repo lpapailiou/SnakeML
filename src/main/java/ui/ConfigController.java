@@ -92,7 +92,8 @@ public class ConfigController implements Initializable {
   @FXML
   private Button stopButton;
 
-  private static ConfigController instance;
+  private ApplicationController applicationController;
+  private GameController gameController;
   private IConfigReader configReader = IConfigReader.getInstance();
   private IConfigWriter configWriter = IConfigWriter.getInstance();
   private NetworkPainter networkPainter;
@@ -107,7 +108,6 @@ public class ConfigController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    instance = this;
     context = layerPane.getGraphicsContext2D();
     controlsAnimator = new ControlsAnimator(modeSelector, baseControls,
         actionControls, neuralNetworkControls, statisticControls);
@@ -171,7 +171,7 @@ public class ConfigController implements Initializable {
     Theme theme = Theme.valueOf(themeSelector.getValue());
     scene.getStylesheets().remove(configReader.getTheme().getCss());
     configWriter.setTheme(theme);
-    GameController.resetGamePanel();
+    gameController.resetGameDisplay();
     scene.setFill(theme.getBackgroundColor());
     scene.getStylesheets().add(
         Objects.requireNonNull(Main.class.getClassLoader().getResource(theme.getCss()))
@@ -183,7 +183,7 @@ public class ConfigController implements Initializable {
     Mode newMode = Arrays.stream(Mode.values())
         .filter(e -> e.getLabel().equals(modeSelector.getValue())).findFirst().get();
     Mode oldMode = configReader.getMode();
-    Scene scene = ApplicationController.getScene();
+    Scene scene = applicationController.getScene();
     controlsAnimator.animateModeTransition(newMode, oldMode, scene);
 
     neuralNetworkControls.setVisible(newMode == Mode.NEURAL_NETWORK);
@@ -238,7 +238,7 @@ public class ConfigController implements Initializable {
           previousValue)) {    // TODO: make sure minimum fits snake starting position
         if (!tempWidth.toString().equals(previousValue)) {
           configWriter.setBoardWidth(Integer.parseInt(tempWidth.toString()));
-          GameController.resetGamePanel();
+          gameController.resetGameDisplay();
         }
       } else {
         showPopupMessage("min: 4, max: 100", boardWithControl);
@@ -253,7 +253,7 @@ public class ConfigController implements Initializable {
           previousValue)) {    // TODO: make sure minimum fits snake starting position
         if (!tempHeight.toString().equals(previousValue)) {
           configWriter.setBoardHeight(Integer.parseInt(tempHeight.toString()));
-          GameController.resetGamePanel();
+          gameController.resetGameDisplay();
         }
       } else {
         showPopupMessage("min: 4, max: 100", boardHeightControl);
@@ -385,8 +385,8 @@ public class ConfigController implements Initializable {
 
   private void initializeButtons() {
     statisticsButton.setOnAction(e -> openStatistics());
-    startButton.setOnAction(e -> ApplicationController.start());
-    stopButton.setOnAction(e -> ApplicationController.stop());
+    startButton.setOnAction(e -> applicationController.launchGame());
+    stopButton.setOnAction(e -> applicationController.stopGame());
     stopButton.setDisable(true);
   }
 
@@ -458,8 +458,16 @@ public class ConfigController implements Initializable {
       popup.setX(node.localToScreen(node.getBoundsInLocal()).getMinX());
       popup.setY(node.localToScreen(node.getBoundsInLocal()).getMinY() - 30);
     });
-    if (ApplicationController.getStage() != null) {
-      popup.show(ApplicationController.getStage());
+    if (applicationController.getStage() != null) {
+      popup.show(applicationController.getStage());
     }
+  }
+
+  void setApplicationController(ApplicationController applicationController) {
+    this.applicationController = applicationController;
+  }
+
+  void setGameController(GameController gameController) {
+    this.gameController = gameController;
   }
 }

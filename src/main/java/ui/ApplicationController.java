@@ -35,14 +35,12 @@ public class ApplicationController implements Initializable {
 
   private State state = new State();
   private IApplicationConfigReader configuration = IApplicationConfigReader.getInstance();
-  private static ApplicationController instance;
   private Scene scene;
   private boolean isRealtimeStatisticsVerbose = true;
   private int statisticsPosition;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    instance = this;
     state.addGameListener(e -> {
       gameController.display(state.getGame());
       if (configuration.getMode() == Mode.NEURAL_NETWORK) {
@@ -53,22 +51,20 @@ public class ApplicationController implements Initializable {
         }
       }
     });
-    state.addTimelineListener(e -> stop());
+    state.addTimelineListener(e -> stopGame());
     rootElement.sceneProperty().addListener(n -> {
       if (n != null) {
         this.scene = rootElement.getScene();
         listenToKeyboardEvents(rootElement.getScene());
       }
     });
+    configController.setApplicationController(this);
+    configController.setGameController(gameController);
+    gameController.setApplicationController(this);
+    gameController.setConfigController(configController);
   }
 
-  static void start() {
-    if (instance != null) {
-      instance.launchGame();
-    }
-  }
-
-  private void launchGame() {
+  void launchGame() {
     configController.setDisable(true);
     Agent agent = configuration.getMode().getAgent().setState(state);
     switch (configuration.getMode()) {
@@ -79,8 +75,6 @@ public class ApplicationController implements Initializable {
         GameBatch batch = new GameBatch(
             new NeuralNetwork(configuration.getRandomizationRate(), configuration.getLayerConfiguration())
         );
-        TempStorage tempStorage = TempStorage.getInstance();
-        tempStorage.addBatch(batch.getBatchEntity());
         agent.setGameBatch(batch);
         break;
       case NEURAL_NETWORK_DEMO:
@@ -90,11 +84,9 @@ public class ApplicationController implements Initializable {
     agent.build();
   }
 
-  static void stop() {
-    if (instance != null) {
-      instance.state.stopTimeline();
-      instance.configController.setDisable(false);
-    }
+  void stopGame() {
+    state.stopTimeline();
+    configController.setDisable(false);
   }
 
   private void listenToKeyboardEvents(Scene scene) {
@@ -142,28 +134,22 @@ public class ApplicationController implements Initializable {
       return;
     }
     if (state.isTimelineRunning()) {
-      stop();
+      stopGame();
     } else {
-      start();
+      launchGame();
     }
   }
 
-  static Scene getScene() {
-    if (instance != null) {
-      return instance.scene;
-    }
-    return null;
+  Scene getScene() {
+    return scene;
   }
 
   public void setStage(Stage stage) {
     this.stage = stage;
   }
 
-  static Stage getStage() {
-    if (instance != null) {
-      return instance.stage;
-    }
-    return null;
+  Stage getStage() {
+    return stage;
   }
 
 }

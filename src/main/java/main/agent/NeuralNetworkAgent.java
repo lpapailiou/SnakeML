@@ -2,6 +2,7 @@ package main.agent;
 
 import ai.GameAdapter;
 import ai.GameBatch;
+import ai.data.storage.TempStorage;
 import ai.neuralnet.NeuralNetwork;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -46,6 +47,8 @@ public class NeuralNetworkAgent extends Agent {
   @Override
   public Agent setGameBatch(GameBatch gameBatch) {
     this.gameBatch = gameBatch;
+    TempStorage tempStorage = TempStorage.getInstance();
+    tempStorage.addBatch(gameBatch.getBatchEntity());
     return this;
   }
 

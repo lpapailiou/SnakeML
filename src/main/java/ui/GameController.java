@@ -15,14 +15,14 @@ public class GameController implements Initializable {
   @FXML
   private Canvas gamePane;
 
-  private static GameController instance;
+  private ApplicationController applicationController;
+  private ConfigController configController;
   private GamePainter gamePainter;
   private GameInformationPainter statisticsPainter;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    instance = this;
-    reset();
+    resetGameDisplay();
   }
 
   void display(Game game) {
@@ -40,15 +40,17 @@ public class GameController implements Initializable {
     statisticsPainter.paintGameInformation(entity, snakeLength, position);
   }
 
-  private void reset() {
+  void resetGameDisplay() {
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
     statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
     display(null);
   }
 
-  static void resetGamePanel() {
-    if (instance != null) {
-      instance.reset();
-    }
+  void setApplicationController(ApplicationController applicationController) {
+    this.applicationController = applicationController;
+  }
+
+  void setConfigController(ConfigController configController) {
+    this.configController = configController;
   }
 }
