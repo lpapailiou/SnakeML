@@ -2,11 +2,12 @@ package game;
 
 import game.event.IGameOverConsumer;
 import game.event.ITickAware;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import main.configuration.Config;
 import main.configuration.IGameConfigReader;
 
 public class Game implements ITickAware {
@@ -14,6 +15,8 @@ public class Game implements ITickAware {
   private final ArrayList<IGameOverConsumer> gameOverConsumers = new ArrayList<>();
 
   private static final Logger LOG = Logger.getLogger("winning snake logger");
+  private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
   private IGameConfigReader config = IGameConfigReader.getInstance();
   private Direction nextDirection = config.getInitialDirection();
   private Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection,
@@ -42,6 +45,11 @@ public class Game implements ITickAware {
     if (snake.isHeadAt(food)) {
       food = findEmptyPosition();
     }
+    pcs.firePropertyChange("tick", false, true);
+  }
+
+  public void addListener(PropertyChangeListener l) {
+    pcs.addPropertyChangeListener("tick", l);
   }
 
   private void emitGameOver() {
@@ -58,6 +66,10 @@ public class Game implements ITickAware {
 
   public Snake getSnake() {
     return snake;
+  }
+
+  public int getSnakeLength() {
+    return snake.getBody().size();
   }
 
   public Cell getFood() {
