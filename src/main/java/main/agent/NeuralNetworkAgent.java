@@ -43,6 +43,7 @@ public class NeuralNetworkAgent extends Agent {
     state.setTimeline(timeline);
   }
 
+  @Override
   public Agent setGameBatch(GameBatch gameBatch) {
     this.gameBatch = gameBatch;
     return this;
