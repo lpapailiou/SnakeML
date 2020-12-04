@@ -149,10 +149,6 @@ public enum InputNode {
     this.tooltipText = tooltipText;
   }
 
-  public int getId() {
-    return this.ordinal();
-  }
-
   public String getTooltipText() {
     return tooltipText;
   }
