@@ -7,9 +7,6 @@ import game.Direction;
 import game.Game;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.animation.Animation.Status;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -40,7 +37,6 @@ public class ApplicationController implements Initializable {
   private State state = new State();
   private IApplicationConfigReader configuration = IApplicationConfigReader.getInstance();
   private static ApplicationController instance;
-  private Timeline timeline;
   private Scene scene;
   private boolean isRealtimeStatisticsVerbose = true;
   private int statisticsPosition;
@@ -57,6 +53,9 @@ public class ApplicationController implements Initializable {
               statisticsPosition);
         }
       }
+    });
+    state.addTimelineListener(e -> {
+      stop();
     });
     rootElement.sceneProperty().addListener(n -> {
       if (n != null) {
@@ -85,56 +84,31 @@ public class ApplicationController implements Initializable {
 
   static void stop() {
     if (instance != null) {
-      instance.stopTimer();
+      instance.state.stopTimeline();
+      instance.configController.setDisable(false);
     }
   }
 
   private void startManualGame() {
     state.setDirection(configuration.getInitialDirection());
     state.setGame(new Game());
+    new ManualAgent(state).startTimeline(configuration.getMode().getSpeed());
 
-    timeline = new ManualAgent(state).startTimeline(configuration.getMode().getSpeed());
-    timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
-      if (newValue == Status.STOPPED) {
-        stopTimer();
-      }
-    });
   }
 
   private void startNewNeuralNetwork() {
     GameBatch batch = new GameBatch(
         new NeuralNetwork(configuration.getRandomizationRate(), configuration.getLayerConfiguration())
     );
-
     TempStorage tempStorage = TempStorage.getInstance();
     tempStorage.addBatch(batch.getBatchEntity());
-
-    timeline = new NeuralNetworkAgent(state, batch).startTimeline(configuration.getMode().getSpeed());
-    timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
-      if (newValue == Status.STOPPED) {
-        stopTimer();
-      }
-    });
+    new NeuralNetworkAgent(state, batch).startTimeline(configuration.getMode().getSpeed());
   }
 
 
   private void startTrainedNeuralNetworkDemo() {
     configController.selectAllRadioButtons();
-    timeline = new DemoAgent(state).startTimeline(configuration.getMode().getSpeed());
-    timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
-      if (newValue == Status.STOPPED) {
-        stopTimer();
-      }
-    });
-  }
-
-  private void stopTimer() {
-    configController.setDisable(false);
-    Platform.runLater(() -> {
-      if (timeline != null) {
-        timeline.stop();
-      }
-    });
+    new DemoAgent(state).startTimeline(configuration.getMode().getSpeed());
   }
 
   private void listenToKeyboardEvents(Scene scene) {
@@ -177,10 +151,10 @@ public class ApplicationController implements Initializable {
   }
 
   private void toggleGame() {
-    if (timeline != null && timeline.getStatus() == Status.STOPPED) {
-      start();
-    } else {
+    if (state.isTimelineRunning()) {
       stop();
+    } else {
+      start();
     }
   }
 

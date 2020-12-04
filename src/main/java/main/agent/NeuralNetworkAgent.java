@@ -18,7 +18,7 @@ public class NeuralNetworkAgent extends Agent {
   }
 
   @Override
-  public Timeline startTimeline(int speed) {
+  public void startTimeline(int speed) {
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (adapter == null) {
         NeuralNetwork neuralNet = batch.processNewGeneration();
@@ -42,7 +42,7 @@ public class NeuralNetworkAgent extends Agent {
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-    return timeline;
+    state.setTimeline(timeline);
   }
 
 }

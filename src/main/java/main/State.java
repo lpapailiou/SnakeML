@@ -3,6 +3,8 @@ package main;
 import ai.data.GenerationEntity;
 import game.Direction;
 import game.Game;
+import javafx.animation.Animation.Status;
+import javafx.animation.Timeline;
 import main.configuration.Mode;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -11,9 +13,32 @@ public class State {
 
   private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+  private Timeline timeline;
   private GenerationEntity generationEntity;
   private Game game;
   private Direction direction;
+
+  public void setTimeline(Timeline timeline) {
+    this.timeline = timeline;
+    this.timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue == Status.STOPPED) {
+        pcs.firePropertyChange("timeline", false, true);
+      }
+    });
+  }
+
+  public boolean isTimelineRunning() {
+    if (timeline == null) {
+      return false;
+    }
+    return timeline.getStatus() == Status.RUNNING;
+  }
+
+  public void stopTimeline() {
+    if (timeline != null) {
+      timeline.stop();
+    }
+  }
 
   public void setGenerationEntity(GenerationEntity generationEntity) {
       this.generationEntity = generationEntity;
@@ -31,6 +56,10 @@ public class State {
 
   public Game getGame() {
     return game;
+  }
+
+  public void addTimelineListener(PropertyChangeListener l) {
+    pcs.addPropertyChangeListener("timeline", l);
   }
 
   public void addGameListener(PropertyChangeListener l) {

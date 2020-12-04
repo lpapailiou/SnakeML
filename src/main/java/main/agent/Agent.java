@@ -1,7 +1,6 @@
 package main.agent;
 
 import ai.GameAdapter;
-import game.Direction;
 import javafx.animation.Timeline;
 import main.State;
 
@@ -16,8 +15,7 @@ abstract class Agent {
     this.state = state;
   }
 
-  protected Timeline startTimeline(int speed) {
-    return null;
+  protected void startTimeline(int speed) {
   }
 
 

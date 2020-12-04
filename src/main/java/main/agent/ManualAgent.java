@@ -17,16 +17,15 @@ public class ManualAgent extends Agent {
   }
 
   @Override
-  public Timeline startTimeline(int speed) {
+  public void startTimeline(int speed) {
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-
       game.changeDirection(state.getDirection());
       game.onTick();
 
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-    return timeline;
+    state.setTimeline(timeline);
   }
 
 }
