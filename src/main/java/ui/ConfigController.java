@@ -121,10 +121,8 @@ public class ConfigController implements Initializable {
     Platform.runLater(() -> boardWithControl.getParent().requestFocus());
   }
 
-  static void display(Direction direction) {
-    if (instance != null) {
-      instance.networkPainter.flashOutput(direction.ordinal());
-    }
+  void display(Direction direction) {
+    networkPainter.flashOutput(direction.ordinal());
   }
 
   private void openStatistics() {
@@ -392,20 +390,20 @@ public class ConfigController implements Initializable {
     stopButton.setDisable(true);
   }
 
-  static void setDisable(boolean disable) {
-    instance.baseControls.setDisable(disable);
-    instance.neuralNetworkControls.setDisable(disable);
-    instance.startButton.setDisable(disable);
-    instance.stopButton.setDisable(!disable);
+  void setDisable(boolean disable) {
+    baseControls.setDisable(disable);
+    neuralNetworkControls.setDisable(disable);
+    startButton.setDisable(disable);
+    stopButton.setDisable(!disable);
 
     if (!disable) {
-      instance.networkPainter.paintNetwork();
-      Platform.runLater(() -> instance.boardWithControl.getParent().requestFocus());
+      networkPainter.paintNetwork();
+      Platform.runLater(() -> boardWithControl.getParent().requestFocus());
     }
   }
 
-  static void selectAllRadioButtons() {
-    for (Node node : instance.inputNodeConfiguration.getChildren()) {
+  void selectAllRadioButtons() {
+    for (Node node : inputNodeConfiguration.getChildren()) {
       ((RadioButton) node).setSelected(true);
     }
   }
@@ -442,7 +440,7 @@ public class ConfigController implements Initializable {
     return false;
   }
 
-  private static Popup createPopup(final String message) {
+  private Popup createPopup(final String message) {
     final Popup popup = new Popup();
     popup.setAutoFix(true);
     popup.setAutoHide(true);
@@ -454,7 +452,7 @@ public class ConfigController implements Initializable {
     return popup;
   }
 
-  private static void showPopupMessage(final String message, Node node) {
+  private void showPopupMessage(final String message, Node node) {
     final Popup popup = createPopup(message);
     popup.setOnShown(e -> {
       popup.setX(node.localToScreen(node.getBoundsInLocal()).getMinX());

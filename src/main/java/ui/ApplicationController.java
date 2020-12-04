@@ -31,12 +31,16 @@ public class ApplicationController implements Initializable {
   @FXML
   private GameController gameController;
 
+  @FXML
+  private ConfigController configController;
+
   private Stage stage;
-  private IApplicationConfigReader config = IApplicationConfigReader.getInstance();
+
+  private IApplicationConfigReader configuration = IApplicationConfigReader.getInstance();
   private static ApplicationController instance;
   private Timeline timeline;
   private boolean isTimerRunning = false;
-  private Direction direction = config.getInitialDirection();
+  private Direction direction = configuration.getInitialDirection();
   private GameAdapter adapter;
   private Scene scene;
   private boolean isRealtimeStatisticsVerbose = true;
@@ -55,7 +59,7 @@ public class ApplicationController implements Initializable {
 
   static void start() {
     if (instance != null) {
-      switch (instance.config.getMode()) {
+      switch (instance.configuration.getMode()) {
         case MANUAL:
           instance.startManualGame();
           break;
@@ -77,11 +81,11 @@ public class ApplicationController implements Initializable {
 
   private void startManualGame() {
     isTimerRunning = true;
-    direction = config.getInitialDirection();
-    int speed = config.getMode().getSpeed();
+    direction = configuration.getInitialDirection();
+    int speed = configuration.getMode().getSpeed();
     Game game = new Game();
 
-    ConfigController.setDisable(true);
+    configController.setDisable(true);
     game.onGameOver(this::stopTimer);
     gameController.setDisplayedGame(game);
 
@@ -101,13 +105,13 @@ public class ApplicationController implements Initializable {
 
   private void startNewNeuralNetwork() {
     isTimerRunning = true;
-    int speed = config.getMode().getSpeed();
+    int speed = configuration.getMode().getSpeed();
     adapter = null;
     GameBatch batch = new GameBatch(
-        new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration())
+        new NeuralNetwork(configuration.getRandomizationRate(), configuration.getLayerConfiguration())
     );
 
-    ConfigController.setDisable(true);
+    configController.setDisable(true);
     TempStorage tempStorage = TempStorage.getInstance();
     tempStorage.addBatch(batch.getBatchEntity());
 
@@ -136,7 +140,7 @@ public class ApplicationController implements Initializable {
       if (isRealtimeStatisticsVerbose) {
         gameController.displayStats(entity, adapter.getSnakeLength(), statisticsPosition);
       }
-      ConfigController.display(adapter.getGame().getDirection());
+      configController.display(adapter.getGame().getDirection());
       if (adapter.isGameOver()) {
         adapter = null;
       }
@@ -148,10 +152,10 @@ public class ApplicationController implements Initializable {
 
   private void startTrainedNeuralNetworkDemo() {
     isTimerRunning = true;
-    ConfigController.setDisable(true);
-    ConfigController
+    configController.setDisable(true);
+    configController
         .selectAllRadioButtons(); // TODO: fix if possible; necessary as otherwise neural net exception would be thrown
-    int speed = config.getMode().getSpeed();
+    int speed = configuration.getMode().getSpeed();
     adapter = new GameAdapter(Serializer.load(), null);
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (!isTimerRunning) {
@@ -176,7 +180,7 @@ public class ApplicationController implements Initializable {
 
   private void stopTimer() {
     isTimerRunning = false;
-    ConfigController.setDisable(false);
+    configController.setDisable(false);
     Platform.runLater(() -> {
       if (timeline != null) {
         timeline.stop();
