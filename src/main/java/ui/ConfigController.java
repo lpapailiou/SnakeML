@@ -448,7 +448,7 @@ public class ConfigController implements Initializable {
     popup.setAutoHide(true);
     popup.setHideOnEscape(true);
     Label label = new Label(
-        "  " + message);    // space for graphic reasons (padding left did not work)
+        "  " + message + "  ");    // space for graphic reasons
     label.setOnMouseReleased(e -> popup.hide());
     popup.getContent().add(label);
     return popup;
