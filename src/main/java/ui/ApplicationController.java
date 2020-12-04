@@ -69,6 +69,7 @@ public class ApplicationController implements Initializable {
 
   static void start() {
     if (instance != null) {
+      instance.configController.setDisable(true);
       switch (instance.configuration.getMode()) {
         case MANUAL:
           instance.startManualGame();
@@ -78,7 +79,6 @@ public class ApplicationController implements Initializable {
           break;
         case NEURAL_NETWORK_DEMO:
           instance.startTrainedNeuralNetworkDemo();
-
           break;
       }
     }
@@ -96,8 +96,6 @@ public class ApplicationController implements Initializable {
     Game game = new Game();
     game.onGameOver(this::stopTimer);
     state.setGame(game);
-    configController.setDisable(true);
-    gameController.setDisplayedGame(game);
 
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
 
@@ -114,7 +112,6 @@ public class ApplicationController implements Initializable {
         new NeuralNetwork(configuration.getRandomizationRate(), configuration.getLayerConfiguration())
     );
 
-    configController.setDisable(true);
     TempStorage tempStorage = TempStorage.getInstance();
     tempStorage.addBatch(batch.getBatchEntity());
 
@@ -128,7 +125,6 @@ public class ApplicationController implements Initializable {
 
 
   private void startTrainedNeuralNetworkDemo() {
-    configController.setDisable(true);
     configController.selectAllRadioButtons();
     timeline = new DemoAgent(state).startTimeline(configuration.getMode().getSpeed());
     timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
