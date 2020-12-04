@@ -1,6 +1,7 @@
 package main;
 
 import ai.data.GenerationEntity;
+import game.Direction;
 import game.Game;
 import main.configuration.Mode;
 import java.beans.PropertyChangeListener;
@@ -12,7 +13,7 @@ public class State {
 
   private GenerationEntity generationEntity;
   private Game game;
-  private Mode mode;
+  private Direction direction;
 
   public void setGenerationEntity(GenerationEntity generationEntity) {
       this.generationEntity = generationEntity;
@@ -34,5 +35,13 @@ public class State {
 
   public void addGameListener(PropertyChangeListener l) {
     pcs.addPropertyChangeListener("game", l);
+  }
+
+  public void setDirection(Direction direction) {
+    this.direction = direction;
+  }
+
+  public Direction getDirection() {
+    return direction;
   }
 }

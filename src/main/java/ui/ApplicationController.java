@@ -8,7 +8,6 @@ import game.Game;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.Animation.Status;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -17,9 +16,10 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+
 import main.State;
 import main.agent.DemoAgent;
+import main.agent.ManualAgent;
 import main.agent.NeuralNetworkAgent;
 import main.configuration.IApplicationConfigReader;
 import main.configuration.Mode;
@@ -41,7 +41,6 @@ public class ApplicationController implements Initializable {
   private IApplicationConfigReader configuration = IApplicationConfigReader.getInstance();
   private static ApplicationController instance;
   private Timeline timeline;
-  private Direction direction = configuration.getInitialDirection();
   private Scene scene;
   private boolean isRealtimeStatisticsVerbose = true;
   private int statisticsPosition;
@@ -91,20 +90,15 @@ public class ApplicationController implements Initializable {
   }
 
   private void startManualGame() {
-    direction = configuration.getInitialDirection();
-    int speed = configuration.getMode().getSpeed();
-    Game game = new Game();
-    game.onGameOver(this::stopTimer);
-    state.setGame(game);
+    state.setDirection(configuration.getInitialDirection());
+    state.setGame(new Game());
 
-    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-
-      game.changeDirection(direction);
-      game.onTick();
-
-    }));
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
+    timeline = new ManualAgent(state).startTimeline(configuration.getMode().getSpeed());
+    timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue == Status.STOPPED) {
+        stopTimer();
+      }
+    });
   }
 
   private void startNewNeuralNetwork() {
@@ -148,22 +142,22 @@ public class ApplicationController implements Initializable {
       switch (key.getCode()) {
         case W:
         case UP:
-          direction = Direction.UP;
+          state.setDirection(Direction.UP);
           break;
 
         case A:
         case LEFT:
-          direction = Direction.LEFT;
+          state.setDirection(Direction.LEFT);
           break;
 
         case S:
         case DOWN:
-          direction = Direction.DOWN;
+          state.setDirection(Direction.DOWN);
           break;
 
         case D:
         case RIGHT:
-          direction = Direction.RIGHT;
+          state.setDirection(Direction.RIGHT);
           break;
 
         case SPACE:
