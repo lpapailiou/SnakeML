@@ -7,7 +7,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import main.State;
-import main.agent.Agent;
 
 public class NeuralNetworkAgent extends Agent {
 
@@ -20,12 +19,7 @@ public class NeuralNetworkAgent extends Agent {
 
   @Override
   public Timeline startTimeline(int speed) {
-    isTimerRunning = true;
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      if (!isTimerRunning) {
-        return;
-      }
-
       if (adapter == null) {
         NeuralNetwork neuralNet = batch.processNewGeneration();
         if (neuralNet != null) {
@@ -37,7 +31,6 @@ public class NeuralNetworkAgent extends Agent {
 
       if (adapter == null) {
         stopTimer();
-
         return;
       }
 

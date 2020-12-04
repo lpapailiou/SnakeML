@@ -8,7 +8,6 @@ import main.State;
 abstract class Agent {
 
   Timeline timeline;
-  boolean isTimerRunning;
   State state;
   GameAdapter adapter;
 

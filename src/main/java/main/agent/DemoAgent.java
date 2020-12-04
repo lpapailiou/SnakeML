@@ -6,7 +6,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import main.State;
-import main.agent.Agent;
 
 public class DemoAgent extends Agent {
 
@@ -18,11 +17,7 @@ public class DemoAgent extends Agent {
 
   @Override
   public Timeline startTimeline(int speed) {
-    isTimerRunning = true;
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      if (!isTimerRunning) {
-        return;
-      }
       if (adapter == null) {
         stopTimer();
         return;
