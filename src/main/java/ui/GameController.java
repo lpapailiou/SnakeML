@@ -10,7 +10,7 @@ import ui.painter.impl.GamePainter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable, IGameTicker {
+public class GameController implements Initializable {
 
   @FXML
   private Canvas gamePane;
@@ -18,19 +18,11 @@ public class GameController implements Initializable, IGameTicker {
   private static GameController instance;
   private GamePainter gamePainter;
   private GameInformationPainter statisticsPainter;
-  private Game displayedGame;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     instance = this;
-    gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
-    statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
-    onTick();
-  }
-
-  @Override
-  public void onTick() {
-    display(displayedGame);
+    reset();
   }
 
   void display(Game game) {
@@ -48,20 +40,15 @@ public class GameController implements Initializable, IGameTicker {
     statisticsPainter.paintGameInformation(entity, snakeLength, position);
   }
 
-  void reset() {
+  private void reset() {
     gamePainter = new GamePainter(gamePane.getGraphicsContext2D());
     statisticsPainter = new GameInformationPainter(gamePane.getGraphicsContext2D());
-    displayedGame = null;
-    onTick();
+    display(null);
   }
 
   static void resetGamePanel() {
     if (instance != null) {
       instance.reset();
     }
-  }
-
-  void setDisplayedGame(Game displayedGame) {
-    this.displayedGame = displayedGame;
   }
 }

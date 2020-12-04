@@ -4,12 +4,13 @@ import ai.GameBatch;
 import ai.data.storage.TempStorage;
 import ai.neuralnet.NeuralNetwork;
 import game.Direction;
-import game.Game;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -73,7 +74,6 @@ public class ApplicationController implements Initializable {
     switch (configuration.getMode()) {
       case MANUAL:
         state.setDirection(configuration.getInitialDirection());
-        state.setGame(new Game());
         break;
       case NEURAL_NETWORK:
         GameBatch batch = new GameBatch(
@@ -137,6 +137,10 @@ public class ApplicationController implements Initializable {
   }
 
   private void toggleGame() {
+    if (!(scene.getFocusOwner() instanceof HBox) && !(scene.getFocusOwner() instanceof Button)) {
+      Platform.runLater(() -> rootElement.requestFocus());
+      return;
+    }
     if (state.isTimelineRunning()) {
       stop();
     } else {
