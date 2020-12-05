@@ -6,10 +6,6 @@ public interface IGenerationConfigReader {
     return Config.getInstance();
   }
 
-  int getBoardWidth();
-
-  int getBoardHeight();
-
   int getPopulationSize();
 
 }

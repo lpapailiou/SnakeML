@@ -12,7 +12,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
     IConfigWriter,
     IApplicationConfigReader, INodeConfigReader, IGenerationConfigReader, IGameBatchConfigReader,
     IGameAdapterConfigReader, ISnakeConfigReader,
-    IPainterConfigReader {    // TODO: too many dependencies?
+    IPainterConfigReader, IAgentConfigReader {    // TODO: too many dependencies?
 
   private static Config instance;
   private int boardWidth = 16;

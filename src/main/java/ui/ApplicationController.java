@@ -65,22 +65,10 @@ public class ApplicationController implements Initializable {
 
   void launchGame() {
     configController.setDisable(true);
-    Agent agent = configuration.getMode().getAgent().setState(state);
-    switch (configuration.getMode()) {
-      case MANUAL:
-        state.setDirection(configuration.getInitialDirection());
-        break;
-      case NEURAL_NETWORK:
-        GameBatch batch = new GameBatch(
-            new NeuralNetwork(configuration.getRandomizationRate(), configuration.getLayerConfiguration())
-        );
-        agent.setGameBatch(batch);
-        break;
-      case NEURAL_NETWORK_DEMO:
-        configController.selectAllRadioButtons();
-        break;
+    if (configuration.getMode() == Mode.NEURAL_NETWORK_DEMO) {
+      configController.selectAllRadioButtons();
     }
-    agent.build();
+    configuration.getMode().getAgent().setState(state).build();
   }
 
   void stopGame() {

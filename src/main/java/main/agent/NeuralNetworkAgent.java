@@ -15,9 +15,10 @@ public class NeuralNetworkAgent extends Agent {
   @Override
   public void build() {
     super.build();
-    if (gameBatch == null) {
-      throw new RuntimeException("incomplete build! gameBatch ist not set!");
-    }
+    GameBatch batch = new GameBatch(
+        new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration())
+    );
+    this.setGameBatch(batch);
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       if (adapter == null) {
         NeuralNetwork neuralNet = gameBatch.processNewGeneration();
@@ -44,12 +45,10 @@ public class NeuralNetworkAgent extends Agent {
     state.setTimeline(timeline);
   }
 
-  @Override
-  public Agent setGameBatch(GameBatch gameBatch) {
+  private void setGameBatch(GameBatch gameBatch) {
     this.gameBatch = gameBatch;
     TempStorage tempStorage = TempStorage.getInstance();
     tempStorage.addBatch(gameBatch.getBatchEntity());
-    return this;
   }
 
 }

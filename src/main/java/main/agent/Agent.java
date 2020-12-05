@@ -4,9 +4,11 @@ import ai.GameAdapter;
 import ai.GameBatch;
 import javafx.animation.Timeline;
 import main.State;
+import main.configuration.IAgentConfigReader;
 
 public abstract class Agent {
 
+  IAgentConfigReader config = IAgentConfigReader.getInstance();
   Timeline timeline;
   int speed;
   State state;
@@ -28,10 +30,6 @@ public abstract class Agent {
       throw new IllegalArgumentException("speed must not be null!");
     }
     this.speed = speed;
-    return this;
-  }
-
-  public Agent setGameBatch(GameBatch gameBatch) {
     return this;
   }
 

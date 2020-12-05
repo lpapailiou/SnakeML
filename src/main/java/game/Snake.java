@@ -2,7 +2,7 @@ package game;
 
 import java.util.LinkedList;
 import java.util.List;
-import main.configuration.Config;
+
 import main.configuration.ISnakeConfigReader;
 
 public class Snake {

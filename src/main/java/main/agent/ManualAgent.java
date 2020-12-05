@@ -12,9 +12,12 @@ public class ManualAgent extends Agent {
   @Override
   public void build() {
     super.build();
+    state.setDirection(config.getInitialDirection());
     game = new Game();
     state.setGame(game);
+
     game.onGameOver(this::stopTimer);
+
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
       game.changeDirection(state.getDirection());
       game.onTick();

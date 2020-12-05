@@ -15,7 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import main.configuration.Config;
 import main.configuration.IGenerationConfigReader;
 
 class Generation {
@@ -70,10 +69,6 @@ class Generation {
         "max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0)
             .getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength() + ")");
 
-    //if (populationList.get(0).getSnakeLength() == config.getBoardWidth()*config.getBoardHeight()) {
-    //Serializer.save(best);    // TODO: uncomment to generate new serialized NeuralNetworks
-    //}
-
     if (populationList.size() < 2) {
       return best;
     } else if (populationList.size() < 20 || populationList.get(0).getSnakeLength() < 10) {
@@ -93,7 +88,7 @@ class Generation {
     }
     int choice = 2;  // choice is the number of snakes which will be additionally selected to reproduce with the best snake
 
-    Map<Integer, Long> map = new HashMap();
+    Map<Integer, Long> map = new HashMap<>();
     double sum = 0;   // sum is the sum of fitness of all pre-selected snakes
     for (int i = 0; i < numberOfSnakesForReproduction; i++) {
       GameAdapter adapter = populationList.get(i);
@@ -142,7 +137,6 @@ class Generation {
 
     @Override
     public void run() {
-      boolean running = true;
       while (!adapter.isGameOver()) {
         adapter.moveSnake();
       }
