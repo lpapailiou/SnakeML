@@ -31,6 +31,10 @@ public class GameAdapter implements Comparable<GameAdapter> {
     game.onGameOver(this::setGameOver);
   }
 
+  public GameAdapter(NeuralNetwork net) {
+    this(net, null);
+  }
+
   public void moveSnake() {
     game.changeDirection(determineNextDirection(game.getSnake(), game.getFood()));
     game.onTick();

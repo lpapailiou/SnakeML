@@ -11,7 +11,7 @@ public class DemoAgent extends Agent {
   @Override
   public void build() {
     super.build();
-    adapter = new GameAdapter(Serializer.load(), null);
+    adapter = new GameAdapter(Serializer.load());
     state.setGame(adapter.getGame());
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
 

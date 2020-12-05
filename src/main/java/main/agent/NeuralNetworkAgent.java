@@ -23,7 +23,7 @@ public class NeuralNetworkAgent extends Agent {
       if (adapter == null) {
         NeuralNetwork neuralNet = gameBatch.processNewGeneration();
         if (neuralNet != null) {
-          adapter = new GameAdapter(neuralNet, null);
+          adapter = new GameAdapter(neuralNet);
           state.setGenerationEntity(gameBatch.getCurrentGenerationEntity());
           state.setGame(adapter.getGame());
         }
