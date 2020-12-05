@@ -1,7 +1,6 @@
 package main.agent;
 
 import ai.GameAdapter;
-import ai.GameBatch;
 import javafx.animation.Timeline;
 import main.State;
 import main.configuration.IAgentConfigReader;
@@ -27,7 +26,7 @@ public abstract class Agent {
 
   public Agent setSpeed(int speed) {
     if (speed < 0) {
-      throw new IllegalArgumentException("speed must not be null!");
+      throw new IllegalArgumentException("speed must not be below null!");
     }
     this.speed = speed;
     return this;
