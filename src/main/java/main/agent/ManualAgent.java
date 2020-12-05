@@ -24,8 +24,8 @@ public class ManualAgent extends Agent {
 
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
     state.setTimeline(timeline);
+    timeline.play();
   }
 
 }

@@ -23,8 +23,8 @@ public class DemoAgent extends Agent {
     }));
 
     timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
     state.setTimeline(timeline);
+    timeline.play();
   }
 
 }

@@ -24,4 +24,6 @@ public interface ITestConfig {
 
   void setMode(Mode mode);
 
+  Mode getMode();
+
 }

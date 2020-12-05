@@ -41,8 +41,8 @@ public class NeuralNetworkAgent extends Agent {
       }
     }));
     timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
     state.setTimeline(timeline);
+    timeline.play();
   }
 
   private void setGameBatch(GameBatch gameBatch) {

@@ -5,7 +5,6 @@ import game.Direction;
 import game.Game;
 import javafx.animation.Animation.Status;
 import javafx.animation.Timeline;
-import main.configuration.Mode;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -58,19 +57,19 @@ public class State {
     return game;
   }
 
-  public void addTimelineListener(PropertyChangeListener l) {
-    pcs.addPropertyChangeListener("timeline", l);
-  }
-
-  public void addGameListener(PropertyChangeListener l) {
-    pcs.addPropertyChangeListener("game", l);
-  }
-
   public void setDirection(Direction direction) {
     this.direction = direction;
   }
 
   public Direction getDirection() {
     return direction;
+  }
+
+  public void addTimelineListener(PropertyChangeListener l) {
+    pcs.addPropertyChangeListener("timeline", l);
+  }
+
+  public void addGameListener(PropertyChangeListener l) {
+    pcs.addPropertyChangeListener("game", l);
   }
 }
