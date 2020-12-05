@@ -1,11 +1,10 @@
 package ui;
 
-import ai.GameBatch;
-import ai.data.storage.TempStorage;
-import ai.neuralnet.NeuralNetwork;
 import game.Direction;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,9 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
 import main.State;
-import main.agent.Agent;
 import main.configuration.IApplicationConfigReader;
 import main.configuration.Mode;
 
