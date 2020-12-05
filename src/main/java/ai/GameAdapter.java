@@ -75,7 +75,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
     return fitness;
   }
 
-  public int getSnakeLength() {
+  int getSnakeLength() {
     return game.getSnake().getBody().size();
   }
 
