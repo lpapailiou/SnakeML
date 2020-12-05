@@ -1,19 +1,19 @@
 package webserver;
 
 
+import static junit.framework.TestCase.assertEquals;
+
 import ai.GameBatch;
 import ai.neuralnet.NeuralNetwork;
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-import main.configuration.Config;
-import main.configuration.ITestConfig;
-import main.configuration.Mode;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.TestCase.assertEquals;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
+import main.configuration.ITestConfig;
+import main.configuration.Mode;
+import org.junit.Test;
 
 public class WebServerTest {
 

@@ -1,7 +1,7 @@
 package main.configuration;
 
-import game.Direction;
 import game.Cell;
+import game.Direction;
 
 public interface IGameConfigReader {
 

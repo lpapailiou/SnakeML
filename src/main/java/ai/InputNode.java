@@ -2,7 +2,6 @@ package ai;
 
 import game.Cell;
 import game.Snake;
-import main.configuration.Config;
 import main.configuration.INodeConfigReader;
 
 public enum InputNode {

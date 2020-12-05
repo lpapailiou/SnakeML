@@ -1,7 +1,6 @@
 package ai;
 
 import ai.neuralnet.NeuralNetwork;
-import main.configuration.Config;
 import main.configuration.ITestConfig;
 import main.configuration.Mode;
 import org.junit.Test;

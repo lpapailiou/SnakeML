@@ -2,13 +2,15 @@ package ui;
 
 import ai.data.GenerationEntity;
 import game.Game;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import ui.painter.impl.GameInformationPainter;
 import ui.painter.impl.GamePainter;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
 

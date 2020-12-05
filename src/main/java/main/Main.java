@@ -1,5 +1,7 @@
 package main;
 
+import java.util.concurrent.CountDownLatch;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -9,11 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import main.configuration.Config;
 import main.configuration.IMainConfigReader;
 import ui.ApplicationController;
 import webserver.WebServer;
-import java.util.concurrent.CountDownLatch;
 
 public class Main extends Application {
 

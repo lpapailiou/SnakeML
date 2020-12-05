@@ -2,6 +2,7 @@ package ui;
 
 import ai.InputNode;
 import game.Direction;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +31,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import main.Main;
-import main.configuration.Config;
 import main.configuration.IConfigReader;
 import main.configuration.IConfigWriter;
 import main.configuration.Mode;

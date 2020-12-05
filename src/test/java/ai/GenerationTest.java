@@ -1,11 +1,12 @@
 package ai;
 
 import ai.neuralnet.NeuralNetwork;
-import main.configuration.Config;
+
+import java.util.ArrayList;
+
 import main.configuration.ITestConfig;
 import main.configuration.Mode;
 import org.junit.Test;
-import java.util.ArrayList;
 
 public class GenerationTest {
 

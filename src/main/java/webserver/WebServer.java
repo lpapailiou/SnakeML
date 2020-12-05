@@ -4,7 +4,7 @@ import io.javalin.Javalin;
 
 public class WebServer {
 
-  Javalin webserver = Javalin.create().start(8050);
+  private Javalin webserver = Javalin.create().start(8050);
 
   public void runServer() {
     webserver.config.enableCorsForAllOrigins();

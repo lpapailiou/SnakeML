@@ -1,10 +1,11 @@
 package main.configuration;
 
+import java.util.function.Supplier;
+
+import main.agent.Agent;
 import main.agent.DemoAgent;
 import main.agent.ManualAgent;
 import main.agent.NeuralNetworkAgent;
-import main.agent.Agent;
-import java.util.function.Supplier;
 
 public enum Mode {
 

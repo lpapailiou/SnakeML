@@ -4,14 +4,15 @@ import ai.data.BatchEntity;
 import ai.data.ConfigurationEntity;
 import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
-import main.configuration.IGameBatchConfigReader;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import main.configuration.IGameBatchConfigReader;
+
 public class GameBatch {
 
-  private IGameBatchConfigReader config = IGameBatchConfigReader.getInstance();
   private int generationCount;
   private int currentGeneration;
   private int populationSize;
@@ -19,9 +20,9 @@ public class GameBatch {
   private List<GenerationEntity> generationEntities = new ArrayList<>();
   private ConfigurationEntity configurationEntity;
   private NeuralNetwork neuralNetwork;
-//  private String jsonData;
 
   public GameBatch(NeuralNetwork neuralNetwork) {
+    IGameBatchConfigReader config = IGameBatchConfigReader.getInstance();
     this.generationCount = config.getGenerationCount();
     this.populationSize = config.getPopulationSize();
     this.neuralNetwork = neuralNetwork;

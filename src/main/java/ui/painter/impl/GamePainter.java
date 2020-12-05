@@ -2,10 +2,11 @@ package ui.painter.impl;
 
 import game.Cell;
 import game.Snake;
+
 import java.util.List;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import main.configuration.Config;
 import main.configuration.IPainterConfigReader;
 import main.configuration.Theme;
 import ui.painter.IGamePainter;

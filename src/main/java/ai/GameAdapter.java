@@ -2,15 +2,17 @@ package ai;
 
 import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
+import game.Cell;
 import game.Direction;
 import game.Game;
-import game.Cell;
 import game.Snake;
-import main.configuration.IGameAdapterConfigReader;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import main.configuration.IGameAdapterConfigReader;
 
 public class GameAdapter implements Comparable<GameAdapter> {
 

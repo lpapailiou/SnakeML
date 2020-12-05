@@ -3,8 +3,6 @@ package main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import main.configuration.ITestConfig;
-import main.configuration.Mode;
 import org.junit.Test;
 
 public class StateTest {

@@ -4,7 +4,6 @@ import ai.data.GenerationEntity;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import main.configuration.Config;
 import main.configuration.IPainterConfigReader;
 import main.configuration.Theme;
 import ui.painter.IGameInformationPainter;

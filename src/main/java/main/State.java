@@ -3,10 +3,12 @@ package main;
 import ai.data.GenerationEntity;
 import game.Direction;
 import game.Game;
-import javafx.animation.Animation.Status;
-import javafx.animation.Timeline;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
+import javafx.animation.Animation.Status;
+import javafx.animation.Timeline;
 
 public class State {
 

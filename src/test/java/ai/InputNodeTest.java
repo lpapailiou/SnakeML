@@ -1,18 +1,17 @@
 package ai;
 
+import static junit.framework.TestCase.assertEquals;
+
+import game.Cell;
 import game.Direction;
 import game.Game;
-import game.Cell;
 import game.Snake;
-import main.configuration.Config;
-import main.configuration.IConfigReader;
-import main.configuration.IGameConfigReader;
-import main.configuration.ITestConfig;
-import org.junit.Test;
 
 import java.util.LinkedList;
 
-import static junit.framework.TestCase.assertEquals;
+import main.configuration.IGameConfigReader;
+import main.configuration.ITestConfig;
+import org.junit.Test;
 
 public class InputNodeTest {
 

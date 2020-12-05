@@ -2,12 +2,14 @@ package game;
 
 import game.event.IGameOverConsumer;
 import game.event.ITickAware;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import main.configuration.IGameConfigReader;
 
 public class Game implements ITickAware {

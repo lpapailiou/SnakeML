@@ -23,6 +23,7 @@ public class ManualAgent extends Agent {
       game.onTick();
 
     }));
+
     timeline.setCycleCount(Timeline.INDEFINITE);
     state.setTimeline(timeline);
     timeline.play();
