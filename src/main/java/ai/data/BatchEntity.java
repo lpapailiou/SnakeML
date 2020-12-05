@@ -2,9 +2,12 @@ package ai.data;
 
 import java.util.List;
 
+/**
+ * This class is the main data wrapper of game batch statistics data. It contains data about the used algorithm
+ * and aggregated game data as list.
+ * Method names may not apply to the Google Java Coding Styleguide, as they are optimized for the JSON parser by jackson.
+ */
 public class BatchEntity {
-
-  // note: method names may not apply to coding guidelines, because jackson library will use method names to generate variable names for JSON file.
 
   private ConfigurationEntity configuration;
   private List<GenerationEntity> generations;

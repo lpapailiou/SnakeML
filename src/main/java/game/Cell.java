@@ -2,11 +2,21 @@ package game;
 
 import java.util.Objects;
 
-public class Cell {
+/**
+ * Instances of this class serve as coordinates. They are used as elements of the game and mark specific
+ * locations on the 'game board'.
+ */
+public class Cell implements Cloneable{
 
-  public final int x;
-  public final int y;
+  public final int x;     // the immutable x coordinate
+  public final int y;     // the immutable y coordinate
 
+  /**
+   * The constructor will create a coordinate of an x and y value. After initialization,
+   * the coordinate will be immutable.
+   * @param x the x coordinate
+   * @param y the y coordinate
+   */
   public Cell(int x, int y) {
     this.x = x;
     this.y = y;
@@ -32,7 +42,13 @@ public class Cell {
 
   @Override
   public Cell clone() {
-    return new Cell(this.x, this.y);
+    try {
+      super.clone();
+      return new Cell(this.x, this.y);
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   @Override

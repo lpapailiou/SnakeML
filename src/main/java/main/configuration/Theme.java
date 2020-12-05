@@ -8,7 +8,8 @@ public enum Theme {
   SANDY(Color.web("#93826c"), Color.web("#93826c"), Color.web("#85a39f"), Color.web("#85a39f"), Color.web("#E7D1B5"), true, "themeSandy.css"),
   SUNSET(Color.web("#ff7582"), Color.web("#ff7582"), Color.web("#c56d86"), Color.MOCCASIN, Color.web("#2a3950"), true,  "themeSunset.css"),
   CANDY(Color.web("#ffa7a7"), Color.web("#ffa7a7"), Color.web("#ffcbcb"), Color.MOCCASIN, Color.web("#c9fdff"), true, "themeCandy.css"),    // TODO: rename to cancer?
-  MINIMAL(Color.BLACK, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED, Color.WHITE, false, "themeMinimal.css");
+  MINIMAL(Color.BLACK, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED, Color.WHITE, false, "themeMinimal.css"),
+  YB(Color.web("#F9CC11"), Color.web("#F9CC11"), Color.web("#F9CC11"), Color.web("#ffffff"), Color.BLACK, true,  "themeYoungBoys.css");
 
   private Color snakeBodyColor;
   private Color frameActiveColor;

@@ -4,6 +4,12 @@ import game.Cell;
 import game.Snake;
 import main.configuration.INodeConfigReader;
 
+/**
+ * This enum is used to collect the vision of the Snake. For every implemented case it implements the according function.
+ * Every value is mapped by its ordinal.
+ * As a every input node has its specific purpose, a short description s added as a field value. This short
+ * description can be visualized on the gui as Tooltip text.
+ */
 public enum InputNode {
 
   UP_WALL("distance to upper wall") {
@@ -148,10 +154,20 @@ public enum InputNode {
     this.tooltipText = tooltipText;
   }
 
+  /**
+   * This method will return the short description of the according input node.
+   * @return the short description
+   */
   public String getTooltipText() {
     return tooltipText;
   }
 
+  /**
+   * This method will calculate a case-specific value, which is part of the vision of the Snake.
+   * @param snake the Snake which's vision is queried
+   * @param food the food of the current game state
+   * @return the vision value for the queried case
+   */
   public double getInput(Snake snake, Cell food) {
     return 0;
   }

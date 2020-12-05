@@ -5,16 +5,26 @@ import java.util.List;
 
 import main.configuration.ISnakeConfigReader;
 
+/**
+ * This class implements the Snake. Core element is the 'snake body', implemented as LinkedList to hold coordinates.
+ */
 public class Snake {
 
-  protected LinkedList<Cell> body = new LinkedList<>();   // TODO: is protected because of test, solve differently?
+  protected LinkedList<Cell> body = new LinkedList<>();             // protected, as we use this Snake as superclass for a mock snake in a test case
   private ISnakeConfigReader config = ISnakeConfigReader.getInstance();
   private int steps;
   private boolean isDead = false;
-  private final int timeoutConstant = config.getSnakeTimeout();
+  private final int timeoutConstant = config.getSnakeTimeout();     // timeout will kill Snake to avoid endless loops in automated games
   private int timeout = timeoutConstant;
   private String causeOfDeath = "timeout";
 
+  /**
+   * The Snake initialization is designed to allow control about starting conditions of a game. All required inputs are
+   * received by parameters.
+   * @param size the initial size of the Snake
+   * @param initialDirection the initial Direction of the next move
+   * @param initialHeadPosition the initial position of the Snake head as coordinate
+   */
   public Snake(int size, Direction initialDirection, Cell initialHeadPosition) {
     andGodSaidLetThereBeSnake(size, initialDirection, initialHeadPosition);
   }
@@ -46,6 +56,10 @@ public class Snake {
     }
   }
 
+  /**
+   * Informs if the Snake is alive or not.
+   * @return true, if Snake is dead
+   */
   public boolean isDead() {
     return isDead;
   }
@@ -66,18 +80,40 @@ public class Snake {
     return false;
   }
 
+  /**
+   * Method to retrieve body (list of coordinates).
+   * @return the body of Snake
+   */
   public List<Cell> getBody() {
     return body;
   }
 
+  /**
+   * Method to retrieve the number of moves done by the Snake.
+   * @return the steps of the Snake
+   */
   public int getSteps() {
     return steps;
   }
 
+  /**
+   * Method to retrieve the reason why a game was designated to end.
+   * @return the cause of death of the Snake
+   */
   public String getCauseOfDeath() {
     return causeOfDeath;
   }
 
+  /**
+   * Method to retrieve the fitness of the Snake, in order to rate the game. The higher the rating, the
+   * better is the game considered.
+   * Tis fitness function will provide two strategies:
+   *    - if the Snake is short/immature, it will be rated higher if more steps where made. This will allow the
+   *      Snake to explore the 'game board', learn that walls are bad and give room to learn that 'food' is good.
+   *    - if the Snake is longer, the rating will increase for food. On the same time, the rating is decreased
+   *      for every step made. This will lead the Snake to go for a more efficient strategy.
+   * @return the fitness of the Snake
+   */
   public long getFitness() {
     int snakeLength = body.size();
     int boardHalf = (config.getBoardWidth() + config.getBoardHeight())/2;
@@ -88,6 +124,10 @@ public class Snake {
     return (long) (Math.pow(snakeLength, 4.7) - (steps/snakeLength));
   }
 
+  /**
+   * This method returns the current position of the Snake head as coordinate
+   * @return the Snake head coordinate
+   */
   public Cell getHead() {
     return body.get(0);
   }
