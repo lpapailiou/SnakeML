@@ -6,7 +6,6 @@ import game.Direction;
 import game.Game;
 import game.Cell;
 import game.Snake;
-import main.configuration.Config;
 import main.configuration.IGameAdapterConfigReader;
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +43,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
     return isGameOver;
   }
 
-  Direction determineNextDirection(Snake snake, Cell food) {
+  private Direction determineNextDirection(Snake snake, Cell food) {
     if (food == null) { // TODO: Refactor into GameWin Event?
       return Direction.values()[new Random().nextInt(Direction.values().length)];
     }
@@ -61,7 +60,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
     return Direction.values()[maxIndex];
   }
 
-  void updateFitness() {
+  private void updateFitness() {
     if (fitness == 0) {
       fitness = game.getSnake().getFitness();
     }
