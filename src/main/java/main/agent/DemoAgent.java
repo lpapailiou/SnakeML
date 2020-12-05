@@ -14,14 +14,12 @@ public class DemoAgent extends Agent {
     adapter = new GameAdapter(Serializer.load(), null);
     state.setGame(adapter.getGame());
     timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      if (adapter == null) {
-        stopTimer();
-        return;
-      }
+
       adapter.moveSnake();
       if (adapter.isGameOver()) {
         stopTimer();
       }
+
     }));
 
     timeline.setCycleCount(Timeline.INDEFINITE);

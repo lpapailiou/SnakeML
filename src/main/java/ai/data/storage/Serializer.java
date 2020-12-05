@@ -18,7 +18,7 @@ public class Serializer {
         String filename = "NeuralNet_16x16_12_15_4_0-8.ser";
         File tempFile = createTempFile("serialized/"+filename, filename);
 
-        NeuralNetwork phoenix = null;
+        NeuralNetwork phoenix;
         try {
             InputStream inputStream = new FileInputStream(tempFile);
             ObjectInputStream in = new ObjectInputStream(inputStream);
@@ -29,6 +29,7 @@ public class Serializer {
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            throw new RuntimeException("failed to deserialize NeuralNetwork!");
         }
         return phoenix;
     }
