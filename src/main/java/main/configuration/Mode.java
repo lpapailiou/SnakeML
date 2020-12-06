@@ -7,6 +7,12 @@ import main.agent.DemoAgent;
 import main.agent.ManualAgent;
 import main.agent.NeuralNetworkAgent;
 
+/**
+ * This enum will provide a specific value per game mode.
+ * It holds a Supplier with the according Agent subclass. If a game is started by
+ * the user interface, this enum takes over the mode selection and starts
+ * with game initialization.
+ */
 public enum Mode {
 
   MANUAL("classic arcade mode (manual)", 200, ManualAgent::new),
@@ -23,10 +29,19 @@ public enum Mode {
     this.agent = agent;
   }
 
+  /**
+   * Gets a short description of the game mode.
+   * @return the short description of the mode
+   */
   public String getLabel() {
     return label;
   }
 
+  /**
+   * This method will create a new instance of the according Agent sub class with the mapped
+   * speed property. The receiver may finish the build to start the game.
+   * @return the prepared Agent instance according to selected mode
+   */
   public Agent getAgent() {
     return agent.get().setSpeed(speed);
   }
