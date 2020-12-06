@@ -41,6 +41,12 @@
     </plugins>
   </build>
 
+  <properties>
+    <sonar.projectKey>PA-5</sonar.projectKey>
+    <sonar.organization>pa-5</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  </properties>
+
   <dependencies>
 
     <dependency>
