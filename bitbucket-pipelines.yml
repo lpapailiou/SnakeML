@@ -12,8 +12,8 @@ definitions:
         caches:
           - maven
           - sonar
-        script:
-          - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+        #script:
+          #- mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         artifacts:
           - target/**
     - step: &build-test
