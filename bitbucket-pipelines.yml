@@ -14,7 +14,7 @@ definitions:
           - sonar
         script:
           - mvn -B verify --file pom.xml
-          - export JAVA_HOME=/path/to/java11
+            export JAVA_HOME=/path/to/java11
           - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         artifacts:
           - target/**
