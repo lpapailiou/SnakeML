@@ -9,8 +9,8 @@ import javafx.util.Duration;
 public class DemoAgent extends Agent {
 
   /**
-   * This is the implementation of the method specific game logic.
-   * It will load a serialized NeuralNetwork, provide it to the state instance and start the game.
+   * This is the implementation of the method specific game logic. It will load a serialized
+   * NeuralNetwork, provide it to the state instance and start the game.
    */
   @Override
   public void build() {

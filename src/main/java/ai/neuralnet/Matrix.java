@@ -16,13 +16,14 @@ public class Matrix implements Serializable, Cloneable {
 
   /**
    * The constructor to create a randomized matrix for given type.
+   *
    * @param rows the row count of the matrix
    * @param cols the column count of the matrix
    */
   Matrix(int rows, int cols) {
-      data = new double[rows][cols];
-      this.rows = rows;
-      this.cols = cols;
+    data = new double[rows][cols];
+    this.rows = rows;
+    this.cols = cols;
   }
 
 //  /**
@@ -47,14 +48,14 @@ public class Matrix implements Serializable, Cloneable {
 //  }
 
   void addBias(Matrix m) {
-      if (cols != m.cols) {
-          throw new IllegalArgumentException("wrong input matrix dimensions!");
+    if (cols != m.cols) {
+      throw new IllegalArgumentException("wrong input matrix dimensions!");
+    }
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        data[i][j] += m.data[0][j];
       }
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              data[i][j] += m.data[0][j];
-          }
-      }
+    }
   }
 
 //  static Matrix subtract(Matrix a, Matrix b) {
@@ -70,15 +71,16 @@ public class Matrix implements Serializable, Cloneable {
 //  }
 
   static Matrix merge(Matrix a, Matrix b) {
-      if (a.rows != b.rows || a.cols != b.cols) {
-          throw new IllegalArgumentException("wrong input matrix dimensions! " + a.getType() + " vs. " + b.getType());
+    if (a.rows != b.rows || a.cols != b.cols) {
+      throw new IllegalArgumentException(
+          "wrong input matrix dimensions! " + a.getType() + " vs. " + b.getType());
+    }
+    for (int i = 0; i < a.rows; i++) {
+      for (int j = 0; j < a.cols; j++) {
+        a.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
       }
-      for (int i = 0; i < a.rows; i++) {
-          for (int j = 0; j < a.cols; j++) {
-              a.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
-          }
-      }
-      return a;
+    }
+    return a;
   }
 
 //  void multiply(double scalar) {
@@ -101,20 +103,21 @@ public class Matrix implements Serializable, Cloneable {
 //  }
 
   static Matrix multiply(Matrix a, Matrix b) {
-      if (a.cols != b.rows) {
-          throw new IllegalArgumentException("wrong input matrix dimensions for multiplication! " + a.getType() + " " + b.getType());
+    if (a.cols != b.rows) {
+      throw new IllegalArgumentException(
+          "wrong input matrix dimensions for multiplication! " + a.getType() + " " + b.getType());
+    }
+    Matrix tmp = new Matrix(a.rows, b.cols);
+    for (int i = 0; i < tmp.rows; i++) {
+      for (int j = 0; j < tmp.cols; j++) {
+        double sum = 0;
+        for (int k = 0; k < a.cols; k++) {
+          sum += a.data[i][k] * b.data[k][j];
+        }
+        tmp.data[i][j] = sum;
       }
-      Matrix tmp = new Matrix(a.rows, b.cols);
-      for (int i = 0; i < tmp.rows; i++) {
-          for (int j = 0; j < tmp.cols; j++) {
-              double sum = 0;
-              for (int k = 0; k < a.cols; k++) {
-                  sum += a.data[i][k] * b.data[k][j];
-              }
-              tmp.data[i][j] = sum;
-          }
-      }
-      return tmp;
+    }
+    return tmp;
   }
 
 //  static Matrix transpose(Matrix m) {
@@ -128,11 +131,11 @@ public class Matrix implements Serializable, Cloneable {
 //  }
 
   void sigmoid() {
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              data[i][j] = 1/(1 + Math.exp(-data[i][j]));
-          }
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        data[i][j] = 1 / (1 + Math.exp(-data[i][j]));
       }
+    }
   }
 
 //  Matrix dsigmoid() {
@@ -146,51 +149,51 @@ public class Matrix implements Serializable, Cloneable {
 //  }
 
   private String getType() {
-      return "(" + rows + ", " + cols + ")";
+    return "(" + rows + ", " + cols + ")";
   }
 
   int getRows() {
-      return rows;
+    return rows;
   }
 
   int getCols() {
-      return cols;
+    return cols;
   }
 
   static Matrix fromArray(double[] arr) {
-      Matrix tmp = new Matrix(arr.length, 1);
-      for (int i = 0; i < arr.length; i++) {
-          tmp.data[i][0] = arr[i];
-      }
-      return tmp;
+    Matrix tmp = new Matrix(arr.length, 1);
+    for (int i = 0; i < arr.length; i++) {
+      tmp.data[i][0] = arr[i];
+    }
+    return tmp;
   }
 
   static List<Double> asList(Matrix m) {
-      List<Double> tmp = new ArrayList<>();
-      for (int i = 0; i < m.rows; i++) {
-          for (int j = 0; j < m.cols; j++) {
-              tmp.add(m.data[i][j]);
-          }
+    List<Double> tmp = new ArrayList<>();
+    for (int i = 0; i < m.rows; i++) {
+      for (int j = 0; j < m.cols; j++) {
+        tmp.add(m.data[i][j]);
       }
-      return tmp;
+    }
+    return tmp;
   }
 
   void randomize() {
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              data[i][j] = Math.random() * 2 - 1;
-          }
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        data[i][j] = Math.random() * 2 - 1;
       }
+    }
   }
 
   void randomize(double factor) {
-      for (int i = 0; i < rows; i++) {
-          for (int j = 0; j < cols; j++) {
-              if (Math.random() < 0.5) {
-                  data[i][j] = data[i][j] + (Math.random() * 2 - 1) * factor;
-              }
-          }
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        if (Math.random() < 0.5) {
+          data[i][j] = data[i][j] + (Math.random() * 2 - 1) * factor;
+        }
       }
+    }
   }
 
 //  void print() {
@@ -206,11 +209,13 @@ public class Matrix implements Serializable, Cloneable {
   @Override
   protected Matrix clone() throws CloneNotSupportedException {
     super.clone();
-      Matrix m = new Matrix(rows, cols);
-      for (int i = 0; i < m.rows; i++) {
-          if (m.cols >= 0) System.arraycopy(this.data[i], 0, m.data[i], 0, m.cols);
+    Matrix m = new Matrix(rows, cols);
+    for (int i = 0; i < m.rows; i++) {
+      if (m.cols >= 0) {
+        System.arraycopy(this.data[i], 0, m.data[i], 0, m.cols);
       }
-      return m;
+    }
+    return m;
   }
 
   @Override

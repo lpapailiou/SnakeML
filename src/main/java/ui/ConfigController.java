@@ -37,6 +37,13 @@ import main.configuration.Mode;
 import main.configuration.Theme;
 import ui.painter.impl.NetworkPainter;
 
+/**
+ * This is a child controller of the Application controller. Its main purpose is to serve as bridge
+ * for the user interacting with the application. On initialization, it loads all values stored in
+ * the Config class. During runtime, the user may change specific parameters. The ConfigController
+ * validates the user input. In case of success, it performs the according modifications in the
+ * configuration or triggers actions.
+ */
 public class ConfigController implements Initializable {
 
   @FXML

@@ -17,16 +17,20 @@ import main.State;
 import main.configuration.IApplicationConfigReader;
 import main.configuration.Mode;
 
+/**
+ * This is the parent controller of the user interface. It is designed to handle the ground logic of
+ * the application in terms of user interaction.
+ */
 public class ApplicationController implements Initializable {
 
   @FXML
   private HBox rootElement;
 
   @FXML
-  private GameController gameController;
+  private GameController gameController;        // IDE says this is not used, but it is
 
   @FXML
-  private ConfigController configController;
+  private ConfigController configController;    // IDE says this is not used, but it is
 
   private Stage stage;
 
@@ -36,6 +40,13 @@ public class ApplicationController implements Initializable {
   private boolean isRealtimeStatisticsVerbose = true;
   private int statisticsPosition;
 
+  /**
+   * The initializer mainly adds listeners to the state object, in order to be able to receive
+   * PropertyChange events from running games.
+   *
+   * @param location  the location URL
+   * @param resources the resources bundle
+   */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     state.addGameListener(e -> {
@@ -112,7 +123,7 @@ public class ApplicationController implements Initializable {
     });
   }
 
-  private void toggleGame() {
+  private void toggleGame() {     // when a text field is focused, a game launch will not be triggered
     if (!(scene.getFocusOwner() instanceof HBox) && !(scene.getFocusOwner() instanceof Button)) {
       Platform.runLater(() -> rootElement.requestFocus());
       return;
@@ -128,6 +139,12 @@ public class ApplicationController implements Initializable {
     return scene;
   }
 
+  /**
+   * The stage needs to be set in order to access it later. It will be used to display validation
+   * popups in the correct position.
+   *
+   * @param stage
+   */
   public void setStage(Stage stage) {
     this.stage = stage;
   }

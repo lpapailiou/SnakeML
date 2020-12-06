@@ -12,6 +12,11 @@ import javafx.scene.canvas.Canvas;
 import ui.painter.impl.GameInformationPainter;
 import ui.painter.impl.GamePainter;
 
+/**
+ * This is a child controller of the Application controller. Its purpose is to visualize one snake
+ * game at a time. Additionally, it will indicate specific events (e.g. game over or statistics
+ * updates) by different visualisation.
+ */
 public class GameController implements Initializable {
 
   @FXML

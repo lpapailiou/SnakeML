@@ -11,8 +11,9 @@ import javafx.animation.Animation.Status;
 import javafx.animation.Timeline;
 
 /**
- * This class is used to abstract game logic from the user interface. The game engine will provide and push game objects to this
- * instance, while the user interface will 'subscribe' to events by implementing an according PropertyChangeListener.
+ * This class is used to abstract game logic from the user interface. The game engine will provide
+ * and push game objects to this instance, while the user interface will 'subscribe' to events by
+ * implementing an according PropertyChangeListener.
  */
 public class State {
 
@@ -24,8 +25,9 @@ public class State {
   private Direction direction;
 
   /**
-   * A new game including mode-specific logic is injected as timeline.
-   * This method will take up the timeline and add the required PropertyChangeListener.
+   * A new game including mode-specific logic is injected as timeline. This method will take up the
+   * timeline and add the required PropertyChangeListener.
+   *
    * @param timeline the Timeline containing the mode-specific game
    */
   public void setTimeline(Timeline timeline) {
@@ -39,6 +41,7 @@ public class State {
 
   /**
    * This method allows to check if the contained game is running.
+   *
    * @return true, if the game is running
    */
   public boolean isTimelineRunning() {
@@ -58,16 +61,18 @@ public class State {
   }
 
   /**
-   * With this method, aggregated data of a machine learning batch can be injected. It may be used to
-   * visualize statistics on the user interface.
+   * With this method, aggregated data of a machine learning batch can be injected. It may be used
+   * to visualize statistics on the user interface.
+   *
    * @param generationEntity the data wrapper class of the current generation
    */
   public void setGenerationEntity(GenerationEntity generationEntity) {
-      this.generationEntity = generationEntity;
+    this.generationEntity = generationEntity;
   }
 
   /**
    * This method allows to get the aggregated data of the current generation.
+   *
    * @return statistics of the current generation
    */
   public GenerationEntity getGenerationEntity() {
@@ -75,18 +80,20 @@ public class State {
   }
 
   /**
-   * This method allows to inject the current game-to-be visualized. Additionally, it will implement a
-   * PropertyChangeListener, in order to inform the user interface a move was executed.
+   * This method allows to inject the current game-to-be visualized. Additionally, it will implement
+   * a PropertyChangeListener, in order to inform the user interface a move was executed.
+   *
    * @param game the game to be visualized
    */
   public void setGame(Game game) {
-      this.game = game;
-      this.game.addListener(e -> pcs.firePropertyChange("game", false, true));
-      pcs.firePropertyChange("game", false, true);
+    this.game = game;
+    this.game.addListener(e -> pcs.firePropertyChange("game", false, true));
+    pcs.firePropertyChange("game", false, true);
   }
 
   /**
    * This method allows to get the currently visualized game.
+   *
    * @return the current game
    */
   public Game getGame() {
@@ -94,8 +101,9 @@ public class State {
   }
 
   /**
-   * This method injects the direction to-be-used for the next move. This implementation is considered only
-   * for manual games.
+   * This method injects the direction to-be-used for the next move. This implementation is
+   * considered only for manual games.
+   *
    * @param direction the next direction
    */
   public void setDirection(Direction direction) {
@@ -104,6 +112,7 @@ public class State {
 
   /**
    * Provides the current direction for the next move.
+   *
    * @return the direction to-go-to
    */
   public Direction getDirection() {
@@ -111,8 +120,9 @@ public class State {
   }
 
   /**
-   * This method allows to listen to property changes of the timeline.
-   * The event will fire, as soon as a game over occurred.
+   * This method allows to listen to property changes of the timeline. The event will fire, as soon
+   * as a game over occurred.
+   *
    * @param l the PropertyChangeListener for the timeline
    */
   public void addTimelineListener(PropertyChangeListener l) {
@@ -120,8 +130,9 @@ public class State {
   }
 
   /**
-   * This method allows to listen to property changes of the game.
-   * The event will fire, as soon as a game is injected to the state instance, as well as on every game tick.
+   * This method allows to listen to property changes of the game. The event will fire, as soon as a
+   * game is injected to the state instance, as well as on every game tick.
+   *
    * @param l the PropertyChangeListener for the game
    */
   public void addGameListener(PropertyChangeListener l) {

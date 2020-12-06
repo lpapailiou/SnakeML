@@ -14,12 +14,12 @@ import java.util.Set;
 
 import main.configuration.IGameAdapterConfigReader;
 
-//TODO: check if this is really adapter or maybe decorator??
+// TODO: check if this is really adapter or maybe decorator??
 
 /**
- * This is an adapter class for game.Game. Its main purpose is to execute a game while implementing machine learning
- * by using a designated NeuralNetwork. Additionally, it will rate the game and collect its data when a
- * game over event occurs.
+ * This is an adapter class for game.Game. Its main purpose is to execute a game while implementing
+ * machine learning by using a designated NeuralNetwork. Additionally, it will rate the game and
+ * collect its data when a game over event occurs.
  */
 public class GameAdapter implements Comparable<GameAdapter> {
 
@@ -31,9 +31,11 @@ public class GameAdapter implements Comparable<GameAdapter> {
   private long fitness;
 
   /**
-   * The constructor requires an instance of NeuralNetwork to be able to perform the machine learning algorithm.
-   * As the collection of statistics is optional, the second parameter GenerationEntity may be null.
-   * @param net the NeuralNetwork used for this specific game
+   * The constructor requires an instance of NeuralNetwork to be able to perform the machine
+   * learning algorithm. As the collection of statistics is optional, the second parameter
+   * GenerationEntity may be null.
+   *
+   * @param net              the NeuralNetwork used for this specific game
    * @param generationEntity the statistics data wrapper class to record data (optional)
    */
   GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
@@ -46,7 +48,9 @@ public class GameAdapter implements Comparable<GameAdapter> {
   }
 
   /**
-   * This constructor allows easy instantiation of a GameAdapter where no further statistics are needed.
+   * This constructor allows easy instantiation of a GameAdapter where no further statistics are
+   * needed.
+   *
    * @param net the NeuralNetwork used for this specific game
    */
   public GameAdapter(NeuralNetwork net) {
@@ -54,7 +58,8 @@ public class GameAdapter implements Comparable<GameAdapter> {
   }
 
   /**
-   * This method coordinates the determination of the next direction, as well as the execution of the according move of Snake.
+   * This method coordinates the determination of the next direction, as well as the execution of
+   * the according move of Snake.
    */
   public void moveSnake() {
     game.changeDirection(determineNextDirection(game.getSnake(), game.getFood()));
@@ -63,6 +68,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
 
   /**
    * This method informs if the game is over.
+   *
    * @return true, if a game over occurred
    */
   public boolean isGameOver() {
@@ -80,8 +86,10 @@ public class GameAdapter implements Comparable<GameAdapter> {
       inputValues[arrayIndex] = InputNode.values()[nodeIndex].getInput(snake, food);
       arrayIndex++;
     }
-    List<Double> out = neuralNetwork.predict(inputValues);  // evaluates input data with NeuralNetwork
-    int maxIndex = out.indexOf(Collections.max(out));       // determines chosen Direction by choosing max index
+    List<Double> out = neuralNetwork
+        .predict(inputValues);  // evaluates input data with NeuralNetwork
+    int maxIndex = out
+        .indexOf(Collections.max(out));       // determines chosen Direction by choosing max index
     return Direction.values()[maxIndex];
   }
 
@@ -93,6 +101,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
 
   /**
    * Returns contained game instance.
+   *
    * @return Game instance
    */
   public Game getGame() {

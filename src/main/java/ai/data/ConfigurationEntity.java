@@ -1,8 +1,9 @@
 package ai.data;
 
 /**
- * This class is designed to collect and hold statistics data for the used configuration, so statistics are traceable.
- * Method names may not apply to the Google Java Coding Styleguide, as they are optimized for the JSON parser by jackson.
+ * This class is designed to collect and hold statistics data for the used configuration, so
+ * statistics are traceable. Method names may not apply to the Google Java Coding Styleguide, as
+ * they are optimized for the JSON parser by jackson.
  */
 public class ConfigurationEntity {
 

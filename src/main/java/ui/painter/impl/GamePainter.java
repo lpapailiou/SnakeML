@@ -11,6 +11,9 @@ import main.configuration.IPainterConfigReader;
 import main.configuration.Theme;
 import ui.painter.IGamePainter;
 
+/**
+ * This is a helper class which isolates the visualization of the snake game on the user interface.
+ */
 public class GamePainter implements IGamePainter {
 
   private GraphicsContext context;
@@ -23,11 +26,17 @@ public class GamePainter implements IGamePainter {
   private double paddingWidth;
   private double paddingHeight;
 
+  /**
+   * @param context the graphics context of the panel to be painted on
+   */
   public GamePainter(GraphicsContext context) {
     this.context = context;
     initializeDimensions();
   }
 
+  /**
+   * This method triggers the visualisation of the snake.
+   */
   public void paintSnake(Snake snake) {
     List<Cell> body = snake.getBody();
 
@@ -48,12 +57,18 @@ public class GamePainter implements IGamePainter {
     }
   }
 
+  /**
+   * This method triggers the visualisation of the food or 'apple'.
+   */
   public void paintFood(Cell foodPosition) {
     if (foodPosition != null) {
       drawCell(foodPosition.x, foodPosition.y, colors.getFoodColor());
     }
   }
 
+  /**
+   * This method triggers the visualisation of the game board.
+   */
   public void paintBoard(boolean isActive) {
     int width = config.getBoardWidth();
     int height = config.getBoardHeight();

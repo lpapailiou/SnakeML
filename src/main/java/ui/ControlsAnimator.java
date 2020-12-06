@@ -11,6 +11,11 @@ import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import main.configuration.Mode;
 
+/**
+ * This is a helper class to support a switch of the game mode visually. As the user interface has
+ * more or less option depending on the selected mode, an animated transition will be made to
+ * improve UX.
+ */
 class ControlsAnimator {
 
   private final ComboBox<String> modeSelector;
@@ -31,11 +36,11 @@ class ControlsAnimator {
   }
 
   void animateModeTransition(Mode newMode, Mode oldMode, Scene scene) {
-    if(scene == null) {
+    if (scene == null) {
       return;
     }
 
-    if(oldMode == newMode) {
+    if (oldMode == newMode) {
       return;
     }
 
@@ -45,7 +50,8 @@ class ControlsAnimator {
 
     modeSelector.hide();
     final Duration transitionDuration = Duration.seconds(0.3);
-    TranslateTransition baseControlsTransition = new TranslateTransition(transitionDuration, baseControls);
+    TranslateTransition baseControlsTransition = new TranslateTransition(transitionDuration,
+        baseControls);
 
     if (newMode == Mode.NEURAL_NETWORK) {
       baseControlsTransition.setFromY(237);
@@ -55,7 +61,8 @@ class ControlsAnimator {
       baseControlsTransition.setToY(0);
     }
 
-    TranslateTransition actionControlsTransition = new TranslateTransition(transitionDuration, actionControls);
+    TranslateTransition actionControlsTransition = new TranslateTransition(transitionDuration,
+        actionControls);
     if (newMode == Mode.NEURAL_NETWORK) {
       actionControlsTransition.setFromX(-177);
       actionControlsTransition.setToX(0);
@@ -68,7 +75,8 @@ class ControlsAnimator {
       actionControlsTransition.setToY(0);
     }
 
-    ScaleTransition actionControlsScaleTransition = new ScaleTransition(transitionDuration, actionControls);
+    ScaleTransition actionControlsScaleTransition = new ScaleTransition(transitionDuration,
+        actionControls);
     if (newMode == Mode.NEURAL_NETWORK) {
       actionControlsScaleTransition.setFromX(2);
       actionControlsScaleTransition.setToX(1);
@@ -78,21 +86,24 @@ class ControlsAnimator {
     }
 
     neuralNetworkControls.setOpacity(0);
-    FadeTransition neuralNetworkTransition = new FadeTransition((Duration.seconds(0.0001)), neuralNetworkControls);
+    FadeTransition neuralNetworkTransition = new FadeTransition((Duration.seconds(0.0001)),
+        neuralNetworkControls);
     if (newMode == Mode.NEURAL_NETWORK) {
       neuralNetworkTransition.setFromValue(0);
       neuralNetworkTransition.setToValue(1);
     }
 
     statisticsControls.setOpacity(0);
-    FadeTransition statisticTransition = new FadeTransition((Duration.seconds(0.0001)), statisticsControls);
+    FadeTransition statisticTransition = new FadeTransition((Duration.seconds(0.0001)),
+        statisticsControls);
     if (newMode == Mode.NEURAL_NETWORK) {
       statisticTransition.setFromValue(0);
       statisticTransition.setToValue(1);
     }
 
     ParallelTransition para1 = new ParallelTransition();
-    para1.getChildren().addAll(baseControlsTransition, actionControlsTransition, actionControlsScaleTransition);
+    para1.getChildren()
+        .addAll(baseControlsTransition, actionControlsTransition, actionControlsScaleTransition);
     ParallelTransition para2 = new ParallelTransition();
     para2.getChildren().addAll(neuralNetworkTransition, statisticTransition);
     SequentialTransition seq = new SequentialTransition();

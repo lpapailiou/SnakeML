@@ -5,10 +5,10 @@ import game.Snake;
 import main.configuration.INodeConfigReader;
 
 /**
- * This enum is used to collect the vision of the Snake. For every implemented case it implements the according function.
- * Every value is mapped by its ordinal.
- * As a every input node has its specific purpose, a short description s added as a field value. This short
- * description can be visualized on the gui as Tooltip text.
+ * This enum is used to collect the vision of the Snake. For every implemented case it implements
+ * the according function. Every value is mapped by its ordinal. As a every input node has its
+ * specific purpose, a short description s added as a field value. This short description can be
+ * visualized on the gui as Tooltip text.
  */
 public enum InputNode {
 
@@ -18,7 +18,7 @@ public enum InputNode {
       return 1 / (snake.getHead().y + 0.001);
     }
   },
-  RIGHT_WALL( "distance to right wall") {
+  RIGHT_WALL("distance to right wall") {
     @Override
     public double getInput(Snake snake, Cell food) {
       return 1 / (Math.abs(config.getBoardWidth() - 1 - snake.getHead().x) + 0.001);
@@ -36,7 +36,7 @@ public enum InputNode {
       return 1 / (snake.getHead().x + 0.001);
     }
   },
-  UP_BODY( "distance to body upwards") {
+  UP_BODY("distance to body upwards") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
@@ -52,7 +52,7 @@ public enum InputNode {
       return 1 / (index + 0.001);
     }
   },
-  RIGHT_BODY( "distance to body right hand side") {
+  RIGHT_BODY("distance to body right hand side") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
@@ -86,7 +86,7 @@ public enum InputNode {
       return 1 / (index + 0.001);
     }
   },
-  LEFT_BODY( "distance to body left hand side") {
+  LEFT_BODY("distance to body left hand side") {
     @Override
     public double getInput(Snake snake, Cell food) {
       Cell pos = snake.getHead().clone();
@@ -156,6 +156,7 @@ public enum InputNode {
 
   /**
    * This method will return the short description of the according input node.
+   *
    * @return the short description
    */
   public String getTooltipText() {
@@ -164,8 +165,9 @@ public enum InputNode {
 
   /**
    * This method will calculate a case-specific value, which is part of the vision of the Snake.
+   *
    * @param snake the Snake which's vision is queried
-   * @param food the food of the current game state
+   * @param food  the food of the current game state
    * @return the vision value for the queried case
    */
   public double getInput(Snake snake, Cell food) {

@@ -6,7 +6,8 @@ import java.util.List;
 import main.configuration.ISnakeConfigReader;
 
 /**
- * This class implements the Snake. Core element is the 'snake body', implemented as LinkedList to hold coordinates.
+ * This class implements the Snake. Core element is the 'snake body', implemented as LinkedList to
+ * hold coordinates.
  */
 public class Snake {
 
@@ -14,15 +15,17 @@ public class Snake {
   private ISnakeConfigReader config = ISnakeConfigReader.getInstance();
   private int steps;
   private boolean isDead = false;
-  private final int timeoutConstant = config.getSnakeTimeout();     // timeout will kill Snake to avoid endless loops in automated games
+  private final int timeoutConstant = config
+      .getSnakeTimeout();     // timeout will kill Snake to avoid endless loops in automated games
   private int timeout = timeoutConstant;
   private String causeOfDeath = "timeout";
 
   /**
-   * The Snake initialization is designed to allow control about starting conditions of a game. All required inputs are
-   * received by parameters.
-   * @param size the initial size of the Snake
-   * @param initialDirection the initial Direction of the next move
+   * The Snake initialization is designed to allow control about starting conditions of a game. All
+   * required inputs are received by parameters.
+   *
+   * @param size                the initial size of the Snake
+   * @param initialDirection    the initial Direction of the next move
    * @param initialHeadPosition the initial position of the Snake head as coordinate
    */
   public Snake(int size, Direction initialDirection, Cell initialHeadPosition) {
@@ -50,7 +53,8 @@ public class Snake {
       if (!newSegment.equals(food)) {
         body.removeLast();
       } else {
-        timeout = body.size() == (config.getBoardWidth() * config.getBoardHeight()) ? 0 : timeoutConstant;
+        timeout =
+            body.size() == (config.getBoardWidth() * config.getBoardHeight()) ? 0 : timeoutConstant;
       }
       steps++;
     }
@@ -58,6 +62,7 @@ public class Snake {
 
   /**
    * Informs if the Snake is alive or not.
+   *
    * @return true, if Snake is dead
    */
   public boolean isDead() {
@@ -73,7 +78,8 @@ public class Snake {
   }
 
   private boolean isSnakeInWall(Cell cell) {
-    if ((cell.x >= config.getBoardWidth() || cell.x < 0) || (cell.y >= config.getBoardHeight() || cell.y < 0)) {
+    if ((cell.x >= config.getBoardWidth() || cell.x < 0) || (cell.y >= config.getBoardHeight()
+        || cell.y < 0)) {
       causeOfDeath = "wall";
       return true;
     }
@@ -82,6 +88,7 @@ public class Snake {
 
   /**
    * Method to retrieve body (list of coordinates).
+   *
    * @return the body of Snake
    */
   public List<Cell> getBody() {
@@ -90,6 +97,7 @@ public class Snake {
 
   /**
    * Method to retrieve the number of moves done by the Snake.
+   *
    * @return the steps of the Snake
    */
   public int getSteps() {
@@ -98,6 +106,7 @@ public class Snake {
 
   /**
    * Method to retrieve the reason why a game was designated to end.
+   *
    * @return the cause of death of the Snake
    */
   public String getCauseOfDeath() {
@@ -105,27 +114,29 @@ public class Snake {
   }
 
   /**
-   * Method to retrieve the fitness of the Snake, in order to rate the game. The higher the rating, the
-   * better is the game considered.
-   * Tis fitness function will provide two strategies:
-   *    - if the Snake is short/immature, it will be rated higher if more steps where made. This will allow the
-   *      Snake to explore the 'game board', learn that walls are bad and give room to learn that 'food' is good.
-   *    - if the Snake is longer, the rating will increase for food. On the same time, the rating is decreased
-   *      for every step made. This will lead the Snake to go for a more efficient strategy.
+   * Method to retrieve the fitness of the Snake, in order to rate the game. The higher the rating,
+   * the better is the game considered. Tis fitness function will provide two strategies: - if the
+   * Snake is short/immature, it will be rated higher if more steps where made. This will allow the
+   * Snake to explore the 'game board', learn that walls are bad and give room to learn that 'food'
+   * is good. - if the Snake is longer, the rating will increase for food. On the same time, the
+   * rating is decreased for every step made. This will lead the Snake to go for a more efficient
+   * strategy.
+   *
    * @return the fitness of the Snake
    */
   public long getFitness() {
     int snakeLength = body.size();
-    int boardHalf = (config.getBoardWidth() + config.getBoardHeight())/2;
+    int boardHalf = (config.getBoardWidth() + config.getBoardHeight()) / 2;
 
     if (snakeLength < boardHalf * 1.5) {
       return (long) Math.pow(snakeLength, 3.7) + steps;
     }
-    return (long) (Math.pow(snakeLength, 4.7) - (steps/snakeLength));
+    return (long) (Math.pow(snakeLength, 4.7) - (steps / snakeLength));
   }
 
   /**
    * This method returns the current position of the Snake head as coordinate
+   *
    * @return the Snake head coordinate
    */
   public Cell getHead() {

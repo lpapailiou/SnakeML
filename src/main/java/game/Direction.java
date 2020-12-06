@@ -1,8 +1,8 @@
 package game;
 
 /**
- * This enum is used to express the four orthogonal directions, up, right, down left.
- * The order of the directions is mapped by ordinals to the output values of the Neural Network.
+ * This enum is used to express the four orthogonal directions, up, right, down left. The order of
+ * the directions is mapped by ordinals to the output values of the Neural Network.
  */
 public enum Direction {
 

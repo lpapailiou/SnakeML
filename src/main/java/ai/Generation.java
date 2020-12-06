@@ -21,9 +21,9 @@ import main.configuration.IGenerationConfigReader;
 
 /**
  * This class will run multiple background games, partially in parallel. This process is one step of
- * batch processing a game series with a NeuralNetwork.
- * Additionally, this class will evaluate processed games. Based on the according ratings, it will
- * provide an 'evolved' NeuralNetwork, which can be used in further generations.
+ * batch processing a game series with a NeuralNetwork. Additionally, this class will evaluate
+ * processed games. Based on the according ratings, it will provide an 'evolved' NeuralNetwork,
+ * which can be used in further generations.
  */
 class Generation {
 
@@ -36,9 +36,12 @@ class Generation {
   private List<GenerationEntity> generationEntities;
 
   /**
-   * The constructor will initialize a whole generation of Snake games to be processed in the background.
-   * @param id the ID of the generation. As generations are played in series, the ID will allow to track the runs
-   * @param populationSize the number of games to be processed in this generation
+   * The constructor will initialize a whole generation of Snake games to be processed in the
+   * background.
+   *
+   * @param id                the ID of the generation. As generations are played in series, the ID
+   *                          will allow to track the runs
+   * @param populationSize    the number of games to be processed in this generation
    * @param generationEntites the according data wrapper class for statistics purposes
    */
   Generation(int id, int populationSize, List<GenerationEntity> generationEntites) {
@@ -52,6 +55,7 @@ class Generation {
 
   /**
    * This method will create the required background games, then run it in parallel.
+   *
    * @param net the seeded NeuralNetwork
    * @return the best NeuralNetwork chosen for reproduction
    */
@@ -60,7 +64,8 @@ class Generation {
 
     List<Runnable> tasks = new ArrayList<>();
     for (int i = 0; i < populationSize; i++) {        // create and prepare background games
-      tasks.add(new BackgroundGame(i == 0 ? net : net.getRandomizedClone(), populationList, generationEntity));
+      tasks.add(new BackgroundGame(i == 0 ? net : net.getRandomizedClone(), populationList,
+          generationEntity));
     }
 
     CompletableFuture<?>[] futures = tasks.stream()   // run background games in parallel
@@ -81,9 +86,10 @@ class Generation {
   }
 
   /**
-   * This method will analyze all processed games and return a NeuralNetwor, which is designed to be the
-   * best choice for reproduction for the following generation.
-   * This method is a crucial part of the machine learning algorithm.
+   * This method will analyze all processed games and return a NeuralNetwor, which is designed to be
+   * the best choice for reproduction for the following generation. This method is a crucial part of
+   * the machine learning algorithm.
+   *
    * @return the best NeuralNetwork for reproduction
    */
   private NeuralNetwork evolve() {
@@ -130,13 +136,14 @@ class Generation {
   }
 
   /**
-   * This is the implementation of the roulette wheel algorithm, allowing to pick specific NeuralNetworks
-   * for reproduction. The best rated NeuralNetworks are preferred, but there is a probability lower rated
-   * NeuralNetworks are considered for reproduction, to avoid local maxima.
+   * This is the implementation of the roulette wheel algorithm, allowing to pick specific
+   * NeuralNetworks for reproduction. The best rated NeuralNetworks are preferred, but there is a
+   * probability lower rated NeuralNetworks are considered for reproduction, to avoid local maxima.
+   *
    * @param generations the list of games-to-be-considered
-   * @param map mapping of rating to sorted index of rating
-   * @param bound the pool of Snakes to be considered for reproduction
-   * @param sum the sum of fitness values
+   * @param map         mapping of rating to sorted index of rating
+   * @param bound       the pool of Snakes to be considered for reproduction
+   * @param sum         the sum of fitness values
    * @return the chosen NeuralNetwork for reproduction
    */
   private NeuralNetwork spinRouletteWheel(List<GameAdapter> generations, Map<Integer, Long> map,
@@ -145,7 +152,8 @@ class Generation {
     NeuralNetwork chosen = null;
     for (int i = 0; i < bound; i++) {
       checksum += map.get(i);
-      if (checksum > new Random().nextInt((int) sum)) {     // double randomization! (occurs in every loop)
+      if (checksum > new Random()
+          .nextInt((int) sum)) {     // double randomization! (occurs in every loop)
         chosen = generations.get(i).getNeuralNetwork();
         break;
       }

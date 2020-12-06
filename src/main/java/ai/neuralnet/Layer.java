@@ -12,12 +12,12 @@ class Layer implements Serializable, Cloneable {
   Matrix bias;
 
   Layer(int m, int n) {
-      weight = new Matrix(m, n);
-      bias = new Matrix(n, 1);
+    weight = new Matrix(m, n);
+    bias = new Matrix(n, 1);
 
-      // randomize matrices for initial setup
-      weight.randomize();
-      bias.randomize();
+    // randomize matrices for initial setup
+    weight.randomize();
+    bias.randomize();
   }
 
   @Override

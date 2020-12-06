@@ -13,11 +13,10 @@ import java.util.logging.Logger;
 import main.configuration.IGameConfigReader;
 
 /**
- * This class is the basic implementation of the Snake game. It is designed as generically as possible, so
- * it can be reused for different Snake algorithms.
- * It mainly takes care about the Snake and the Cell ('food' or 'apple').
- * Additionally, it will manage a game over event.
- * The game is designed to react on a tick frequency, which is translated to 'steps of the Snake'.
+ * This class is the basic implementation of the Snake game. It is designed as generically as
+ * possible, so it can be reused for different Snake algorithms. It mainly takes care about the
+ * Snake and the Cell ('food' or 'apple'). Additionally, it will manage a game over event. The game
+ * is designed to react on a tick frequency, which is translated to 'steps of the Snake'.
  */
 public class Game implements ITickAware {
 
@@ -41,6 +40,7 @@ public class Game implements ITickAware {
 
   /**
    * With this method, the Direction of the next move of the Snake can be set.
+   *
    * @param nextDirection the Direction of the next move
    */
   public void changeDirection(Direction nextDirection) {
@@ -48,8 +48,8 @@ public class Game implements ITickAware {
   }
 
   /**
-   * This method is triggered periodically on a specific frequency.
-   * It executes one single move of the Snake.
+   * This method is triggered periodically on a specific frequency. It executes one single move of
+   * the Snake.
    */
   @Override
   public void onTick() {
@@ -69,6 +69,7 @@ public class Game implements ITickAware {
 
   /**
    * This method will allow to add a listener to the game ticks.
+   *
    * @param l the PropertyChangeListener to be added
    */
   public void addListener(PropertyChangeListener l) {
@@ -81,6 +82,7 @@ public class Game implements ITickAware {
 
   /**
    * This method will consume a game over event.
+   *
    * @param consumer the event consumer to be added
    */
   public void onGameOver(IGameOverConsumer consumer) {
@@ -89,6 +91,7 @@ public class Game implements ITickAware {
 
   /**
    * Returns the Direction of the next move.
+   *
    * @return the Direction of the next move
    */
   public Direction getDirection() {
@@ -97,6 +100,7 @@ public class Game implements ITickAware {
 
   /**
    * Returns the Snake as object.
+   *
    * @return the Snake
    */
   public Snake getSnake() {
@@ -105,6 +109,7 @@ public class Game implements ITickAware {
 
   /**
    * Returns the length of the Snake as integer.
+   *
    * @return the Snake length
    */
   public int getSnakeLength() {
@@ -113,6 +118,7 @@ public class Game implements ITickAware {
 
   /**
    * Returns the coordinates of the food.
+   *
    * @return the coordinates of the food
    */
   public Cell getFood() {

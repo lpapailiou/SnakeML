@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used as temporary storage of game batch statistics data.
- * It will not persist data permanently.
- * It is implemented as Singleton, to assure just a single instance is instantiated.
+ * This class is used as temporary storage of game batch statistics data. It will not persist data
+ * permanently. It is implemented as Singleton, to assure just a single instance is instantiated.
  */
 public class TempStorage {
 
@@ -20,6 +19,7 @@ public class TempStorage {
 
   /**
    * Will add batch data set to temporary storage.
+   *
    * @param batchData
    */
   public void addBatch(BatchEntity batchData) {
@@ -28,6 +28,7 @@ public class TempStorage {
 
   /**
    * Assures that only one instance of TemppStorage is created for this JVM.
+   *
    * @return the Singleton instance
    */
   public static synchronized TempStorage getInstance() {
@@ -39,6 +40,7 @@ public class TempStorage {
 
   /**
    * Returns all temporary stored batch statistics.
+   *
    * @return current batch data
    */
   public List<BatchEntity> getBatches() {

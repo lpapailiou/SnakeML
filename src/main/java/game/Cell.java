@@ -3,17 +3,18 @@ package game;
 import java.util.Objects;
 
 /**
- * Instances of this class serve as coordinates. They are used as elements of the game and mark specific
- * locations on the 'game board'.
+ * Instances of this class serve as coordinates. They are used as elements of the game and mark
+ * specific locations on the 'game board'.
  */
-public class Cell implements Cloneable{
+public class Cell implements Cloneable {
 
   public final int x;     // the immutable x coordinate
   public final int y;     // the immutable y coordinate
 
   /**
-   * The constructor will create a coordinate of an x and y value. After initialization,
-   * the coordinate will be immutable.
+   * The constructor will create a coordinate of an x and y value. After initialization, the
+   * coordinate will be immutable.
+   *
    * @param x the x coordinate
    * @param y the y coordinate
    */
@@ -52,5 +53,7 @@ public class Cell implements Cloneable{
   }
 
   @Override
-  public String toString() { return "(" + x + ", " + y + ")"; }
+  public String toString() {
+    return "(" + x + ", " + y + ")";
+  }
 }

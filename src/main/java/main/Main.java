@@ -16,8 +16,9 @@ import ui.ApplicationController;
 import webserver.WebServer;
 
 /**
- * This is the class which contains the main(String[] args) method as entry point to the application.
- * It will launch the application. Additionally, it will launch a web server in a background thread.
+ * This is the class which contains the main(String[] args) method as entry point to the
+ * application. It will launch the application. Additionally, it will launch a web server in a
+ * background thread.
  */
 public class Main extends Application {
 
@@ -25,6 +26,7 @@ public class Main extends Application {
 
   /**
    * The entry point of this application.
+   *
    * @param args args (not processed)
    */
   public static void main(String[] args) {
@@ -34,6 +36,7 @@ public class Main extends Application {
   /**
    * This method is called at the start of the application. It will launch the user interface and
    * trigger the start of the web server.
+   *
    * @param stage
    */
   @Override
@@ -56,7 +59,8 @@ public class Main extends Application {
     Parent root = loader.load();
     Scene scene = new Scene(root, 1600, 800);
     scene.getStylesheets().add(classLoader.getResource("applicationCss.css").toExternalForm());
-    scene.getStylesheets().add(Main.class.getClassLoader().getResource(config.getTheme().getCss()).toExternalForm());
+    scene.getStylesheets()
+        .add(Main.class.getClassLoader().getResource(config.getTheme().getCss()).toExternalForm());
     scene.setFill(config.getTheme().getBackgroundColor());
     stage.setScene(scene);
     stage.setMinHeight(839);
@@ -70,12 +74,12 @@ public class Main extends Application {
   }
 
   /**
-   * This method allows a clean stop of the application.
-   * It takes care about stopping the web server, so the used port will be closed.
+   * This method allows a clean stop of the application. It takes care about stopping the web
+   * server, so the used port will be closed.
    */
   @Override
   public void stop() {
-    if (webservice!= null) {
+    if (webservice != null) {
       webservice.stopServer();
     }
     Platform.exit();

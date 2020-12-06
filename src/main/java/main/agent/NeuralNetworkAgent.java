@@ -13,11 +13,11 @@ public class NeuralNetworkAgent extends Agent {
   private GameBatch gameBatch;
 
   /**
-   * This is the implementation of the method specific game logic.
-   * It will load the current configuration, create an according NeuralNetwork and set up batch games to be processed in the background.
-   * The batch consists of multiple generations. After each generation is processed, the 'resulting' NeuralNetwork
-   * will be extracted. It is used to create a new game, which is provided to the state instance. This is the game which will be
-   * visualized on the user interface.
+   * This is the implementation of the method specific game logic. It will load the current
+   * configuration, create an according NeuralNetwork and set up batch games to be processed in the
+   * background. The batch consists of multiple generations. After each generation is processed, the
+   * 'resulting' NeuralNetwork will be extracted. It is used to create a new game, which is provided
+   * to the state instance. This is the game which will be visualized on the user interface.
    */
   @Override
   public void build() {

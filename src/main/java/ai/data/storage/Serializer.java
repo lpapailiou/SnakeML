@@ -19,38 +19,39 @@ public class Serializer {
 
   /**
    * This method will load a specific trained NeuralNetwork from the resources folder.
+   *
    * @return a trained NeuralNetwork
    */
   public static NeuralNetwork load() {
-      String filename = "NeuralNet_16x16_12_15_4_0-8.ser";
-      File tempFile = createTempFile("serialized/"+filename, filename);
+    String filename = "NeuralNet_16x16_12_15_4_0-8.ser";
+    File tempFile = createTempFile("serialized/" + filename, filename);
 
-      NeuralNetwork phoenix;
-      try {
-          InputStream inputStream = new FileInputStream(tempFile);
-          ObjectInputStream in = new ObjectInputStream(inputStream);
-          phoenix = (NeuralNetwork) in.readObject();
+    NeuralNetwork phoenix;
+    try {
+      InputStream inputStream = new FileInputStream(tempFile);
+      ObjectInputStream in = new ObjectInputStream(inputStream);
+      phoenix = (NeuralNetwork) in.readObject();
 
-          inputStream.close();
-          in.close();
+      inputStream.close();
+      in.close();
 
-      } catch (IOException | ClassNotFoundException e) {
-          e.printStackTrace();
-          throw new RuntimeException("failed to deserialize NeuralNetwork!");
-      }
-      return phoenix;
+    } catch (IOException | ClassNotFoundException e) {
+      e.printStackTrace();
+      throw new RuntimeException("failed to deserialize NeuralNetwork!");
+    }
+    return phoenix;
   }
 
   private static File createTempFile(String resource, String fileName) {
-      try {
-          InputStream htmlFile = Serializer.class.getClassLoader().getResourceAsStream(resource);
-          File tempFile = new File(System.getProperty("java.io.tmpdir"), fileName);
-          Path tempPath = tempFile.toPath();
-          Files.copy(htmlFile, tempPath, StandardCopyOption.REPLACE_EXISTING);
-          return tempFile;
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
-      throw new RuntimeException("failed to deserialize");
+    try {
+      InputStream htmlFile = Serializer.class.getClassLoader().getResourceAsStream(resource);
+      File tempFile = new File(System.getProperty("java.io.tmpdir"), fileName);
+      Path tempPath = tempFile.toPath();
+      Files.copy(htmlFile, tempPath, StandardCopyOption.REPLACE_EXISTING);
+      return tempFile;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    throw new RuntimeException("failed to deserialize");
   }
 }

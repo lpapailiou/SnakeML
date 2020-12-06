@@ -9,6 +9,10 @@ import io.javalin.http.Context;
 
 import java.util.List;
 
+/**
+ * This is a helper class, designed to collect all available batch data files from the temporary
+ * storage, parse them to JSON strings and pass them to the web server.
+ */
 class StatisticsEndpoint {
 
   static void listAllBatches(Context context) {

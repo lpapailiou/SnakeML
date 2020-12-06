@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class holds the centralized parametrization of the application parameters.
- * During runtime, some designated parameters may be modified.
- * From outside this package, it can be accessed only by using a specific interface. The interfaces may
- * overlap, in order to keep the access points as specific as possible (interface segregation principle).
+ * This class holds the centralized parametrization of the application parameters. During runtime,
+ * some designated parameters may be modified. From outside this package, it can be accessed only by
+ * using a specific interface. The interfaces may overlap, in order to keep the access points as
+ * specific as possible (interface segregation principle).
  */
 public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig, IConfigReader,
     IConfigWriter,
@@ -53,6 +53,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Setter for the chosen mode (in terms of game logic).
+   *
    * @param mode the mode to-be-set
    */
   @Override
@@ -62,6 +63,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Returns the currently selected mode (in terms of game logic).
+   *
    * @return the selected game mode
    */
   @Override
@@ -71,6 +73,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Returns the current board width.
+   *
    * @return the board width
    */
   @Override
@@ -80,6 +83,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Returns the current board height.
+   *
    * @return the board height
    */
   @Override
@@ -89,6 +93,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Setter for the board width.
+   *
    * @param boardWidth the chosen board width
    */
   @Override
@@ -98,6 +103,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Setter for the board height.
+   *
    * @param boardHeight the chosen board height
    */
   @Override
@@ -107,6 +113,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Gets number of segments the Snake should be initialized with.
+   *
    * @return the size of the initial Snake
    */
   @Override
@@ -116,6 +123,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Gets the initial direction the Snake will move towards to.
+   *
    * @return the direction to-go-to
    */
   @Override
@@ -125,6 +133,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Gets the initial starting coordinates for a new Snake (head).
+   *
    * @return the initial starting coordinates
    */
   @Override
@@ -134,6 +143,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Provides the currently selected theme.
+   *
    * @return the current theme
    */
   @Override
@@ -143,6 +153,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Sets the selected theme.
+   *
    * @param theme the selected theme
    */
   @Override
@@ -152,6 +163,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Gets the currently set generation count.
+   *
    * @return the generation count.
    */
   @Override
@@ -161,6 +173,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Sets the entered generation count.
+   *
    * @param generationCount the selected generation count
    */
   @Override
@@ -170,6 +183,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Gets the currently set population size.
+   *
    * @return the population size
    */
   @Override
@@ -179,6 +193,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Sets the entered population size.
+   *
    * @param populationSize the selected generation size
    */
   @Override
@@ -188,6 +203,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Gets the currently set randomization rate.
+   *
    * @return the randomization rate
    */
   @Override
@@ -197,6 +213,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Sets the entered randomization rate.
+   *
    * @param randomizationRate the selected randomization rate
    */
   @Override
@@ -206,6 +223,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Returns the layer configuration as immutable integer array.
+   *
    * @return the layer configuration
    */
   @Override
@@ -215,6 +233,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Returns the layer configuration as Integer List.
+   *
    * @return the layer configuration
    */
   @Override
@@ -228,6 +247,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * Sets the layer configuration according to the input array.
+   *
    * @param layerConfiguration the chosen layer configuration
    */
   @Override
@@ -236,8 +256,9 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
   }
 
   /**
-   * Returns the input node selection as a list of Integer. The input nodes are
-   * represented as enum ordinals.
+   * Returns the input node selection as a list of Integer. The input nodes are represented as enum
+   * ordinals.
+   *
    * @return the input node selection
    */
   @Override
@@ -247,6 +268,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * This method allows to add a selected input node by enum ordinal.
+   *
    * @param selectedInputNode the ID of the selected input node
    */
   @Override
@@ -256,6 +278,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
 
   /**
    * This method allows to remove a specific input node from the input node selection by ordinal.
+   *
    * @param selectedInputNode the ID of the input node to-be-removed
    */
   @Override
@@ -264,8 +287,9 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
   }
 
   /**
-   * Returns the timeout for the snake. If the steps of the snake exceed this number, the according game will be terminated.
-   * This allows to avoid infinite loops in automated games.
+   * Returns the timeout for the snake. If the steps of the snake exceed this number, the according
+   * game will be terminated. This allows to avoid infinite loops in automated games.
+   *
    * @return the timeout for snake steps
    */
   @Override
