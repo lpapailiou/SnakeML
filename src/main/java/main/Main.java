@@ -20,7 +20,7 @@ import webserver.WebServer;
  * application. It will launch the application. Additionally, it will launch a web server in a
  * background thread.
  * @author Lena Papailiou, Ramona Koksa, Sandro Bürki
- * @version 1.0
+ * @version 0.99
  */
 public class Main extends Application {
 
