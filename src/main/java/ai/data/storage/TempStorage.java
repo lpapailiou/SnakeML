@@ -27,7 +27,7 @@ public class TempStorage {
   }
 
   /**
-   * Assures that only one instance of TemppStorage is created for this JVM.
+   * Assures that only one instance of TempStorage is created for this JVM.
    *
    * @return the Singleton instance
    */
