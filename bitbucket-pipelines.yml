@@ -25,3 +25,6 @@ pipelines:
               # Run a security scan for sensitive data.
               # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
               - pipe: atlassian/git-secrets-scan:0.4.3
+              - org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+    clone:
+        depth: full    # SonarCloud scanner needs the full history to assign issues properly
