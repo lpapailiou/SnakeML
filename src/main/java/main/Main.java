@@ -19,7 +19,7 @@ import webserver.WebServer;
  * This is the class which contains the main(String[] args) method as entry point to the
  * application. It will launch the application. Additionally, it will launch a web server in a
  * background thread.
- * @author Lena Papailiou, Ramona Koksa, Sandro B\u00fcrki
+ * @author Lena Papailiou, Ramona Koksa, Sandro Bürki
  * @version 1.0
  */
 public class Main extends Application {
