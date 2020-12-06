@@ -1,7 +1,12 @@
 package ai.data;
 
-import game.element.Snake;
+import game.Snake;
 
+/**
+ * This class is designed to collect and hold aggregated statistics data for batch games. Method
+ * names may not apply to the Google Java Coding Styleguide, as they are optimized for the JSON
+ * parser by jackson.
+ */
 public class GenerationEntity {
 
   private final static Object LOCK = new Object();
@@ -20,6 +25,13 @@ public class GenerationEntity {
   private double avgFitness;
   private long maxFitness;
 
+  /**
+   * This method will aggregate data for statistics purposes. It is called for every Snake of a
+   * population. As the games can be processed in parallel, access must be synchronized so
+   * statistics do not get messed up.
+   *
+   * @param snake
+   */
   public void aggregateSnakeData(Snake snake) {
     synchronized (LOCK) {
       populationSize++;
@@ -54,7 +66,7 @@ public class GenerationEntity {
         maxFitness = fitness;
       }
     }
-   }
+  }
 
   public void setId(int id) {
     this.id = id;

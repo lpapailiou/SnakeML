@@ -1,21 +1,25 @@
 package main.configuration;
 
-import game.Direction;
-
+/**
+ * This interface is designed to allow access to very specific global configuration parameters. It
+ * is used in the ApplicationController class.
+ */
 public interface IApplicationConfigReader {
 
-  int getBoardWidth();
+  /**
+   * This method allows access to all methods provided in the IApplicationConfigReader interface.
+   *
+   * @return IApplicationConfigReader
+   */
+  static IApplicationConfigReader getInstance() {
+    return Config.getInstance();
+  }
 
-  int getBoardHeight();
-
-  Theme getTheme();
-
+  /**
+   * Returns the currently selected mode (in terms of game logic).
+   *
+   * @return the selected game mode
+   */
   Mode getMode();
-
-  Direction getInitialDirection();
-
-  int[] getLayerConfiguration();
-
-  double getRandomizationRate();
 
 }

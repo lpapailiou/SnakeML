@@ -3,17 +3,21 @@ package ai;
 import ai.data.BatchEntity;
 import ai.data.ConfigurationEntity;
 import ai.data.GenerationEntity;
-import ai.data.storage.JsonFileHandler;
 import ai.neuralnet.NeuralNetwork;
-import main.configuration.Config;
-import main.configuration.IGameBatchConfigReader;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import main.configuration.IGameBatchConfigReader;
+
+/**
+ * This class is the 'outer loop' of processing the machine learning algorithm. It allows to process
+ * batches of Generations coordinated and stepwise, so the intermediate data can be used.
+ * Additionally, it coordinates the collections of statistics about the processed games.
+ */
 public class GameBatch {
 
-  private IGameBatchConfigReader config = Config.getGameBatchConfigReader();
   private int generationCount;
   private int currentGeneration;
   private int populationSize;
@@ -21,9 +25,16 @@ public class GameBatch {
   private List<GenerationEntity> generationEntities = new ArrayList<>();
   private ConfigurationEntity configurationEntity;
   private NeuralNetwork neuralNetwork;
-//  private String jsonData;
 
+  /**
+   * The constructor takes the NeuralNetwork, which will be the seed for the generations to-be-run.
+   * During the initialization, it will record the currently used algorithm and include it to the
+   * according statistics record.
+   *
+   * @param neuralNetwork
+   */
   public GameBatch(NeuralNetwork neuralNetwork) {
+    IGameBatchConfigReader config = IGameBatchConfigReader.getInstance();
     this.generationCount = config.getGenerationCount();
     this.populationSize = config.getPopulationSize();
     this.neuralNetwork = neuralNetwork;
@@ -39,62 +50,39 @@ public class GameBatch {
     configurationEntity.setPopulationSize(populationSize);
   }
 
-
-//  public void run() {
-//    batchEntity.setConfigurationEntity(configurationEntity);
-//    batchEntity.setGenerationEntities(generationEntities);
-//
-//
-//    for (int i = 0; i < generationCount; i++) {
-//      Generation gen = new Generation(i, populationnSize, generationEntities);
-//      neuralNetwork = gen.run(neuralNetwork);
-//    }
-//    saveJsonData();
-//  }
-
-  public int getCurrentGeneration() {
-    return currentGeneration;
-  }
-
-  public NeuralNetwork processGeneration() {
+  /**
+   * This method triggers a single run of a generation. Additionally, it will collect the according
+   * data.
+   *
+   * @return the NeuralNetwork which is considered best for reproduction for the next generation
+   */
+  public NeuralNetwork processNewGeneration() {
     Generation gen = new Generation(currentGeneration, populationSize, generationEntities);
     neuralNetwork = gen.run(neuralNetwork);
     batchEntity.setConfigurationEntity(configurationEntity);
     batchEntity.setGenerationEntities(generationEntities);
     if (currentGeneration == generationCount) {
-//      saveJsonData();
       return null;
     }
     currentGeneration++;
     return neuralNetwork;
   }
 
+  /**
+   * This method extracts the aggregated data of the current generation.
+   *
+   * @return aggregated data of current generation
+   */
   public GenerationEntity getCurrentGenerationEntity() {
-    return generationEntities.isEmpty() ? null : generationEntities.get(generationEntities.size()-1);
+    return generationEntities.isEmpty() ? null
+        : generationEntities.get(generationEntities.size() - 1);
   }
 
-//  public void generateJson() {
-//    ObjectMapper mapper = new ObjectMapper();
-//    try {
-//      jsonData = mapper.writeValueAsString(batchEntity);
-//    } catch (JsonProcessingException e) {
-//      e.printStackTrace();
-//    }
-//  }
-//
-//  public String getJsonString() {
-//    if (jsonData == null) {
-//      generateJson();
-//    }
-//    return jsonData;
-//  }
-
-//  public void saveJsonData() {
-//    JsonFileHandler jfh = new JsonFileHandler(getJsonString());
-//    jfh.saveToTempStorage();
-//  }
-
-
+  /**
+   * This method returns the wrapped statistics data for this batch.
+   *
+   * @return the wrapped statistics data of this instance
+   */
   public BatchEntity getBatchEntity() {
     return batchEntity;
   }

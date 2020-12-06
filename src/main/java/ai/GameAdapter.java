@@ -2,17 +2,25 @@ package ai;
 
 import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
+import game.Cell;
 import game.Direction;
 import game.Game;
-import game.element.Cell;
-import game.element.Snake;
-import main.configuration.Config;
-import main.configuration.IGameAdapterConfigReader;
+import game.Snake;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import main.configuration.IGameAdapterConfigReader;
+
+// TODO: check if this is really adapter or maybe decorator??
+
+/**
+ * This is an adapter class for game.Game. Its main purpose is to execute a game while implementing
+ * machine learning by using a designated NeuralNetwork. Additionally, it will rate the game and
+ * collect its data when a game over event occurs.
+ */
 public class GameAdapter implements Comparable<GameAdapter> {
 
   private NeuralNetwork neuralNetwork;
@@ -22,43 +30,80 @@ public class GameAdapter implements Comparable<GameAdapter> {
   private GenerationEntity generationEntity;
   private long fitness;
 
-  public GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
-    IGameAdapterConfigReader config = Config.getGameAdapterConfigReader();
+  /**
+   * The constructor requires an instance of NeuralNetwork to be able to perform the machine
+   * learning algorithm. As the collection of statistics is optional, the second parameter
+   * GenerationEntity may be null.
+   *
+   * @param net              the NeuralNetwork used for this specific game
+   * @param generationEntity the statistics data wrapper class to record data (optional)
+   */
+  GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
+    IGameAdapterConfigReader config = IGameAdapterConfigReader.getInstance();
     neuralNetwork = net;
     nodeSelection = config.getInputNodeSelection();
     this.generationEntity = generationEntity;
     game = new Game();
-  }
-
-  public boolean moveSnake() {
-    game.changeDirection(getDirection(game.getSnake(), game.getFood()));
-    game.onTick();
     game.onGameOver(this::setGameOver);
-    return !isGameOver;
   }
 
-  Direction getDirection(Snake snake, Cell food) {
+  /**
+   * This constructor allows easy instantiation of a GameAdapter where no further statistics are
+   * needed.
+   *
+   * @param net the NeuralNetwork used for this specific game
+   */
+  public GameAdapter(NeuralNetwork net) {
+    this(net, null);
+  }
+
+  /**
+   * This method coordinates the determination of the next direction, as well as the execution of
+   * the according move of Snake.
+   */
+  public void moveSnake() {
+    game.changeDirection(determineNextDirection(game.getSnake(), game.getFood()));
+    game.onTick();
+  }
+
+  /**
+   * This method informs if the game is over.
+   *
+   * @return true, if a game over occurred
+   */
+  public boolean isGameOver() {
+    return isGameOver;
+  }
+
+  private Direction determineNextDirection(Snake snake, Cell food) {
     if (food == null) {
-      return Direction.values()[new Random().nextInt(4)];
+      return Direction.values()[new Random().nextInt(Direction.values().length)];
     }
 
     int arrayIndex = 0;
     double[] inputValues = new double[nodeSelection.size()];
-    for (Integer nodeIndex : nodeSelection) {
+    for (Integer nodeIndex : nodeSelection) {               // vision of snake: collects input data
       inputValues[arrayIndex] = InputNode.values()[nodeIndex].getInput(snake, food);
       arrayIndex++;
     }
-    List<Double> out = neuralNetwork.predict(inputValues);
-    int maxIndex = out.indexOf(Collections.max(out));
+    List<Double> out = neuralNetwork
+        .predict(inputValues);  // evaluates input data with NeuralNetwork
+    int maxIndex = out
+        .indexOf(Collections.max(out));       // determines chosen Direction by choosing max index
     return Direction.values()[maxIndex];
   }
 
-  void updateFitness() {
+  private void updateFitness() {
     if (fitness == 0) {
       fitness = game.getSnake().getFitness();
     }
   }
 
+  /**
+   * Returns contained game instance.
+   *
+   * @return Game instance
+   */
   public Game getGame() {
     return game;
   }
@@ -67,7 +112,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
     return fitness;
   }
 
-  public int getSnakeLength() {
+  int getSnakeLength() {
     return game.getSnake().getBody().size();
   }
 
@@ -89,7 +134,7 @@ public class GameAdapter implements Comparable<GameAdapter> {
   }
 
   @Override
-  public int compareTo(GameAdapter o) {
+  public int compareTo(GameAdapter o) {     // used for evolution algorithm in Generation
     if (this.fitness > o.fitness) {
       return 1;
     } else if (this.fitness < o.fitness) {

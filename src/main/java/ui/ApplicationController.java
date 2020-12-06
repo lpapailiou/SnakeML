@@ -1,169 +1,87 @@
 package ui;
 
-import ai.GameAdapter;
-import ai.GameBatch;
-import ai.data.GenerationEntity;
-import ai.data.storage.Serializer;
-import ai.data.storage.TempStorage;
-import ai.neuralnet.NeuralNetwork;
 import game.Direction;
-import game.Game;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import main.configuration.Config;
+import main.State;
 import main.configuration.IApplicationConfigReader;
+import main.configuration.Mode;
 
+/**
+ * This is the parent controller of the user interface. It is designed to handle the ground logic of
+ * the application in terms of user interaction.
+ */
 public class ApplicationController implements Initializable {
 
   @FXML
   private HBox rootElement;
 
+  @FXML
+  private GameController gameController;        // IDE says this is not used, but it is
+
+  @FXML
+  private ConfigController configController;    // IDE says this is not used, but it is
+
   private Stage stage;
-  private IApplicationConfigReader config = Config.getApplicationConfigReader();
-  private static ApplicationController instance;
-  private Timeline timeline;
-  private boolean isTimerRunning = false;
-  private Direction direction = config.getInitialDirection();
-  private GameAdapter adapter;
+
+  private State state = new State();
+  private IApplicationConfigReader configuration = IApplicationConfigReader.getInstance();
   private Scene scene;
   private boolean isRealtimeStatisticsVerbose = true;
   private int statisticsPosition;
 
+  /**
+   * The initializer mainly adds listeners to the state object, in order to be able to receive
+   * PropertyChange events from running games.
+   *
+   * @param location  the location URL
+   * @param resources the resources bundle
+   */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    instance = this;
+    state.addGameListener(e -> {
+      gameController.display(state.getGame());
+      if (configuration.getMode() == Mode.NEURAL_NETWORK) {
+        configController.displayDirection(state.getGame().getDirection());
+        if (isRealtimeStatisticsVerbose) {
+          gameController.displayStats(state.getGenerationEntity(), state.getGame().getSnakeLength(),
+              statisticsPosition);
+        }
+      }
+    });
+    state.addTimelineListener(e -> stopGame());
     rootElement.sceneProperty().addListener(n -> {
       if (n != null) {
         this.scene = rootElement.getScene();
         listenToKeyboardEvents(rootElement.getScene());
       }
     });
+    configController.setApplicationController(this);
+    configController.setGameController(gameController);
+
   }
 
-  static void start() {
-    if (instance != null) {
-      switch (instance.config.getMode()) {
-        case MANUAL:
-          instance.setupManualTimer();
-          break;
-        case NEURAL_NETWORK:
-          instance.setupNeuralNetworkTimer();
-          break;
-        case NEURAL_NETWORK_DEMO:
-          instance.setupNeuralNetworkDemoTimer();
-          break;
-      }
+  void launchGame() {
+    configController.setDisable(true);
+    if (configuration.getMode() == Mode.NEURAL_NETWORK_DEMO) {
+      configController.selectAllRadioButtons();
     }
+    configuration.getMode().getAgent().setState(state).build();
   }
 
-  static void stop() {
-    if (instance != null) {
-      instance.stopTimer();
-    }
-  }
-
-  private void setupManualTimer() {
-    isTimerRunning = true;
-    ConfigController.disableInputs(true);
-    direction = config.getInitialDirection();
-    int speed = config.getMode().getSpeed();
-    Game game = new Game();
-    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      if (isTimerRunning) {
-        game.changeDirection(direction);
-        game.onTick();
-        GameController.display(game);
-        game.onGameOver(this::stopTimer);
-      }
-
-    }));
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
-  }
-
-  private void setupNeuralNetworkTimer() {
-    isTimerRunning = true;
-    ConfigController.disableInputs(true);
-    int speed = config.getMode().getSpeed();
-    adapter = null;
-    GameBatch batch = new GameBatch(new NeuralNetwork(config.getRandomizationRate(), config.getLayerConfiguration()));
-
-    TempStorage tempStorage = TempStorage.getInstance();
-    tempStorage.addBatch(batch.getBatchEntity());
-
-    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {   // TODO: refactoring of stats-branch made performance drop/broke something
-      if (isTimerRunning) {
-        if (adapter == null) {
-          NeuralNetwork neuralNet = batch.processGeneration();
-          if (neuralNet != null) {
-            adapter = new GameAdapter(neuralNet, null);
-          }
-        }
-        if (adapter != null) {
-          boolean success = adapter.moveSnake();
-          GenerationEntity entity;
-          entity = batch.getCurrentGenerationEntity();
-          GameController.display(adapter.getGame());
-          if (isRealtimeStatisticsVerbose) {
-            GameController.displayStats(entity, adapter.getSnakeLength(), statisticsPosition);
-          }
-          ConfigController.display( adapter.getGame().getDirection());
-          if (!success) {
-            adapter = null;
-          }
-        } else {
-          ConfigController.enableStatistics();
-          stopTimer();
-        }
-      }
-    }));
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
-  }
-
-
-  private void setupNeuralNetworkDemoTimer() {
-    isTimerRunning = true;
-    ConfigController.disableInputs(true);
-    ConfigController.selectAllRadioButtons();           // TODO: fix if possible; necessary as otherwise neural net exception would be thrown
-    int speed = config.getMode().getSpeed();
-    adapter = new GameAdapter(Serializer.load(), null);
-    timeline = new Timeline(new KeyFrame(Duration.millis(speed), event -> {
-      if (isTimerRunning) {
-        if (adapter != null) {
-          boolean success = adapter.moveSnake();
-          GameController.display(adapter.getGame());
-          if (!success) {
-            stopTimer();
-          }
-        } else {
-          stopTimer();
-        }
-      }
-    }));
-
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
-  }
-
-  private void stopTimer() {
-    isTimerRunning = false;
-    ConfigController.disableInputs(false);
-    Platform.runLater(() -> {
-      if (timeline != null) {
-        timeline.stop();
-      }
-    });
+  void stopGame() {
+    state.stopTimeline();
+    configController.setDisable(false);
   }
 
   private void listenToKeyboardEvents(Scene scene) {
@@ -171,27 +89,27 @@ public class ApplicationController implements Initializable {
       switch (key.getCode()) {
         case W:
         case UP:
-          direction = Direction.UP;
+          state.setDirection(Direction.UP);
           break;
 
         case A:
         case LEFT:
-          direction = Direction.LEFT;
+          state.setDirection(Direction.LEFT);
           break;
 
         case S:
         case DOWN:
-          direction = Direction.DOWN;
+          state.setDirection(Direction.DOWN);
           break;
 
         case D:
         case RIGHT:
-          direction = Direction.RIGHT;
+          state.setDirection(Direction.RIGHT);
           break;
 
         case SPACE:
         case ENTER:
-          triggerGame();
+          toggleGame();
           break;
 
         case V:
@@ -205,30 +123,34 @@ public class ApplicationController implements Initializable {
     });
   }
 
-  private void triggerGame() {
-    if (!isTimerRunning) {
-      start();
+  private void toggleGame() {     // when a text field is focused, a game launch will not be triggered
+    if (!(scene.getFocusOwner() instanceof HBox) && !(scene.getFocusOwner() instanceof Button)) {
+      Platform.runLater(() -> rootElement.requestFocus());
+      return;
+    }
+    if (state.isTimelineRunning()) {
+      stopGame();
     } else {
-      stop();
+      launchGame();
     }
   }
 
-  static Scene getScene() {
-    if (instance != null) {
-      return instance.scene;
-    }
-    return null;
+  Scene getScene() {
+    return scene;
   }
 
+  /**
+   * The stage needs to be set in order to access it later. It will be used to display validation
+   * popups in the correct position.
+   *
+   * @param stage
+   */
   public void setStage(Stage stage) {
     this.stage = stage;
   }
 
-  static Stage getStage() {
-    if (instance != null) {
-      return instance.stage;
-    }
-    return null;
+  Stage getStage() {
+    return stage;
   }
 
 }

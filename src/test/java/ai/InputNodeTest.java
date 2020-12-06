@@ -1,23 +1,24 @@
 package ai;
 
+import static junit.framework.TestCase.assertEquals;
+
+import game.Cell;
 import game.Direction;
 import game.Game;
-import game.element.Cell;
-import game.element.Snake;
-import main.configuration.Config;
-import main.configuration.ITestConfig;
-import org.junit.Test;
+import game.Snake;
 
 import java.util.LinkedList;
 
-import static junit.framework.TestCase.assertEquals;
+import main.configuration.IGameConfigReader;
+import main.configuration.ITestConfig;
+import org.junit.Test;
 
 public class InputNodeTest {
 
 
   @Test
   public void foodInputNodesTest() {
-    ITestConfig config = Config.getTestConfig();
+    ITestConfig config = ITestConfig.getInstance();
     config.setBoardWidth(20);
     config.setBoardHeight(20);
 
@@ -53,12 +54,12 @@ public class InputNodeTest {
 
   @Test
   public void bodynputNodesTest() {
-    ITestConfig config = Config.getTestConfig();
+    ITestConfig config = ITestConfig.getInstance();
     config.setBoardWidth(20);
     config.setBoardHeight(20);
 
     // use dummy snake to set custom body
-    DummySnake snake = new DummySnake(Config.getGameConfigReader().getInitialSnakeSize(), Config.getGameConfigReader().getInitialDirection(), Config.getGameConfigReader().getInitialStartingPosition());
+    DummySnake snake = new DummySnake(IGameConfigReader.getInstance().getInitialSnakeSize(), IGameConfigReader.getInstance().getInitialDirection(), IGameConfigReader.getInstance().getInitialStartingPosition());
     snake.addBodyPart(new Cell(3,3));
     snake.addBodyPart(new Cell(3,2));
     snake.addBodyPart(new Cell(4,2));
@@ -99,7 +100,7 @@ public class InputNodeTest {
 
   @Test
   public void wallInputNodesTest() {
-    ITestConfig config = Config.getTestConfig();
+    ITestConfig config = ITestConfig.getInstance();
     config.setBoardWidth(20);
     config.setBoardHeight(20);
 

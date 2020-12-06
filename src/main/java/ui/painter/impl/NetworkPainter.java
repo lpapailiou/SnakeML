@@ -9,23 +9,34 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import main.configuration.Config;
 import main.configuration.IPainterConfigReader;
 import main.configuration.Theme;
 import ui.painter.INetworkPainter;
 
+/**
+ * This is a helper class which isolates the visualization of the NeuralNetwork on the user
+ * interface.
+ */
 public class NetworkPainter implements INetworkPainter {
 
-  private IPainterConfigReader config = Config.getPainterConfigReader();
+  private IPainterConfigReader config = IPainterConfigReader.getInstance();
   private Theme colors = config.getTheme();
   private GraphicsContext context;
   private int width = 520;
   private int height = 290;
-  private double correctionOffsetX = -0.3;
-  private double correctionOffsetY = 1.3;
+  private double correctionOffsetX = 0.8;
+  private double correctionOffsetY = 1.9;
   private int radius = 16;
   List<List<GraphNode>> graph = new ArrayList<>();
 
+  /**
+   * The constructor is designed to store date which should not be refreshed during a game batch is
+   * run.
+   *
+   * @param context                the graphics context of the panel to be painted on
+   * @param networkConfiguration   the current architecture of the NeuralNetwork
+   * @param inputNodeConfiguration the currently selected input nodes of the NeuralNetwork
+   */
   public NetworkPainter(GraphicsContext context, List<Integer> networkConfiguration,
       VBox inputNodeConfiguration) {
     this.context = context;
@@ -58,6 +69,9 @@ public class NetworkPainter implements INetworkPainter {
     }
   }
 
+  /**
+   * This method triggers the visualisation of the neural network.
+   */
   @Override
   public void paintNetwork() {
     paintBackground();
@@ -81,6 +95,12 @@ public class NetworkPainter implements INetworkPainter {
     }
   }
 
+  /**
+   * This method will trigger the output nodes of the visual representation of the NeuralNetwork to
+   * flash, according to the predicted direction.
+   *
+   * @param flash the ordinal of the input node to be highlighted
+   */
   public void flashOutput(int flash) {
     for (int i = 0; i < graph.get(graph.size() - 1).size(); i++) {
       GraphNode node = graph.get(graph.size() - 1).get(i);
@@ -135,7 +155,10 @@ public class NetworkPainter implements INetworkPainter {
     context.fillRect(0, 0, width, height);
   }
 
-
+  /**
+   * This inner class serves to build up a graph of the NeuralNetwork, which will be visualized on
+   * the user interface.
+   */
   private static class GraphNode {
 
     int x;

@@ -5,26 +5,32 @@ import java.io.Serializable;
 /**
  * This is a helper class to assure a dynamic and configurable architecture for the neural network.
  */
-class Layer implements Serializable {
+class Layer implements Serializable, Cloneable {
 
   private static final long serialVersionUID = 2L;
   Matrix weight;
   Matrix bias;
 
   Layer(int m, int n) {
-      weight = new Matrix(m, n);
-      bias = new Matrix(n, 1);
+    weight = new Matrix(m, n);
+    bias = new Matrix(n, 1);
 
-      // randomize matrices for initial setup
-      weight.randomize();
-      bias.randomize();
+    // randomize matrices for initial setup
+    weight.randomize();
+    bias.randomize();
   }
 
   @Override
   protected Layer clone() {
+    try {
+      super.clone();
       Layer layer = new Layer(this.weight.getRows(), this.weight.getCols());
       layer.weight = this.weight.clone();
       layer.bias = this.bias.clone();
       return layer;
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }
