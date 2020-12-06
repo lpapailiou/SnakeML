@@ -1,26 +1,27 @@
-image: maven:3.6.3-jdk-11
+#  Template maven-build
 
-clone:
-  depth: full              # SonarCloud scanner needs the full history to assign issues properly
+#  This template allows you to test and build your Java project with Maven.
+#  The workflow allows running tests, code checkstyle and security scans on the default branch.
 
-definitions:
-  caches:
-    sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
-  steps:
-    - step: &build-test-sonarcloud
-      name: Build, test and analyze on SonarCloud
-      caches:
-        - maven
-        - sonar
-      script:
-        - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-      artifacts:
-        - target/**
+# Prerequisites: pom.xml and appropriate project structure should exist in the repository.
 
-pipelines:                 # More info here: https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html
-  branches:
-    master:
-      - step: *build-test-sonarcloud
-  pull-requests:
-    '**':
-      - step: *build-test-sonarcloud
+image: maven:3.6.3
+
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Build and Test
+            caches:
+              - maven
+            script:
+              - mvn -B verify --file pom.xml
+            after-script:
+              # Collect checkstyle results, if any, and convert to Bitbucket Code Insights.
+              - pipe: atlassian/checkstyle-report:0.2.0
+        - step:
+            name: Security Scan
+            script:
+              # Run a security scan for sensitive data.
+              # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
+              - pipe: atlassian/git-secrets-scan:0.4.3
