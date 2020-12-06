@@ -15,6 +15,7 @@ definitions:
         script:
           - mvn -B verify --file pom.xml
           - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          - mvn -B org.jacoco:jacoco-maven-plugin:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar # used for unit testing report
         artifacts:
           - target/**
     - step: &build-test
