@@ -14,7 +14,7 @@ definitions:
           - sonar
         script:
           - mvn -B org.jacoco:jacoco-maven-plugin:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-          - org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         artifacts:
           - target/**
     - step: &build-test
