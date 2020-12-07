@@ -574,7 +574,7 @@ a {
 }
 
 [id^=chart__]::before {
-  content: 'Batch #' attr(data-batch-number);
+  content: attr(data-batch-description);
   color: white;
   margin-left: 70px;
   border-bottom: 1px solid;
