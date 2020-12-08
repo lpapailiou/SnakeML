@@ -20,7 +20,7 @@ public class TempStorage {
   /**
    * Will add batch data set to temporary storage.
    *
-   * @param batchData
+   * @param batchData the batch data to-be-added
    */
   public void addBatch(BatchEntity batchData) {
     batches.add(batchData);
