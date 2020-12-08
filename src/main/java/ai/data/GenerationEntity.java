@@ -30,7 +30,7 @@ public class GenerationEntity {
    * population. As the games can be processed in parallel, access must be synchronized so
    * statistics do not get messed up.
    *
-   * @param snake
+   * @param snake the Snake which will contribute to data aggregation
    */
   public void aggregateSnakeData(Snake snake) {
     synchronized (LOCK) {

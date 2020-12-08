@@ -24,11 +24,18 @@ public class Snake {
    * The Snake initialization is designed to allow control about starting conditions of a game. All
    * required inputs are received by parameters.
    *
-   * @param size                the initial size of the Snake
-   * @param initialDirection    the initial Direction of the next move
-   * @param initialHeadPosition the initial position of the Snake head as coordinate
+   * @param size                the initial size of the Snake. at least 1
+   * @param initialDirection    the initial Direction of the next move. must not be null
+   * @param initialHeadPosition the initial position of the Snake head as coordinate. must not be null
    */
   public Snake(int size, Direction initialDirection, Cell initialHeadPosition) {
+    if (size < 1) {
+      throw new IllegalArgumentException("Snake length must be at least 1.");
+    } else if (initialDirection == null) {
+      throw new IllegalArgumentException("Initial direction must not be null.");
+    } else if (initialHeadPosition == null) {
+      throw new IllegalArgumentException("initial position must not be null.");
+    }
     andGodSaidLetThereBeSnake(size, initialDirection, initialHeadPosition);
   }
 

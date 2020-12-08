@@ -39,6 +39,9 @@ public class GameAdapter implements Comparable<GameAdapter> {
    * @param generationEntity the statistics data wrapper class to record data (optional)
    */
   GameAdapter(NeuralNetwork net, GenerationEntity generationEntity) {
+    if (net == null) {
+      throw new IllegalArgumentException("Neural network must no be null.");
+    }
     IGameAdapterConfigReader config = IGameAdapterConfigReader.getInstance();
     neuralNetwork = net;
     nodeSelection = config.getInputNodeSelection();
@@ -133,8 +136,13 @@ public class GameAdapter implements Comparable<GameAdapter> {
     return neuralNetwork;
   }
 
+  /**
+   * This method is used to sort processed games for further rating.
+   * @param o the other GameAdapter for comparison
+   * @return 1 if rated higher, -1 if rated lower, else 0
+   */
   @Override
-  public int compareTo(GameAdapter o) {     // used for evolution algorithm in Generation
+  public int compareTo(GameAdapter o) {
     if (this.fitness > o.fitness) {
       return 1;
     } else if (this.fitness < o.fitness) {

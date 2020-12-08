@@ -31,9 +31,12 @@ public class GameBatch {
    * During the initialization, it will record the currently used algorithm and include it to the
    * according statistics record.
    *
-   * @param neuralNetwork
+   * @param neuralNetwork the NeuralNetwork to be seeded. Must not be null
    */
   public GameBatch(NeuralNetwork neuralNetwork) {
+    if (neuralNetwork == null) {
+      throw new IllegalArgumentException("The neural network must not be null");
+    }
     IGameBatchConfigReader config = IGameBatchConfigReader.getInstance();
     this.generationCount = config.getGenerationCount();
     this.populationSize = config.getPopulationSize();

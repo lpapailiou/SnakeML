@@ -41,7 +41,7 @@ class Generation {
    *
    * @param id                the ID of the generation. As generations are played in series, the ID
    *                          will allow to track the runs
-   * @param populationSize    the number of games to be processed in this generation
+   * @param populationSize    the number of games to be processed in this generation. Must not be below 1
    * @param generationEntites the according data wrapper class for statistics purposes
    */
   Generation(int id, int populationSize, List<GenerationEntity> generationEntites) {
@@ -86,7 +86,7 @@ class Generation {
   }
 
   /**
-   * This method will analyze all processed games and return a NeuralNetwor, which is designed to be
+   * This method will analyze all processed games and return a NeuralNetwork, which is designed to be
    * the best choice for reproduction for the following generation. This method is a crucial part of
    * the machine learning algorithm.
    *
@@ -181,6 +181,9 @@ class Generation {
       populationList.add(adapter);
     }
 
+    /**
+     * This method processes the actual game within a thread.
+     */
     @Override
     public void run() {
       while (!adapter.isGameOver()) {
