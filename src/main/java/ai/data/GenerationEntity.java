@@ -91,7 +91,7 @@ public class GenerationEntity {
     return maxSnakeLength;
   }
 
-  public int getMin_steps() {
+  public int getMinSteps() {
     return minSteps;
   }
 
