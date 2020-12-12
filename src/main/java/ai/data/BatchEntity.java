@@ -1,5 +1,7 @@
 package ai.data;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  * used algorithm and aggregated game data as list. Method names may not apply to the Google Java
  * Coding Styleguide, as they are optimized for the JSON parser by jackson.
  */
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class BatchEntity {
 
   private ConfigurationEntity configuration;

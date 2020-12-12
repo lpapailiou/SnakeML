@@ -41,11 +41,11 @@ public class GameInformationPainter implements IGameInformationPainter {
         : colors.getBackgroundColor().brighter();
     background = background.deriveColor(1, 1, 1, 0.8);
     context.setFill(background);
-    double deathWall = entity.getNumber_of_wall_deaths();
-    double deathBody = entity.getNumber_of_body_deaths();
-    double deathTimeout = entity.getNumber_of_timeout_deaths();
+    double deathWall = entity.getNumberOfWallDeaths();
+    double deathBody = entity.getNumberOfBodyDeaths();
+    double deathTimeout = entity.getNumberOfTimeoutDeaths();
     double deathCount = deathBody + deathWall + deathTimeout;
-    int maxSnakeLength = entity.getMax_snake_length();
+    int maxSnakeLength = entity.getMaxSnakeLength();
     String maxLength =
         (maxSnakeLength == config.getBoardWidth() * config.getBoardHeight()) ? maxSnakeLength + "*"
             : maxSnakeLength + "";
@@ -67,7 +67,7 @@ public class GameInformationPainter implements IGameInformationPainter {
             .fillText("current snake length:   \t" + snakeLength, offsetX + padding, offsetY + 20);
         context.fillText("max. snake length:   \t" + maxLength, offsetX + padding, offsetY
             + 40);
-        context.fillText("max. steps:   \t\t\t" + entity.getMax_steps(), offsetX + padding,
+        context.fillText("max. steps:   \t\t\t" + entity.getMaxSteps(), offsetX + padding,
             offsetY + 60);
         context
             .fillText("death by wall:   \t\t" + (int) (100 / deathCount * deathWall) + " %", offsetX
@@ -95,7 +95,7 @@ public class GameInformationPainter implements IGameInformationPainter {
         context.setFill(colors.getSnakeBodyColor());
         context.fillText("current snake length:   \t" + snakeLength, offsetX + padding, y + 20);
         context.fillText("max. snake length:   \t" + maxLength, offsetX + padding, y + 40);
-        context.fillText("max. steps:   \t\t\t" + entity.getMax_steps(), offsetX + padding, y + 60);
+        context.fillText("max. steps:   \t\t\t" + entity.getMaxSteps(), offsetX + padding, y + 60);
         context
             .fillText("death by wall:   \t\t" + (int) (100 / deathCount * deathWall) + " %", offsetX
                 + padding, y + 90);
@@ -127,7 +127,7 @@ public class GameInformationPainter implements IGameInformationPainter {
         context.setFill(colors.getSnakeBodyColor());
         context.fillText("current snake length:   \t" + snakeLength, x + padding, y + 20);
         context.fillText("max. snake length:   \t" + maxLength, x + padding, y + 40);
-        context.fillText("max. steps:   \t\t\t" + entity.getMax_steps(), x + padding, y + 60);
+        context.fillText("max. steps:   \t\t\t" + entity.getMaxSteps(), x + padding, y + 60);
         context.fillText("death by wall:   \t\t" + (int) (100 / deathCount * deathWall) + " %",
             x + padding
                 + 200, y + 20);
@@ -151,7 +151,7 @@ public class GameInformationPainter implements IGameInformationPainter {
         context.setFill(colors.getSnakeBodyColor());
         context.fillText("current snake length:   \t" + snakeLength, x + padding, y + 20);
         context.fillText("max. snake length:   \t" + maxLength, x + padding, y + 40);
-        context.fillText("max. steps:   \t\t\t" + entity.getMax_steps(), x + padding, y + 60);
+        context.fillText("max. steps:   \t\t\t" + entity.getMaxSteps(), x + padding, y + 60);
         context.fillText("death by wall:   \t\t" + (int) (100 / deathCount * deathWall) + " %",
             x + padding, y + 90);
         context.fillText("death by body:   \t\t" + (int) (100 / deathCount * deathBody) + " %",

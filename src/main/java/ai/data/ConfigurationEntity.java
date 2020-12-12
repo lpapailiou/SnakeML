@@ -1,10 +1,14 @@
 package ai.data;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 /**
  * This class is designed to collect and hold statistics data for the used configuration, so
  * statistics are traceable. Method names may not apply to the Google Java Coding Styleguide, as
  * they are optimized for the JSON parser by jackson.
  */
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ConfigurationEntity {
 
   private int boardWidth;
@@ -28,11 +32,11 @@ public class ConfigurationEntity {
     this.populationSize = populationSize;
   }
 
-  public int getBoard_width() {
+  public int getBoardWidth() {
     return boardWidth;
   }
 
-  public int getBoard_height() {
+  public int getBoardHeight() {
     return boardHeight;
   }
 

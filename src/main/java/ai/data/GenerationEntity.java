@@ -1,5 +1,7 @@
 package ai.data;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import game.Snake;
 
 /**
@@ -7,6 +9,7 @@ import game.Snake;
  * names may not apply to the Google Java Coding Styleguide, as they are optimized for the JSON
  * parser by jackson.
  */
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class GenerationEntity {
 
   private final static Object LOCK = new Object();
@@ -76,15 +79,15 @@ public class GenerationEntity {
     return id;
   }
 
-  public int getMin_snake_length() {
+  public int getMinSnakeLength() {
     return minSnakeLength;
   }
 
-  public double getAvg_snake_length() {
+  public double getAvgSnakeLength() {
     return avgSnakeLength;
   }
 
-  public int getMax_snake_length() {
+  public int getMaxSnakeLength() {
     return maxSnakeLength;
   }
 
@@ -92,36 +95,35 @@ public class GenerationEntity {
     return minSteps;
   }
 
-  public double getAvg_steps() {
+  public double getAvgSteps() {
     return avgSteps;
   }
 
-  public int getMax_steps() {
+  public int getMaxSteps() {
     return maxSteps;
   }
 
-  public int getNumber_of_wall_deaths() {
+  public int getNumberOfWallDeaths() {
     return numberOfWallDeath;
   }
 
-  public int getNumber_of_body_deaths() {
+  public int getNumberOfBodyDeaths() {
     return numberOfBodyDeath;
   }
 
-  public int getNumber_of_timeout_deaths() {
+  public int getNumberOfTimeoutDeaths() {
     return numberOfTimeoutDeath;
   }
 
-  public long getMin_fitness() {
+  public long getMinFitness() {
     return minFitness;
   }
 
-  public double getAvg_fitness() {
+  public double getAvgFitness() {
     return avgFitness;
   }
 
-  public long getMax_fitness() {
+  public long getMaxFitness() {
     return maxFitness;
   }
-
 }
