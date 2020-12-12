@@ -20,9 +20,12 @@ public class TempStorage {
   /**
    * Will add batch data set to temporary storage.
    *
-   * @param batchData
+   * @param batchData the batch entity to-be-added to temporary storage
    */
   public void addBatch(BatchEntity batchData) {
+    if (batchData == null) {
+      return;
+    }
     batches.add(batchData);
   }
 
@@ -41,7 +44,7 @@ public class TempStorage {
   /**
    * Returns all temporary stored batch statistics.
    *
-   * @return current batch data
+   * @return current batch data list
    */
   public List<BatchEntity> getBatches() {
     return batches;

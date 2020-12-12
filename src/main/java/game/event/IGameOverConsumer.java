@@ -1,7 +1,7 @@
 package game.event;
 
 /**
- * A consumer allowing to consume a firede GameOver event.
+ * A consumer allowing to consume a fired GameOver event.
  */
 public interface IGameOverConsumer {
 

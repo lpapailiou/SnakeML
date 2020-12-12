@@ -196,16 +196,6 @@ public class Matrix implements Serializable, Cloneable {
     }
   }
 
-//  void print() {
-//      for (int i = 0; i < rows; i++) {
-//          for (int j = 0; j < cols; j++) {
-//              System.out.print(data[i][j] + "  ");
-//          }
-//          System.out.println();
-//      }
-//      System.out.println();
-//  }
-
   @Override
   protected Matrix clone() throws CloneNotSupportedException {
     super.clone();
