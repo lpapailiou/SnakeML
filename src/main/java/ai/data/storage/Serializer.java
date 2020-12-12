@@ -39,8 +39,7 @@ public class Serializer {
       in.close();
 
     } catch (IOException | ClassNotFoundException e) {
-      e.printStackTrace();
-      throw new SerializationException("failed to deserialize NeuralNetwork!");
+      throw new DeserializationException("failed to deserialize NeuralNetwork!", e);
     }
     return phoenix;
   }
@@ -55,6 +54,6 @@ public class Serializer {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    throw new SerializationException("failed to deserialize");
+    throw new DeserializationException("failed to deserialize");
   }
 }
