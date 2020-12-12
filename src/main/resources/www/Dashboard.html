@@ -23,11 +23,11 @@
 
 </head>
 <body>
-<div class="four columns div-user-controls">
+<div id="main-section" class="four columns">
   <h2>SNAKE ML - STATISTICS</h2>
   <p>Visualising statistics of the Game "Snake ML"</p>
   <p>Pick one or more statistics from the dropdown below.</p>
-  <button id="reload-button" onclick="loadCurrentBatchData()">Reload</button>
+  <button id="reload-button" class="button" onclick="loadCurrentBatchData()">Reload</button>
   <button id="loading-button" class="loading-button" disabled>Loading...</button>
   <div id="batch-selection-form">
   </div>
@@ -61,10 +61,24 @@
       setLoadingState(false);
       const batches = JSON.parse(response);
 
-      handleEmptyMessage(batches)
-      displayBatchSelectionForm(batches)
+      handleEmptyMessage(batches);
+      displayBatchSelectionForm(batches);
+      updateChartVisibility();
       displayCharts(batches);
 
+    });
+  }
+
+  function updateChartVisibility() {
+    document.querySelectorAll('#charts-container > div:not(.chart-template-div)')
+    .forEach(chartDiv => chartDiv.style.display = 'none');
+
+
+    getSelectedBatchNumbers().forEach(chartNumber => {
+      document.querySelectorAll(`#charts-container > div[data-batch-number="${chartNumber}"]`)
+      .forEach(element => {
+        element.style.display = 'block';
+      })
     });
   }
 
@@ -72,10 +86,11 @@
     let batchSelectionForm = document.getElementById('batch-selection-form');
     batchSelectionForm.textContent = null;
 
-    batches.forEach((batch, batchNumber) => {
+    batches.forEach((batch, index) => {
+      const batchNumber = index + 1;
       let label = document.createElement('label');
       label.classList.add('batch-selection__label');
-      label.innerText = 'Batch #' + (batchNumber + 1) + ' - ' + batch.configuration.algorithm;
+      label.innerText = `Batch #${batchNumber} - ${batch.configuration.algorithm}`;
 
       let checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
@@ -83,10 +98,10 @@
       checkbox.dataset.batchNumber = batchNumber;
       checkbox.classList.add('batch-selection__checkbox');
       checkbox.checked = true;
-      checkbox.onclick = () => displayCharts(batches);
+      checkbox.onclick = () => updateChartVisibility();
 
       label.appendChild(checkbox)
-      batchSelectionForm.appendChild(label);
+      batchSelectionForm.insertBefore(label, batchSelectionForm.firstChild);
     });
   }
 
@@ -113,34 +128,11 @@
   }
 
   function displayCharts(batches) {
-    const selectedBatchNumbers = getSelectedBatchNumbers();
 
-    if (selectedBatchNumbers.length === 0) {
-      document.getElementById('charts-container').style.display = 'none';
-      return;
-    }
-
-    document.querySelectorAll('#charts-container > div:not(.chart-template-div)')
-    .forEach(element => element.remove());
-
-    document.getElementById('charts-container').style.display = 'block';
-
-
-    console.log(batches);
-    console.log(batches
-    .filter((batch, index) => {
-      console.log(selectedBatchNumbers.indexOf(index.toString()));
-      return selectedBatchNumbers.indexOf(index) !== -1;
-    }));
-
-
-
-    batches
-    .filter((batch, index) => selectedBatchNumbers.indexOf(index))
-    .forEach((batch, batchNumber) => {
+    batches.forEach((batch, batchNumber) => {
       batchNumber++;
 
-      templateIds.forEach((templateId, index) => {
+      templateIds.forEach(templateId => {
         if (document.getElementById(templateId + batchNumber) === null) {
           cloneChartDiv(templateId, batchNumber, batch);
         }
@@ -160,8 +152,9 @@
     const chartDivTemplate = document.getElementById(templateId);
     const chartDivClone = chartDivTemplate.cloneNode();
     chartDivClone.id = templateId + batchNumber;
-    chartDivClone.classList.remove("chart-template-div")
-    chartDivClone.setAttribute('data-batch-description', 'Batch #' + batchNumber + ' - ' + batch.configuration.algorithm);
+    chartDivClone.classList.remove("chart-template-div");
+    chartDivClone.setAttribute('data-batch-number', batchNumber);
+    chartDivClone.setAttribute('data-batch-description', `Batch #${batchNumber} - ${batch.configuration.algorithm}`);
     chartDivTemplate.after(chartDivClone);
   }
 

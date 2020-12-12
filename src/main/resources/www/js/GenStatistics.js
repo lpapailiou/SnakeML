@@ -30,11 +30,10 @@ function loadGraph(gen_data, batchNumber) {
       am4charts.XYChart);
   snakeLengthChart.data = gen_data
 
-   const valueAxisX = snakeLengthChart.xAxes.push(new am4charts.ValueAxis());
+  const valueAxisX = snakeLengthChart.xAxes.push(new am4charts.ValueAxis());
   valueAxisX.title.text = 'Generation';
   valueAxisX.renderer.minGridDistance = 40;
 
-  // Create value axis
   const valueAxisY = snakeLengthChart.yAxes.push(new am4charts.ValueAxis());
   valueAxisY.title.text = 'Snake length';
 
@@ -83,7 +82,8 @@ function loadGraph(gen_data, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__deaths--batch-${batchNumber}`, gen_data, deathsConfig);
+  createLineChart(`chart__deaths--batch-${batchNumber}`, gen_data,
+      deathsConfig);
 
   // ------------------------------ fitness -----------------------------------
 
@@ -105,7 +105,8 @@ function loadGraph(gen_data, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__fitness--batch-${batchNumber}`, gen_data, fitnessConfig);
+  createLineChart(`chart__fitness--batch-${batchNumber}`, gen_data,
+      fitnessConfig);
 
   // ------------------------------- steps ------------------------------------
 
