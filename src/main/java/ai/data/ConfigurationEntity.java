@@ -44,7 +44,7 @@ public class ConfigurationEntity {
     return algorithm;
   }
 
-  public int getPopulation_size() {
+  public int getPopulationSize() {
     return populationSize;
   }
 

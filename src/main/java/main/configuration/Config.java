@@ -24,7 +24,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
   private int boardWidth = 16;
   private int boardHeight = 12;
   private int initialSnakeSize = 3;
-  private final Direction initialDirection = Direction.RIGHT;
+  private static final Direction initialDirection = Direction.RIGHT;
   private Cell initialStartingPosition = new Cell(3, 3);
 
   private Theme theme = Theme.CLASSIC;
@@ -33,8 +33,8 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
   private int generationCount = 60;
   private int populationSize = 2000;
   private double randomizationRate = 0.8;
-  private final int inputNodes = 12;
-  private final int outputNodes = 4;
+  private static final int inputNodes = 12;
+  private static final int outputNodes = 4;
   private int[] layerConfiguration = {inputNodes, 16, outputNodes};
   private Set<Integer> inputNodeSelection = new HashSet<>();
 

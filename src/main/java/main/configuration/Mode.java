@@ -22,7 +22,7 @@ public enum Mode {
   private int speed;
   private Supplier<Agent> agent;
 
-  Mode(String label, int speed, Supplier agent) {
+  Mode(String label, int speed, Supplier<Agent> agent) {
     this.label = label;
     this.speed = speed;
     this.agent = agent;

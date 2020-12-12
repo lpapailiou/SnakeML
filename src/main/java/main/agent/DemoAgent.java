@@ -2,6 +2,7 @@ package main.agent;
 
 import ai.GameAdapter;
 import ai.data.storage.Serializer;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -26,7 +27,7 @@ public class DemoAgent extends Agent {
 
     }));
 
-    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.setCycleCount(Animation.INDEFINITE);
     state.setTimeline(timeline);
     timeline.play();
   }

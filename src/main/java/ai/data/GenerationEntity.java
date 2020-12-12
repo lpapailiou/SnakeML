@@ -12,7 +12,7 @@ import game.Snake;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class GenerationEntity {
 
-  private final static Object LOCK = new Object();
+  private static final Object LOCK = new Object();
   private int id;
   private int populationSize;
   private int minSnakeLength = Integer.MAX_VALUE;

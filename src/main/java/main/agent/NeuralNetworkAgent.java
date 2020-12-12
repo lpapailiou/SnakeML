@@ -4,6 +4,7 @@ import ai.GameAdapter;
 import ai.GameBatch;
 import ai.data.storage.TempStorage;
 import ai.neuralnet.NeuralNetwork;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -47,7 +48,7 @@ public class NeuralNetworkAgent extends Agent {
         adapter = null;
       }
     }));
-    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.setCycleCount(Animation.INDEFINITE);
     state.setTimeline(timeline);
     timeline.play();
   }

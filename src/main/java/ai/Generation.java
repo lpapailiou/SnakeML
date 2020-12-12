@@ -2,7 +2,6 @@ package ai;
 
 import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,7 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import main.configuration.IGenerationConfigReader;
 
 /**
@@ -31,7 +29,7 @@ class Generation {
   private IGenerationConfigReader config = IGenerationConfigReader.getInstance();
   private int populationSize;
   private List<GameAdapter> populationList = new ArrayList<>();
-  private final static int THREAD_POOL = 4;
+  private static final int THREAD_POOL = 4;
   private GenerationEntity generationEntity = new GenerationEntity();
   private List<GenerationEntity> generationEntities;
 
@@ -41,7 +39,8 @@ class Generation {
    *
    * @param id                the ID of the generation. As generations are played in series, the ID
    *                          will allow to track the runs
-   * @param populationSize    the number of games to be processed in this generation. Must not be below 1
+   * @param populationSize    the number of games to be processed in this generation. Must not be
+   *                          below 1
    * @param generationEntites the according data wrapper class for statistics purposes
    */
   Generation(int id, int populationSize, List<GenerationEntity> generationEntites) {
@@ -77,7 +76,7 @@ class Generation {
     try {
       executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
-      System.out.println("executor service interrupted unexpectedly!");
+      LOG.log(Level.WARNING, "executor service interrupted unexpectedly!", e);
     }
 
     generationEntities.add(generationEntity);
@@ -86,9 +85,9 @@ class Generation {
   }
 
   /**
-   * This method will analyze all processed games and return a NeuralNetwork, which is designed to be
-   * the best choice for reproduction for the following generation. This method is a crucial part of
-   * the machine learning algorithm.
+   * This method will analyze all processed games and return a NeuralNetwork, which is designed to
+   * be the best choice for reproduction for the following generation. This method is a crucial part
+   * of the machine learning algorithm.
    *
    * @return the best NeuralNetwork for reproduction
    */
@@ -97,8 +96,9 @@ class Generation {
     NeuralNetwork best = populationList.get(0).getNeuralNetwork();
 
     LOG.log(Level.INFO,
-        "max fitness for gen #" + generationEntity.getId() + ": \t" + populationList.get(0)
-            .getFitness() + " \t(snake length: " + populationList.get(0).getSnakeLength() + ")");
+        String
+            .format("max fitness for gen #%d: \t %d \t(snake length: %d)", generationEntity.getId(),
+                populationList.get(0).getFitness(), populationList.get(0).getSnakeLength()));
 
     if (populationList.size() < 2) {
       return best;

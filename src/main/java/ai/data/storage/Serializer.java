@@ -2,6 +2,7 @@ package ai.data.storage;
 
 import ai.neuralnet.NeuralNetwork;
 
+import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,6 +17,8 @@ import java.nio.file.StandardCopyOption;
  * The deserialized object may be used to visualize replay or test with different board sizes.
  */
 public class Serializer {
+
+  private Serializer() {}
 
   /**
    * This method will load a specific trained NeuralNetwork from the resources folder.
@@ -37,7 +40,7 @@ public class Serializer {
 
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();
-      throw new RuntimeException("failed to deserialize NeuralNetwork!");
+      throw new SerializationException("failed to deserialize NeuralNetwork!");
     }
     return phoenix;
   }
@@ -52,6 +55,6 @@ public class Serializer {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    throw new RuntimeException("failed to deserialize");
+    throw new SerializationException("failed to deserialize");
   }
 }

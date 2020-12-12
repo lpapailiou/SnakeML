@@ -14,10 +14,11 @@ import ui.painter.IGameInformationPainter;
  */
 public class GameInformationPainter implements IGameInformationPainter {
 
+  private static final String FONT_NAME = "Monospace Regular";
   private GraphicsContext context;
   private IPainterConfigReader config = IPainterConfigReader.getInstance();
   private Theme colors = config.getTheme();
-  private final double canvasWidth = 800;     // must match fxml
+  private static final double canvasWidth = 800;     // must match fxml
   private double paddingWidth;
   private double paddingHeight;
 
@@ -46,9 +47,6 @@ public class GameInformationPainter implements IGameInformationPainter {
     double deathTimeout = entity.getNumberOfTimeoutDeaths();
     double deathCount = deathBody + deathWall + deathTimeout;
     int maxSnakeLength = entity.getMaxSnakeLength();
-    String maxLength =
-        (maxSnakeLength == config.getBoardWidth() * config.getBoardHeight()) ? maxSnakeLength + "*"
-            : maxSnakeLength + "";
     int generation = entity.getId() + 1;       // start counting from 1?
     double fontSizeLarge = 32;
     double fontSize = 12;
@@ -58,120 +56,114 @@ public class GameInformationPainter implements IGameInformationPainter {
     double offsetY = (canvasWidth - offsetX) - height;
     double width = 570;
 
+    double x;
+    double y;
+
     switch (position) {
       case 0:
-        context.setFont(new Font("", fontSize));
+        context.setFont(new Font(FONT_NAME, fontSize));
         context.fillRoundRect(offsetX, offsetY, width, height, 6, 6);
         context.setFill(colors.getSnakeBodyColor());
-        context
-            .fillText("current snake length:   \t" + snakeLength, offsetX + padding, offsetY + 20);
-        context.fillText("max. snake length:   \t" + maxLength, offsetX + padding, offsetY
-            + 40);
-        context.fillText("max. steps:   \t\t\t" + entity.getMaxSteps(), offsetX + padding,
-            offsetY + 60);
-        context
-            .fillText("death by wall:   \t\t" + (int) (100 / deathCount * deathWall) + " %", offsetX
-                + padding
-                + 200, offsetY + 20);
-        context
-            .fillText("death by body:   \t\t" + (int) (100 / deathCount * deathBody) + " %", offsetX
-                + padding
-                + 200, offsetY + 40);
-        context
-            .fillText("death by timeout:   \t\t" + (int) (100 / deathCount * deathTimeout) + " %",
-                offsetX
-                    + padding
-                    + 200, offsetY + 60);
+
+        writeStatisticsLine("current snake length", snakeLength, false, offsetX + padding, offsetY + 20);
+        writeStatisticsLine("max. snake length", maxSnakeLength, false, offsetX + padding, offsetY + 40);
+        writeStatisticsLine("max. steps",  entity.getMaxSteps(), false, offsetX + padding, offsetY + 60);
+
+        writeStatisticsLine("death by wall", (int) (100 / deathCount * deathWall), true, offsetX + padding + 200, offsetY + 20);
+        writeStatisticsLine("death by body", (int) (100 / deathCount * deathBody), true, offsetX + padding + 200, offsetY + 40);
+        writeStatisticsLine("death by timeout", (int) (100 / deathCount * deathTimeout), true, offsetX + padding + 200, offsetY + 60);
+
         context.fillText("generation:", offsetX + padding + 400, offsetY + 60);
-        context.setFont(new Font("", fontSizeLarge));
-        context.fillText(generation + "", offsetX + padding + 400 + 70,
-            offsetY + 60);    // starts counting from 1
+        context.setFont(new Font(FONT_NAME, fontSizeLarge));
+        context.fillText(String.format("%2d", generation), offsetX + padding + 400 +100, offsetY + 60);
         break;
+
       case 1:
-        context.setFont(new Font("", fontSize));
-        double x = offsetX;
-        double y = offsetY - 120;
+        context.setFont(new Font(FONT_NAME, fontSize));
+        y = offsetY - 120;
         context.fillRoundRect(offsetX, y, 230, 190, 6, 6);
         context.setFill(colors.getSnakeBodyColor());
-        context.fillText("current snake length:   \t" + snakeLength, offsetX + padding, y + 20);
-        context.fillText("max. snake length:   \t" + maxLength, offsetX + padding, y + 40);
-        context.fillText("max. steps:   \t\t\t" + entity.getMaxSteps(), offsetX + padding, y + 60);
-        context
-            .fillText("death by wall:   \t\t" + (int) (100 / deathCount * deathWall) + " %", offsetX
-                + padding, y + 90);
-        context
-            .fillText("death by body:   \t\t" + (int) (100 / deathCount * deathBody) + " %", offsetX
-                + padding, y + 110);
-        context
-            .fillText("death by timeout:   \t\t" + (int) (100 / deathCount * deathTimeout) + " %",
-                offsetX
-                    + padding, y + 130);
+
+        writeStatisticsLine("current snake length", snakeLength, false, offsetX + padding, y + 20);
+        writeStatisticsLine("max. snake length", maxSnakeLength, false, offsetX + padding, y + 40);
+        writeStatisticsLine("max. steps",  entity.getMaxSteps(), false, offsetX + padding, y + 60);
+
+        writeStatisticsLine("death by wall", (int) (100 / deathCount * deathWall), true, offsetX + padding, y + 90);
+        writeStatisticsLine("death by body", (int) (100 / deathCount * deathBody), true, offsetX + padding, y + 110);
+        writeStatisticsLine("death by timeout", (int) (100 / deathCount * deathTimeout), true, offsetX + padding, y + 130);
+
         context.fillText("generation:", offsetX + padding, y + 180);
-        context.setFont(new Font("", fontSizeLarge));
-        context.fillText(generation + "", offsetX + padding + 130,
-            y + 180);    // starts counting from 1
+        context.setFont(new Font(FONT_NAME, fontSizeLarge));
+        context.fillText(String.format("%2d", generation), offsetX + padding + 150, y + 180);
         break;
+
       case 2:
         x = offsetX;
         y = offsetY + height - 50;
         context.fillRoundRect(x, y, 100, 50, 6, 6);
         context.setFill(colors.getSnakeBodyColor());
-        context.setFont(new Font("", fontSizeLarge));
-        context.fillText(generation + "", x + padding, y + 40);    // starts counting from 1
+        context.setFont(new Font(FONT_NAME, fontSizeLarge));
+        context.fillText(String.format("%2d", generation), x + padding, y + 40);
         break;
+
       case 3:
-        context.setFont(new Font("", fontSize));
+        context.setFont(new Font(FONT_NAME, fontSize));
         x = paddingWidth + offsetX - padding;
         y = offsetY - paddingHeight + padding;
         context.fillRoundRect(x, y, width, height, 6, 6);
         context.setFill(colors.getSnakeBodyColor());
-        context.fillText("current snake length:   \t" + snakeLength, x + padding, y + 20);
-        context.fillText("max. snake length:   \t" + maxLength, x + padding, y + 40);
-        context.fillText("max. steps:   \t\t\t" + entity.getMaxSteps(), x + padding, y + 60);
-        context.fillText("death by wall:   \t\t" + (int) (100 / deathCount * deathWall) + " %",
-            x + padding
-                + 200, y + 20);
-        context.fillText("death by body:   \t\t" + (int) (100 / deathCount * deathBody) + " %",
-            x + padding
-                + 200, y + 40);
-        context
-            .fillText("death by timeout:   \t\t" + (int) (100 / deathCount * deathTimeout) + " %",
-                x + padding
-                    + 200, y + 60);
+
+        writeStatisticsLine("current snake length", snakeLength, false, x + padding, y + 20);
+        writeStatisticsLine("max. snake length", maxSnakeLength, false, x + padding, y + 40);
+        writeStatisticsLine("max. steps",  entity.getMaxSteps(), false, x + padding, y + 60);
+
+        writeStatisticsLine("death by wall", (int) (100 / deathCount * deathWall), true, x + padding + 200, y + 20);
+        writeStatisticsLine("death by body", (int) (100 / deathCount * deathBody), true, x + padding + 200, y + 40);
+        writeStatisticsLine("death by timeout", (int) (100 / deathCount * deathTimeout), true, x + padding + 200, y + 60);
+
         context.fillText("generation:", x + padding + 400, y + 60);
-        context.setFont(new Font("", fontSizeLarge));
-        context
-            .fillText(generation + "", x + padding + 400 + 70, y + 60);    // starts counting from 1
+        context.setFont(new Font(FONT_NAME, fontSizeLarge));
+        context.fillText(String.format("%2d", generation), x + padding + 400 + 100, y + 60);
         break;
+
       case 4:
-        context.setFont(new Font("", fontSize));
+        context.setFont(new Font(FONT_NAME, fontSize));
         x = paddingWidth + offsetX - padding;
         y = offsetY - paddingHeight + padding - 120;
         context.fillRoundRect(x, y, 230, 190, 6, 6);
         context.setFill(colors.getSnakeBodyColor());
-        context.fillText("current snake length:   \t" + snakeLength, x + padding, y + 20);
-        context.fillText("max. snake length:   \t" + maxLength, x + padding, y + 40);
-        context.fillText("max. steps:   \t\t\t" + entity.getMaxSteps(), x + padding, y + 60);
-        context.fillText("death by wall:   \t\t" + (int) (100 / deathCount * deathWall) + " %",
-            x + padding, y + 90);
-        context.fillText("death by body:   \t\t" + (int) (100 / deathCount * deathBody) + " %",
-            x + padding, y + 110);
-        context
-            .fillText("death by timeout:   \t\t" + (int) (100 / deathCount * deathTimeout) + " %",
-                x + padding, y + 130);
+
+        writeStatisticsLine("current snake length", snakeLength, false, x + padding, y + 20);
+        writeStatisticsLine("max. snake length", maxSnakeLength, false, x + padding, y + 40);
+        writeStatisticsLine("max. steps",  entity.getMaxSteps(), false, x + padding, y + 60);
+
+
+        writeStatisticsLine("death by wall", (int) (100 / deathCount * deathWall), true, x + padding, y + 90);
+        writeStatisticsLine("death by body", (int) (100 / deathCount * deathBody), true, x + padding, y + 110);
+        writeStatisticsLine("death by timeout", (int) (100 / deathCount * deathTimeout), true, x + padding, y + 130);
+
         context.fillText("generation:", x + padding, y + 180);
-        context.setFont(new Font("", fontSizeLarge));
-        context.fillText(generation + "", x + padding + 130, y + 180);    // starts counting from 1
+        context.setFont(new Font(FONT_NAME, fontSizeLarge));
+        context.fillText(String.format("%2d", generation), x + padding + 150, y + 180);
         break;
+
       case 5:
         x = paddingWidth + offsetX - padding;
         y = offsetY - paddingHeight - padding - padding + 50;
         context.fillRoundRect(x, y, 100, 50, 6, 6);
         context.setFill(colors.getSnakeBodyColor());
-        context.setFont(new Font("", fontSizeLarge));
-        context.fillText(generation + "", x + padding, y + 40);    // starts counting from 1
+        context.setFont(new Font(FONT_NAME, fontSizeLarge));
+        context.fillText(String.format("%2d", generation), x + padding, y + 40);
         break;
     }
+  }
+
+  private void writeStatisticsLine(String propertyText, int value, boolean isPercentile, double x, double y) {
+    propertyText += ":";
+    final int stringLength = 22;
+    final String pattern = "%-" + stringLength + "s%3d%s";
+    final String text = String.format(pattern, propertyText, value, isPercentile ? "%" : "");
+    context.fillText(text, x, y);
   }
 
   private void initializeDimensions() {

@@ -2,7 +2,6 @@ package ui;
 
 import ai.InputNode;
 import game.Direction;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -10,8 +9,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,7 +65,7 @@ public class ConfigController implements Initializable {
   private HBox neuralNetworkControls;
 
   @FXML
-  private ComboBox hiddenLayerCount;
+  private ComboBox<String> hiddenLayerCount;
 
   @FXML
   private HBox hiddenLayerControls;
@@ -134,30 +134,29 @@ public class ConfigController implements Initializable {
   }
 
   private void openStatistics() {
+    Runtime rt = Runtime.getRuntime();
     String url = "http://localhost:8050/Dashboard.html";
     String os = System.getProperty("os.name").toLowerCase();
-    Runtime rt = Runtime.getRuntime();
 
     try {
       if (os.contains("win")) {
         rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
-
       } else if (os.contains("mac")) {
         rt.exec("open " + url);
       } else if (os.contains("nix") || os.contains("nux")) {
-        String[] browsers = {"chromium", "google-chrome", "epiphany", "firefox", "mozilla",
-            "konqueror",
-            "netscape", "opera", "links", "lynx"};
-        StringBuffer cmd = new StringBuffer();
-        for (int i = 0; i < browsers.length; i++) {
-          cmd.append(i == 0 ? "" : " || ").append(browsers[i]).append(" \"").append(url)
-              .append("\" ");
-        }
-        rt.exec(new String[]{"sh", "-c", cmd.toString()});
+
+        String[] supportedBrowsers = {"chromium", "google-chrome", "epiphany", "firefox", "mozilla",
+            "konqueror", "netscape", "opera", "links", "lynx"};
+
+        String browserOpeningCommandString = Arrays.stream(supportedBrowsers)
+            .map(browser -> String.format("%s \"%s\"", browser, url))
+            .collect(Collectors.joining(" || "));
+        rt.exec(new String[]{"sh", "-c", browserOpeningCommandString});
       }
 
     } catch (IOException e) {
-      e.printStackTrace();
+      Logger.getLogger("config controller logger")
+          .log(Level.WARNING, "Browser could not be opened.", e);
     }
   }
 
@@ -168,13 +167,13 @@ public class ConfigController implements Initializable {
   }
 
   private void updateTheme() {
-    List<String> cssList = Arrays.stream(Theme.values()).map(Theme::getCss)
-        .collect(Collectors.toList());
-    for (Object str : cssList) {
-      String sheet = (String) str;
-      this.boardWithControl.getScene().getStylesheets().removeIf(s -> s.matches(
-          Objects.requireNonNull(Main.class.getClassLoader().getResource(sheet)).toExternalForm()));
-    }
+    Arrays.stream(Theme.values())
+        .map(Theme::getCss)
+        .forEach(cssFile -> {
+          this.boardWithControl.getScene().getStylesheets().removeIf(s -> s.matches(
+              Objects.requireNonNull(Main.class.getClassLoader().getResource(cssFile))
+                  .toExternalForm()));
+        });
     Scene scene = this.boardWithControl.getScene();
     Theme theme = Theme.valueOf(themeSelector.getValue());
     scene.getStylesheets().remove(configReader.getTheme().getCss());
@@ -245,7 +244,7 @@ public class ConfigController implements Initializable {
       String previousValue = tempWidth.toString();
       tempWidth.set(boardWithControl.getText());
       if (configureTextField(boardWithControl, 4, 100, tempWidth.toString(),
-          previousValue)) {    // TODO: make sure minimum fits snake starting position
+          previousValue)) {
         if (!tempWidth.toString().equals(previousValue)) {
           configWriter.setBoardWidth(Integer.parseInt(tempWidth.toString()));
           gameController.resetGameDisplay();
@@ -260,7 +259,7 @@ public class ConfigController implements Initializable {
       String previousValue = tempHeight.toString();
       tempHeight.set(boardHeightControl.getText());
       if (configureTextField(boardHeightControl, 4, 100, tempHeight.toString(),
-          previousValue)) {    // TODO: make sure minimum fits snake starting position
+          previousValue)) {
         if (!tempHeight.toString().equals(previousValue)) {
           configWriter.setBoardHeight(Integer.parseInt(tempHeight.toString()));
           gameController.resetGameDisplay();

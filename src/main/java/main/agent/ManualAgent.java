@@ -1,13 +1,12 @@
 package main.agent;
 
 import game.Game;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class ManualAgent extends Agent {
-
-  private Game game;
 
   /**
    * This is the implementation of the method specific game logic. It will initialize a new game,
@@ -18,7 +17,7 @@ public class ManualAgent extends Agent {
   public void build() {
     super.build();
     state.setDirection(config.getInitialDirection());
-    game = new Game();
+    Game game = new Game();
     state.setGame(game);
 
     game.onGameOver(this::stopTimer);
@@ -29,7 +28,7 @@ public class ManualAgent extends Agent {
 
     }));
 
-    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.setCycleCount(Animation.INDEFINITE);
     state.setTimeline(timeline);
     timeline.play();
   }

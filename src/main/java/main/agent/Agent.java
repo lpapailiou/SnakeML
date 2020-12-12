@@ -25,7 +25,7 @@ public abstract class Agent {
    */
   public void build() {
     if (state == null) {
-      throw new RuntimeException("incomplete build! state ist not set!");
+      throw new IncompleteStateException("incomplete build! state ist not set!");
     }
   }
 

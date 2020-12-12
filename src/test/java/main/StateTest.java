@@ -23,7 +23,7 @@
 //    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> {
 //      System.out.println("running");
 //    }));
-//    timeline.setCycleCount(Timeline.INDEFINITE);
+//    timeline.setCycleCount(Animation.INDEFINITE);
 ////    timeline.play();    // fails, because there is no Application Thread
 //  }
 //}

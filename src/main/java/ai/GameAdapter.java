@@ -14,8 +14,6 @@ import java.util.Set;
 
 import main.configuration.IGameAdapterConfigReader;
 
-// TODO: check if this is really adapter or maybe decorator??
-
 /**
  * This is an adapter class for game.Game. Its main purpose is to execute a game while implementing
  * machine learning by using a designated NeuralNetwork. Additionally, it will rate the game and

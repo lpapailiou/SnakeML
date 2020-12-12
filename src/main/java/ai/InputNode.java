@@ -170,8 +170,6 @@ public enum InputNode {
    * @param food  the food of the current game state
    * @return the vision value for the queried case
    */
-  public double getInput(Snake snake, Cell food) {
-    return 0;
-  }
+  public abstract double getInput(Snake snake, Cell food);
 
 }

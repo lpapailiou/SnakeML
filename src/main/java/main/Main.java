@@ -88,7 +88,7 @@ public class Main extends Application {
     System.exit(0);
   }
 
-  private void startWebServer() {   // TODO: slows down startup of gui
+  private void startWebServer() {
     Service<Void> service = new Service<Void>() {
       @Override
       protected Task<Void> createTask() {
