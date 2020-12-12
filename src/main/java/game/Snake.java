@@ -68,12 +68,24 @@ public class Snake {
   }
 
   /**
-   * Informs if the Snake is alive or not.
+   * Method to retrieve the fitness of the Snake, in order to rate the game. The higher the rating,
+   * the better is the game considered. Tis fitness function will provide two strategies: - if the
+   * Snake is short/immature, it will be rated higher if more steps where made. This will allow the
+   * Snake to explore the 'game board', learn that walls are bad and give room to learn that 'food'
+   * is good. - if the Snake is longer, the rating will increase for food. On the same time, the
+   * rating is decreased for every step made. This will lead the Snake to go for a more efficient
+   * strategy.
    *
-   * @return true, if Snake is dead
+   * @return the fitness of the Snake
    */
-  public boolean isDead() {
-    return isDead;
+  public long getFitness() {
+    int snakeLength = body.size();
+    int boardHalf = (config.getBoardWidth() + config.getBoardHeight()) / 2;
+
+    if (snakeLength < boardHalf * 1.5) {
+      return (long) Math.pow(snakeLength, 3.7) + steps;
+    }
+    return (long) (Math.pow(snakeLength, 4.7) - (steps / snakeLength));
   }
 
   private boolean isSnakeInItself(Cell cell) {
@@ -121,27 +133,6 @@ public class Snake {
   }
 
   /**
-   * Method to retrieve the fitness of the Snake, in order to rate the game. The higher the rating,
-   * the better is the game considered. Tis fitness function will provide two strategies: - if the
-   * Snake is short/immature, it will be rated higher if more steps where made. This will allow the
-   * Snake to explore the 'game board', learn that walls are bad and give room to learn that 'food'
-   * is good. - if the Snake is longer, the rating will increase for food. On the same time, the
-   * rating is decreased for every step made. This will lead the Snake to go for a more efficient
-   * strategy.
-   *
-   * @return the fitness of the Snake
-   */
-  public long getFitness() {
-    int snakeLength = body.size();
-    int boardHalf = (config.getBoardWidth() + config.getBoardHeight()) / 2;
-
-    if (snakeLength < boardHalf * 1.5) {
-      return (long) Math.pow(snakeLength, 3.7) + steps;
-    }
-    return (long) (Math.pow(snakeLength, 4.7) - (steps / snakeLength));
-  }
-
-  /**
    * This method returns the current position of the Snake head as coordinate
    *
    * @return the Snake head coordinate
@@ -152,6 +143,15 @@ public class Snake {
 
   boolean isHeadAt(Cell foodPosition) {
     return body.get(0).equals(foodPosition);
+  }
+
+  /**
+   * Informs if the Snake is alive or not.
+   *
+   * @return true, if Snake is dead
+   */
+  public boolean isDead() {
+    return isDead;
   }
 
 }

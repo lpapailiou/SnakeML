@@ -20,6 +20,7 @@
 
   <script src="./js/GenStatistics.js"></script>
   <script src="./js/SnakeMlClient.js"></script>
+  <script src="./js/BatchService.js"></script>
 
 </head>
 <body>
@@ -45,119 +46,9 @@
   starten Sie ein neuronales Netz in der Applikation.
 </div>
 
+<div id="error-toast">Es scheint ein Problem mit der Verbindung zum Server zu bestehen. Bitte starten Sie die Applikation erneut.</div>
+
 <script>
-
-  const templateIds = [
-    "chart__snake-length--batch-",
-    "chart__deaths--batch-",
-    "chart__fitness--batch-",
-    "chart__steps--batch-",
-  ];
-
-  function loadCurrentBatchData() {
-    setLoadingState(true)
-
-    loadJSON(response => {
-      setLoadingState(false);
-      const batches = JSON.parse(response);
-
-      handleEmptyMessage(batches);
-      displayBatchSelectionForm(batches);
-      updateChartVisibility();
-      displayCharts(batches);
-
-    });
-  }
-
-  function updateChartVisibility() {
-    document.querySelectorAll('#charts-container > div:not(.chart-template-div)')
-    .forEach(chartDiv => chartDiv.style.display = 'none');
-
-
-    getSelectedBatchNumbers().forEach(chartNumber => {
-      document.querySelectorAll(`#charts-container > div[data-batch-number="${chartNumber}"]`)
-      .forEach(element => {
-        element.style.display = 'block';
-      })
-    });
-  }
-
-  function displayBatchSelectionForm(batches) {
-    let batchSelectionForm = document.getElementById('batch-selection-form');
-    batchSelectionForm.textContent = null;
-
-    batches.forEach((batch, index) => {
-      const batchNumber = index + 1;
-      let label = document.createElement('label');
-      label.classList.add('batch-selection__label');
-      label.innerText = `Batch #${batchNumber} - ${batch.configuration.algorithm}`;
-
-      let checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = 'batch-selection__checkbox--id-' + batchNumber;
-      checkbox.dataset.batchNumber = batchNumber;
-      checkbox.classList.add('batch-selection__checkbox');
-      checkbox.checked = true;
-      checkbox.onclick = () => updateChartVisibility();
-
-      label.appendChild(checkbox)
-      batchSelectionForm.insertBefore(label, batchSelectionForm.firstChild);
-    });
-  }
-
-  function handleEmptyMessage(batches) {
-    if (batches.length === 0) {
-      document.getElementById('empty-message').classList.add('empty-message--visible');
-    } else {
-      document.getElementById('empty-message').classList.remove('empty-message--visible');
-    }
-  }
-
-  function setLoadingState(isLoading) {
-    let reloadButton = document.getElementById('reload-button')
-    let loadingButton = document.getElementById('loading-button');
-    if (isLoading) {
-      reloadButton.disabled = true;
-      reloadButton.classList.add('reload-button--loading');
-      loadingButton.classList.add('loading-button--loading');
-    } else {
-      reloadButton.disabled = false;
-      reloadButton.classList.remove('reload-button--loading')
-      loadingButton.classList.remove('loading-button--loading');
-    }
-  }
-
-  function displayCharts(batches) {
-
-    batches.forEach((batch, batchNumber) => {
-      batchNumber++;
-
-      templateIds.forEach(templateId => {
-        if (document.getElementById(templateId + batchNumber) === null) {
-          cloneChartDiv(templateId, batchNumber, batch);
-        }
-      });
-
-      loadGraph(batch.generations, batchNumber);
-    });
-  }
-
-  function getSelectedBatchNumbers() {
-    return Array.from(document.getElementsByClassName('batch-selection__checkbox'))
-    .filter(checkbox => checkbox.checked)
-    .map(checkbox => checkbox.dataset.batchNumber);
-  }
-
-  function cloneChartDiv(templateId, batchNumber, batch) {
-    const chartDivTemplate = document.getElementById(templateId);
-    const chartDivClone = chartDivTemplate.cloneNode();
-    chartDivClone.id = templateId + batchNumber;
-    chartDivClone.classList.remove("chart-template-div");
-    chartDivClone.setAttribute('data-batch-number', batchNumber);
-    chartDivClone.setAttribute('data-batch-description', `Batch #${batchNumber} - ${batch.configuration.algorithm}`);
-    chartDivTemplate.after(chartDivClone);
-  }
-
   window.onload = () => {
     loadCurrentBatchData();
   }

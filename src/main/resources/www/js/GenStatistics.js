@@ -1,4 +1,11 @@
-function loadGraph(gen_data, batchNumber) {
+/**
+ * Displays the graphs for the snake length, death count, fitness and step count
+ * data within this batch.
+ *
+ * @param generationData The generation data of this batch
+ * @param batchNumber The batch number
+ */
+function displayGraphs(generationData, batchNumber) {
   am4core.options.autoDispose = true;
 
   // Themes
@@ -7,7 +14,7 @@ function loadGraph(gen_data, batchNumber) {
 
   // -------------------------- snake length ----------------------------------
 
-  const chartConfig = [
+  const lengthConfig = [
     {
       key: 'max_snake_length',
       tooltip: 'maximal snake length',
@@ -25,42 +32,8 @@ function loadGraph(gen_data, batchNumber) {
     },
   ];
 
-  const snakeLengthChart = am4core.create(
-      `chart__snake-length--batch-${batchNumber}`,
-      am4charts.XYChart);
-  snakeLengthChart.data = gen_data
-
-  const valueAxisX = snakeLengthChart.xAxes.push(new am4charts.ValueAxis());
-  valueAxisX.title.text = 'Generation';
-  valueAxisX.renderer.minGridDistance = 40;
-
-  const valueAxisY = snakeLengthChart.yAxes.push(new am4charts.ValueAxis());
-  valueAxisY.title.text = 'Snake length';
-
-  chartConfig.forEach(config => {
-    const lineSeries = snakeLengthChart.series.push(new am4charts.LineSeries());
-    lineSeries.dataFields.valueY = config.key;
-    lineSeries.dataFields.valueX = 'id';
-    lineSeries.strokeOpacity = 0;
-
-    lineSeries.tooltipText = config.tooltip;
-    lineSeries.tooltip.pointerOrientation = "vertical";
-    lineSeries.tooltip.background.fillOpacity = 0.9;
-
-    const bullet = lineSeries.bullets.push(new am4charts.Bullet());
-
-    const circleStyle = bullet.createChild(am4core.Circle);
-    circleStyle.horizontalCenter = "middle";
-    circleStyle.verticalCenter = "middle";
-    circleStyle.strokeWidth = 0;
-    circleStyle.fill = snakeLengthChart.colors.getIndex(config.colorIndex);
-    circleStyle.direction = "top";
-    circleStyle.width = 6;
-    circleStyle.height = 6;
-
-  });
-
-  snakeLengthChart.scrollbarX = new am4core.Scrollbar();
+  createLineChart(`chart__snake-length--batch-${batchNumber}`, generationData,
+      lengthConfig);
 
   // ------------------------------ deaths ------------------------------------
 
@@ -82,7 +55,7 @@ function loadGraph(gen_data, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__deaths--batch-${batchNumber}`, gen_data,
+  createLineChart(`chart__deaths--batch-${batchNumber}`, generationData,
       deathsConfig);
 
   // ------------------------------ fitness -----------------------------------
@@ -105,7 +78,7 @@ function loadGraph(gen_data, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__fitness--batch-${batchNumber}`, gen_data,
+  createLineChart(`chart__fitness--batch-${batchNumber}`, generationData,
       fitnessConfig);
 
   // ------------------------------- steps ------------------------------------
@@ -128,12 +101,18 @@ function loadGraph(gen_data, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__steps--batch-${batchNumber}`, gen_data, stepConfig)
+  createLineChart(`chart__steps--batch-${batchNumber}`, generationData, stepConfig)
 }
 
+/**
+ * Creates a chart for the passed data.
+ *
+ * @param chartElementId The html element id in which the chart will be inserted
+ * @param data The data for the chart
+ * @param lineConfigurations The configuration for the chart
+ */
 const createLineChart = (chartElementId, data, lineConfigurations) => {
-  const chart = am4core.create(chartElementId,
-      am4charts.XYChart);
+  const chart = am4core.create(chartElementId, am4charts.XYChart);
   chart.paddingRight = 20;
 
   chart.data = data;
@@ -149,6 +128,17 @@ const createLineChart = (chartElementId, data, lineConfigurations) => {
     series.dataFields.valueY = config.key;
     series.tooltipText = config.tooltip;
     series.strokeWidth = 1;
+
+    const bullet = series.bullets.push(new am4charts.Bullet());
+
+    const circleStyle = bullet.createChild(am4core.Circle);
+    circleStyle.horizontalCenter = "middle";
+    circleStyle.verticalCenter = "middle";
+    circleStyle.strokeWidth = 0;
+    circleStyle.fill = chart.colors.getIndex(config.colorIndex);
+    circleStyle.direction = "top";
+    circleStyle.width = 6;
+    circleStyle.height = 6;
   });
 
   chart.cursor = new am4charts.XYCursor();
