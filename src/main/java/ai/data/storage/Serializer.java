@@ -1,8 +1,6 @@
 package ai.data.storage;
 
 import ai.neuralnet.NeuralNetwork;
-
-import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,7 +16,8 @@ import java.nio.file.StandardCopyOption;
  */
 public class Serializer {
 
-  private Serializer() {}
+  private Serializer() {
+  }
 
   /**
    * This method will load a specific trained NeuralNetwork from the resources folder.
