@@ -15,10 +15,11 @@ import ui.painter.IGameInformationPainter;
 public class GameInformationPainter implements IGameInformationPainter {
 
   private static final String FONT_NAME = "Monospace Regular";
+  private static final double CANVAS_WIDTH = 800;     // must match fxml
+
   private GraphicsContext context;
   private IPainterConfigReader config = IPainterConfigReader.getInstance();
   private Theme colors = config.getTheme();
-  private static final double canvasWidth = 800;     // must match fxml
   private double paddingWidth;
   private double paddingHeight;
 
@@ -53,7 +54,7 @@ public class GameInformationPainter implements IGameInformationPainter {
     double padding = 10;
     double offsetX = 20;
     double height = 70;
-    double offsetY = (canvasWidth - offsetX) - height;
+    double offsetY = (CANVAS_WIDTH - offsetX) - height;
     double width = 570;
 
     double x;
@@ -173,12 +174,12 @@ public class GameInformationPainter implements IGameInformationPainter {
 
     double cellWidth;
     if (width >= height) {
-      cellWidth = (canvasWidth - basePadding * 2) / width;
+      cellWidth = (CANVAS_WIDTH - basePadding * 2) / width;
     } else {
-      cellWidth = (canvasWidth - basePadding * 2) / height;
+      cellWidth = (CANVAS_WIDTH - basePadding * 2) / height;
     }
-    paddingWidth = (canvasWidth - (cellWidth * width)) / 2;
-    paddingHeight = (canvasWidth - (cellWidth * height)) / 2;
+    paddingWidth = (CANVAS_WIDTH - (cellWidth * width)) / 2;
+    paddingHeight = (CANVAS_WIDTH - (cellWidth * height)) / 2;
   }
 
 }

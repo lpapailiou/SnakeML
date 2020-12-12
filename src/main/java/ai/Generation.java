@@ -26,10 +26,11 @@ import main.configuration.IGenerationConfigReader;
 class Generation {
 
   private static final Logger LOG = Logger.getLogger("generation logger");
+  private static final int THREAD_POOL = 4;
+
   private IGenerationConfigReader config = IGenerationConfigReader.getInstance();
   private int populationSize;
   private List<GameAdapter> populationList = new ArrayList<>();
-  private static final int THREAD_POOL = 4;
   private GenerationEntity generationEntity = new GenerationEntity();
   private List<GenerationEntity> generationEntities;
 
