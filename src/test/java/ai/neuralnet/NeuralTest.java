@@ -1,9 +1,8 @@
 package ai.neuralnet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-
 import org.junit.Test;
 
 public class NeuralTest {
@@ -11,7 +10,7 @@ public class NeuralTest {
   @Test
   public void blindTest() {
     NeuralNetwork net = new NeuralNetwork(3, 4, 7, 2);
-    List<Double> out = net.predict(new double[] {1, 2, 3});
+    List<Double> out = net.predict(new double[]{1, 2, 3});
 
     assertTrue(out.get(0) > 0 && out.get(0) < 1);
     assertTrue(out.get(1) > 0 && out.get(1) < 1);
