@@ -6,9 +6,17 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import main.configuration.IConfigWriter;
+import org.junit.Before;
 import org.junit.Test;
 
 public class SnakeTest {
+
+  @Before
+  public void setup() {
+    IConfigWriter configWriter = IConfigWriter.getInstance();
+    configWriter.setBoardWidth(14);
+    configWriter.setBoardHeight(14);
+  }
 
   @Test
   public void testMovingStraight() {
@@ -86,21 +94,18 @@ public class SnakeTest {
 
   @Test
   public void testWallDeath() {
-    Snake snake = new Snake(3, Direction.RIGHT, new Cell(3, 3));
-    IConfigWriter configWriter = IConfigWriter.getInstance();
-    configWriter.setBoardWidth(4);
-    configWriter.setBoardHeight(4);
+    Snake snake = new Snake(3, Direction.RIGHT, new Cell(13, 13));
 
     ArrayList<Cell> newBodyPosition = new ArrayList<>();
-    newBodyPosition.add(new Cell(3, 3));
-    newBodyPosition.add(new Cell(2, 3));
-    newBodyPosition.add(new Cell(1, 3));
+    newBodyPosition.add(new Cell(13, 13));
+    newBodyPosition.add(new Cell(12, 13));
+    newBodyPosition.add(new Cell(11, 13));
 
     assertFalse(snake.isDead());
 
     snake.move(Direction.RIGHT, new Cell(0, 0));
 
-    assertTrue(snake.isHeadAt(new Cell(3, 3)));
+    assertTrue(snake.isHeadAt(new Cell(13, 13)));
     assertEquals(newBodyPosition, snake.getBody());
     assertTrue(snake.isDead());
 

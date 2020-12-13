@@ -40,7 +40,6 @@ public class WebServerTest {
     config.setPopulationSize(population);
 
     expectedResultJson = new ArrayList<>();
-//    expectedResultJson.add(batch.getJsonString());
     HttpResponse response = Unirest.get("http://localhost:8050/?cmd=load").asString();
 
     assertEquals(expectedResultJson.toString(), response.getBody());
