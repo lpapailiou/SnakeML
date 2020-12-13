@@ -97,9 +97,9 @@ class Generation {
     NeuralNetwork best = populationList.get(0).getNeuralNetwork();
 
     LOG.log(Level.INFO,
-        String
-            .format("max fitness for gen #%d: \t %d \t(snake length: %d)", generationEntity.getId(),
-                populationList.get(0).getFitness(), populationList.get(0).getSnakeLength()));
+            () -> String.format("max fitness for gen #%d: \t %d \t(snake length: %d)", generationEntity.getId(),
+                populationList.get(0).getFitness(), populationList.get(0).getSnakeLength())
+    );
 
     if (populationList.size() < 2) {
       return best;

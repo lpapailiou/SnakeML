@@ -44,13 +44,14 @@ public class GameBatch {
     configurationEntity = new ConfigurationEntity();
     configurationEntity.setBoardWidth(config.getBoardWidth());
     configurationEntity.setBoardHeight(config.getBoardHeight());
-    String sb = "Neural Network"
-        + "; randomization rate: "
-        + config.getRandomizationRate()
-        + "; layer configuration: "
-        + Arrays.toString(config.getLayerConfiguration());
-    configurationEntity.setAlgorithm(sb);
     configurationEntity.setPopulationSize(populationSize);
+
+    String algorithmDescription = String.format(
+        "Neural Network; randomization rate: %s; layer configuration: %s",
+        config.getRandomizationRate(),
+        Arrays.toString(config.getLayerConfiguration())
+    );
+    configurationEntity.setAlgorithm(algorithmDescription);
   }
 
   /**
@@ -58,6 +59,7 @@ public class GameBatch {
    * data.
    *
    * @return the NeuralNetwork which is considered best for reproduction for the next generation
+   *         or null, if the generation count has been reached.
    */
   public NeuralNetwork processNewGeneration() {
     Generation gen = new Generation(currentGeneration, populationSize, generationEntities);

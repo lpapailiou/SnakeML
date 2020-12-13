@@ -169,11 +169,9 @@ public class ConfigController implements Initializable {
   private void updateTheme() {
     Arrays.stream(Theme.values())
         .map(Theme::getCss)
-        .forEach(cssFile -> {
-          this.boardWithControl.getScene().getStylesheets().removeIf(s -> s.matches(
-              Objects.requireNonNull(Main.class.getClassLoader().getResource(cssFile))
-                  .toExternalForm()));
-        });
+        .forEach(cssFile -> this.boardWithControl.getScene().getStylesheets().removeIf(s -> s.matches(
+            Objects.requireNonNull(Main.class.getClassLoader().getResource(cssFile))
+                .toExternalForm())));
     Scene scene = this.boardWithControl.getScene();
     Theme theme = Theme.valueOf(themeSelector.getValue());
     scene.getStylesheets().remove(configReader.getTheme().getCss());
