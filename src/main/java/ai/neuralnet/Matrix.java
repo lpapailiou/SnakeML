@@ -28,12 +28,13 @@ public class Matrix implements Serializable, Cloneable {
 
   /**
    * Constructor used for testing
+   *
    * @param input the input 2d array to be converted to a matrix
    */
   Matrix(double[][] input) {
-      data = input;
-      rows = input.length;
-      cols = input[0].length;
+    data = input;
+    rows = input.length;
+    cols = input[0].length;
   }
 
   void addBias(Matrix m) {

@@ -14,7 +14,7 @@ public class NeuralNetwork implements Serializable {
 
   private static final long serialVersionUID = 2L;
   private List<Layer> layers = new ArrayList<>();
-  private int inputLayerNodes;
+  private final int inputLayerNodes;
   private double randomizationRate = 0.1;
 
   /**

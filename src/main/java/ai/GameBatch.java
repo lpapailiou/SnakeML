@@ -4,11 +4,9 @@ import ai.data.BatchEntity;
 import ai.data.ConfigurationEntity;
 import ai.data.GenerationEntity;
 import ai.neuralnet.NeuralNetwork;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import main.configuration.IGameBatchConfigReader;
 
 /**
@@ -18,12 +16,12 @@ import main.configuration.IGameBatchConfigReader;
  */
 public class GameBatch {
 
-  private int generationCount;
+  private final int generationCount;
   private int currentGeneration;
-  private int populationSize;
-  private BatchEntity batchEntity = new BatchEntity();
-  private List<GenerationEntity> generationEntities = new ArrayList<>();
-  private ConfigurationEntity configurationEntity;
+  private final int populationSize;
+  private final BatchEntity batchEntity = new BatchEntity();
+  private final List<GenerationEntity> generationEntities = new ArrayList<>();
+  private final ConfigurationEntity configurationEntity;
   private NeuralNetwork neuralNetwork;
 
   /**
@@ -58,8 +56,8 @@ public class GameBatch {
    * This method triggers a single run of a generation. Additionally, it will collect the according
    * data.
    *
-   * @return the NeuralNetwork which is considered best for reproduction for the next generation
-   *         or null, if the generation count has been reached.
+   * @return the NeuralNetwork which is considered best for reproduction for the next generation or
+   * null, if the generation count has been reached.
    */
   public NeuralNetwork processNewGeneration() {
     Generation gen = new Generation(currentGeneration, populationSize, generationEntities);
