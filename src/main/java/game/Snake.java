@@ -11,7 +11,7 @@ import main.configuration.ISnakeConfigReader;
  */
 public class Snake {
 
-  protected LinkedList<Cell> body = new LinkedList<>();             // protected, as we use this Snake as superclass for a mock snake in a test case
+  protected LinkedList<Cell> body = new LinkedList<>();
   private ISnakeConfigReader config = ISnakeConfigReader.getInstance();
   private int steps;
   private boolean isDead = false;

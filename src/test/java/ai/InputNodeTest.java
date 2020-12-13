@@ -53,7 +53,7 @@ public class InputNodeTest {
   }
 
   @Test
-  public void bodynputNodesTest() {
+  public void bodyInputNodesTest() {
     ITestConfig config = ITestConfig.getInstance();
     config.setBoardWidth(20);
     config.setBoardHeight(20);
@@ -83,19 +83,13 @@ public class InputNodeTest {
 
     assertEquals((1.0/0.001), up, 0.001);
     assertEquals((1.0/0.001), right, 0.001);
-    assertEquals((1.0/1), down, 0.001);
+    assertEquals((1.0), down, 0.001);
     assertEquals((1.0/2), left, 0.001);
 
-    System.out.println(up); // 1000.0
-    System.out.println(right); // 1000.0
-    System.out.println(down); // 0.9990009990009991
-    System.out.println(left); // 0.49975012493753124
     snake.removeLastBodyPart();
     left = InputNode.LEFT_BODY.getInput(snake, food);
-    System.out.println(left); // 0.33322225924691773
 
     assertEquals((1.0/3), left, 0.001);
-
   }
 
   @Test
@@ -122,11 +116,6 @@ public class InputNodeTest {
     assertEquals((1.0/(19-6)), right, 0.001);
     assertEquals((1.0/(19-3)), down, 0.001);
     assertEquals((1.0/6), left, 0.001);
-
-    System.out.println(up); // 0.33322225924691773
-    System.out.println(right); // 0.07691716021844473
-    System.out.println(down); // 0.06249609399412536
-    System.out.println(left); // 0.16663889351774702
   }
 
   static class DummySnake extends Snake {

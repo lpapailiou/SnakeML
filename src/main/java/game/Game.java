@@ -26,8 +26,7 @@ public class Game implements ITickAware {
 
   private IGameConfigReader config = IGameConfigReader.getInstance();
   private Direction nextDirection = config.getInitialDirection();
-  private Snake snake = new Snake(config.getInitialSnakeSize(), nextDirection,
-      config.getInitialStartingPosition());
+  private Snake snake;
   private Cell food;
   private Random rand = new Random();
 
@@ -35,6 +34,11 @@ public class Game implements ITickAware {
    * As soon as initialized, the Game will initialize food for the Snake on a random coordinate.
    */
   public Game() {
+    food = provideFood();
+  }
+
+  Game(Snake snake) {
+    this.snake = snake;
     food = provideFood();
   }
 
