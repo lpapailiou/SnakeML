@@ -93,11 +93,11 @@ function displayBatchSelectionForm(batches) {
  * checkboxes.
  */
 function updateChartVisibility() {
-  document.querySelectorAll('#charts-container > div:not(.chart-template-div)')
+  document.querySelectorAll('#charts-container div.chart-div')
   .forEach(chartDiv => chartDiv.style.display = 'none');
 
   getSelectedBatchNumbers().forEach(chartNumber => {
-    document.querySelectorAll(`#charts-container > div[data-batch-number="${chartNumber}"]`)
+    document.querySelectorAll(`#charts-container div.chart-div[data-batch-number="${chartNumber}"]`)
     .forEach(element => {
       element.style.display = 'block';
     })
@@ -149,6 +149,7 @@ function cloneChartDiv(templateId, batchNumber, batch) {
   const chartDivClone = chartDivTemplate.cloneNode();
   chartDivClone.id = templateId + batchNumber;
   chartDivClone.classList.remove("chart-template-div");
+  chartDivClone.classList.add("chart-div");
   chartDivClone.setAttribute('data-batch-number', batchNumber);
   chartDivClone.setAttribute('data-batch-description',
       `Batch #${batchNumber} - ${batch.configuration.algorithm}`);

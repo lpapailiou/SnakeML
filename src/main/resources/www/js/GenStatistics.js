@@ -32,8 +32,12 @@ function displayGraphs(generationData, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__snake-length--batch-${batchNumber}`, generationData,
-      lengthConfig);
+  createLineChart(
+      'Snake length',
+      `chart__snake-length--batch-${batchNumber}`,
+      generationData,
+      lengthConfig
+  );
 
   // ------------------------------ deaths ------------------------------------
 
@@ -55,8 +59,12 @@ function displayGraphs(generationData, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__deaths--batch-${batchNumber}`, generationData,
-      deathsConfig);
+  createLineChart(
+      'Deaths',
+      `chart__deaths--batch-${batchNumber}`,
+      generationData,
+      deathsConfig
+  );
 
   // ------------------------------ fitness -----------------------------------
 
@@ -78,7 +86,10 @@ function displayGraphs(generationData, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__fitness--batch-${batchNumber}`, generationData,
+  createLineChart(
+      'Fitness',
+      `chart__fitness--batch-${batchNumber}`,
+      generationData,
       fitnessConfig);
 
   // ------------------------------- steps ------------------------------------
@@ -101,17 +112,22 @@ function displayGraphs(generationData, batchNumber) {
     },
   ];
 
-  createLineChart(`chart__steps--batch-${batchNumber}`, generationData, stepConfig)
+  createLineChart(
+      'Steps',
+      `chart__steps--batch-${batchNumber}`,
+      generationData,
+      stepConfig)
 }
 
 /**
  * Creates a chart for the passed data.
  *
+ * @param yAxisLabelText The label text to be shown for the graphs y-axis
  * @param chartElementId The html element id in which the chart will be inserted
  * @param data The data for the chart
  * @param lineConfigurations The configuration for the chart
  */
-const createLineChart = (chartElementId, data, lineConfigurations) => {
+const createLineChart = (yAxisLabelText, chartElementId, data, lineConfigurations) => {
   const chart = am4core.create(chartElementId, am4charts.XYChart);
   chart.paddingRight = 20;
 
@@ -119,7 +135,9 @@ const createLineChart = (chartElementId, data, lineConfigurations) => {
 
   const xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
   xAxis.dataFields.category = 'id';
-  chart.yAxes.push(new am4charts.ValueAxis());
+
+  const yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+  yAxis.title.text = yAxisLabelText;
 
   lineConfigurations.forEach(config => {
 

@@ -36,17 +36,27 @@
 
 
 <div id="charts-container" class="eight columns bg-grey">
-  <div class="chart-template-div" id="chart__snake-length--batch-"></div>
-  <div class="chart-template-div" id="chart__deaths--batch-"></div>
-  <div class="chart-template-div" id="chart__fitness--batch-"></div>
-  <div class="chart-template-div" id="chart__steps--batch-"></div>
+  <div class="chart-group">
+    <div class="chart-template-div" id="chart__snake-length--batch-"></div>
+  </div>
+  <div class="chart-group">
+    <div class="chart-template-div" id="chart__deaths--batch-"></div>
+  </div>
+  <div class="chart-group">
+    <div class="chart-template-div" id="chart__fitness--batch-"></div>
+  </div>
+  <div class="chart-group">
+    <div class="chart-template-div" id="chart__steps--batch-"></div>
+  </div>
 </div>
 
 <div id="empty-message" class="empty-message">Noch keine Spieldaten einer AI vorhanden. Bitte
   starten Sie ein neuronales Netz in der Applikation.
 </div>
 
-<div id="error-toast">Es scheint ein Problem mit der Verbindung zum Server zu bestehen. Bitte starten Sie die Applikation erneut.</div>
+<div id="error-toast">Es scheint ein Problem mit der Verbindung zum Server zu bestehen. Bitte
+  starten Sie die Applikation erneut.
+</div>
 
 <script>
   window.onload = () => {

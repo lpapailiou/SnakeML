@@ -241,6 +241,14 @@ a {
   display: none !important;
 }
 
+.chart-group > :last-child{
+  padding-bottom: 70px;
+}
+
+.chart-group:not(:last-child) > div:last-child {
+  border-bottom: 1px solid #525252;
+}
+
 [id^=chart__] {
   display: flex;
   flex-direction: column;
