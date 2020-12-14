@@ -106,7 +106,7 @@ function displayGraphs(generationData, batchNumber) {
       colorIndex: 3,
     },
     {
-      key: 'avg_fitness',
+      key: 'avg_steps',
       tooltip: 'average step count',
       colorIndex: 5,
     },
