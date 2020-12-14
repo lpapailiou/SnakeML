@@ -39,8 +39,7 @@ public class GameInformationPainter implements IGameInformationPainter {
    * @param position    the ID of the position the statistics should be displayed at
    */
   public void paintGameInformation(GenerationEntity entity, int snakeLength, int position) {
-    Color background = config.getTheme().isDarkTheme() ? colors.getBackgroundColor().brighter()
-        : colors.getBackgroundColor().brighter();
+    Color background = colors.getBackgroundColor().brighter();
     background = background.deriveColor(1, 1, 1, 0.8);
     context.setFill(background);
     double deathWall = entity.getNumberOfWallDeaths();
