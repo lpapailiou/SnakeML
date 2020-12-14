@@ -20,7 +20,7 @@ public class GamePainter implements IGamePainter {
   private IPainterConfigReader config = IPainterConfigReader.getInstance();
   private Theme colors = config.getTheme();
 
-  private static final double canvasWidth = 800;     // must match fxml
+  private static final double CANVAS_WIDTH = 800;     // must match fxml
   private double cellWidth;
   private double strokeWidth;
   private double paddingWidth;
@@ -72,9 +72,9 @@ public class GamePainter implements IGamePainter {
   public void paintBoard(boolean isActive) {
     int width = config.getBoardWidth();
     int height = config.getBoardHeight();
-    context.clearRect(0, 0, canvasWidth, canvasWidth);
+    context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_WIDTH);
     context.setFill(colors.getBackgroundColor());
-    context.fillRect(0, 0, canvasWidth, canvasWidth);
+    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_WIDTH);
     double offset = (Math.min(paddingWidth, paddingHeight)) / 6;
     context.setFill(isActive ? colors.getFrameActiveColor() : colors.getFrameInactiveColor());
     context
@@ -105,16 +105,16 @@ public class GamePainter implements IGamePainter {
     int height = config.getBoardHeight();
 
     if (width >= height) {
-      cellWidth = (canvasWidth - basePadding * 2) / width;
+      cellWidth = (CANVAS_WIDTH - basePadding * 2) / width;
     } else {
-      cellWidth = (canvasWidth - basePadding * 2) / height;
+      cellWidth = (CANVAS_WIDTH - basePadding * 2) / height;
     }
     strokeWidth = cellWidth / 5 * 4;
     if (strokeWidth < 2) {
       strokeWidth = 2;
     }
-    paddingWidth = (canvasWidth - (cellWidth * width)) / 2;
-    paddingHeight = (canvasWidth - (cellWidth * height)) / 2;
+    paddingWidth = (CANVAS_WIDTH - (cellWidth * width)) / 2;
+    paddingHeight = (CANVAS_WIDTH - (cellWidth * height)) / 2;
   }
 
 }

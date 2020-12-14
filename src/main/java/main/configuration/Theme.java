@@ -13,7 +13,7 @@ public enum Theme {
   SUNSET(Color.web("#ff7582"), Color.web("#ff7582"), Color.web("#c56d86"), Color.MOCCASIN,
       Color.web("#2a3950"), true, "themeSunset.css"),
   CANDY(Color.web("#ffa7a7"), Color.web("#ffa7a7"), Color.web("#ffcbcb"), Color.MOCCASIN,
-      Color.web("#c9fdff"), true, "themeCandy.css"),    // TODO: rename to cancer?
+      Color.web("#c9fdff"), true, "themeCandy.css"),
   MINIMAL(Color.BLACK, Color.DARKGRAY, Color.MEDIUMVIOLETRED, Color.MEDIUMVIOLETRED, Color.WHITE,
       false, "themeMinimal.css"),
   YB(Color.web("#F9CC11"), Color.web("#F9CC11"), Color.web("#F9CC11"), Color.web("#ffffff"),

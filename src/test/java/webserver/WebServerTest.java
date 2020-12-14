@@ -40,12 +40,11 @@ public class WebServerTest {
     config.setPopulationSize(population);
 
     expectedResultJson = new ArrayList<>();
-    HttpResponse response = Unirest.get("http://localhost:8050/?cmd=load").asString();
+    HttpResponse response = Unirest.get("http://localhost:8050/").asString();
 
     assertEquals(expectedResultJson.toString(), response.getBody());
 
     webServer.stopServer();
-    Thread.sleep(2000);
 
   }
 }
