@@ -111,4 +111,24 @@ public class SnakeTest {
 
   }
 
+  @Test
+  public void testSizeIncreaseOnEatingFood() {
+    Snake snake = new Snake(3, Direction.RIGHT, new Cell(3, 3));
+
+    ArrayList<Cell> newBodyPosition = new ArrayList<>();
+    newBodyPosition.add(new Cell(4, 3));
+    newBodyPosition.add(new Cell(3, 3));
+    newBodyPosition.add(new Cell(2, 3));
+    newBodyPosition.add(new Cell(1, 3));
+
+    assertFalse(snake.isDead());
+
+    snake.move(Direction.RIGHT, new Cell(4, 3));
+
+    assertTrue(snake.isHeadAt(new Cell(4, 3)));
+    assertEquals(4, snake.getBody().size());
+    assertEquals(newBodyPosition, snake.getBody());
+    assertFalse(snake.isDead());
+  }
+
 }
