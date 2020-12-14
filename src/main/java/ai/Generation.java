@@ -78,6 +78,7 @@ class Generation {
       executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       LOG.log(Level.WARNING, "executor service interrupted unexpectedly!", e);
+      Thread.currentThread().interrupt();
     }
 
     generationEntities.add(generationEntity);
