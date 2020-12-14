@@ -15,6 +15,8 @@ import java.util.List;
  */
 class StatisticsEndpoint {
 
+  private StatisticsEndpoint() {}
+
   static void listAllBatches(Context context) {
 
     context.header(Header.ACCESS_CONTROL_ALLOW_ORIGIN, "*");

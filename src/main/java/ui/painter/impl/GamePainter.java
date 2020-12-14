@@ -20,7 +20,7 @@ public class GamePainter implements IGamePainter {
   private IPainterConfigReader config = IPainterConfigReader.getInstance();
   private Theme colors = config.getTheme();
 
-  private final double canvasWidth = 800;     // must match fxml
+  private static final double canvasWidth = 800;     // must match fxml
   private double cellWidth;
   private double strokeWidth;
   private double paddingWidth;

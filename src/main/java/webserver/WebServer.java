@@ -9,23 +9,23 @@ import io.javalin.Javalin;
  */
 public class WebServer {
 
-  private Javalin webserver = Javalin.create().start(8050);
+  private Javalin javalin = Javalin.create().start(8050);
 
   /**
    * This method will configure the web server. Additionally, it will execute a get request to
    * publish game statistics.
    */
   public void runServer() {
-    webserver.config.enableCorsForAllOrigins();
-    webserver.config.enableDevLogging();
-    webserver.config.addStaticFiles("/www");
-    webserver.get("", StatisticsEndpoint::listAllBatches);
+    javalin.config.enableCorsForAllOrigins();
+    javalin.config.enableDevLogging();
+    javalin.config.addStaticFiles("/www");
+    javalin.get("", StatisticsEndpoint::listAllBatches);
   }
 
   /**
    * This method will stop the server, in order to free up the used port.
    */
   public void stopServer() {
-    webserver.stop();
+    javalin.stop();
   }
 }

@@ -199,7 +199,7 @@ public class ConfigController implements Initializable {
   }
 
   private void updateHiddenLayerSelection() {
-    int selection = Integer.parseInt(hiddenLayerCount.getValue().toString());
+    int selection = Integer.parseInt(hiddenLayerCount.getValue());
     for (int i = 0; i < hiddenLayerControls.getChildren().size(); i++) {
       TextField field = (TextField) hiddenLayerControls.getChildren().get(i);
       if (i < selection) {
