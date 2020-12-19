@@ -1,8 +1,12 @@
 package main.agent;
 
-public class IncompleteStateException extends RuntimeException {
+/**
+ * This class is used to signalize errors if an Agent has not been fully initialized
+ * before it is being used.
+ */
+class IncompleteStateException extends RuntimeException {
 
-  public IncompleteStateException(String s) {
+  IncompleteStateException(String s) {
     super(s);
   }
 }

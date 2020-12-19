@@ -1,12 +1,16 @@
 package ai.data.storage;
 
-public class DeserializationException extends RuntimeException {
+/**
+ * This class is used to signalize errors during the deserialization of the pre-trained
+ * artificial networks.
+ */
+class DeserializationException extends RuntimeException {
 
-  public DeserializationException(String s, Throwable throwable) {
+  DeserializationException(String s, Throwable throwable) {
     super(s, throwable);
   }
 
-  public DeserializationException(String s) {
+  DeserializationException(String s) {
     super(s);
   }
 }
