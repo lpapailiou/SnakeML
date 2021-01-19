@@ -18,7 +18,7 @@ Created as FFHS project in collaboration with [@ramonator00](https://github.com/
 		5.2.3 [Execute Jar](#execute-jar)  
   
 ## About the game
-![screenshot of snake](https://github.com/lpapailiou/snake/blob/master/src/main/resources/img/screenshot_application.png)
+![screenshot of snake](https://raw.githubusercontent.com/lpapailiou/SnakeML/master/src/main/resources/img/screenshot_application.png)
   
 Following modes are available:  
 - arcade mode (classic manual gameplay)
