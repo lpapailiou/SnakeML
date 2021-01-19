@@ -48,7 +48,7 @@ The neural network was implemented by using a genetic algorithm.
 * ``ai``                     here, all ai related code is in  
 * ``game``                 the basic game loic  
 * ``main``                 this package contains the main method (in ``Main.java``), configuration and game mode handling    
-* ``ui``                         all ui related code  
+* ``ui``                            all ui related code  
 * ``webserver``         all webserver related code  
   
 ## How to get it
