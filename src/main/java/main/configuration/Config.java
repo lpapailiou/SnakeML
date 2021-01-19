@@ -34,7 +34,7 @@ public class Config implements IGameConfigReader, IMainConfigReader, ITestConfig
   private double randomizationRate = 0.8;
   private static final int NUM_INPUT_NODES = 12;
   private static final int NUM_OUTPUT_NODES = 4;
-  private int[] layerConfiguration = {NUM_INPUT_NODES, 16, NUM_OUTPUT_NODES};
+  private int[] layerConfiguration = {NUM_INPUT_NODES, 4, NUM_OUTPUT_NODES};
   private Set<Integer> inputNodeSelection = new HashSet<>();
 
   private Config() {
