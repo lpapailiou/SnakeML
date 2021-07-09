@@ -8,14 +8,6 @@ Created as FFHS project in fall 2020 in collaboration with [@ramonator00](https:
 2. [Implemented AI](#implemented-ai)  
 3. [Project structure](#project-structure)  
 4. [How to get it](#how-to-get-it)  
-	4.1 [How to import it to Intellij IDE](#how-to-import-it-to-intellij-ide)   
-	4.2 [How to import it to Eclipse IDE](#how-to-import-it-to-eclipse-ide)   
-5. [How to run it](#how-to-run-it)  
-	5.1 [Within the IDE](#within-the-ide)  
-	5.2 [From a Jar file](#from-a-jar-file)  
-		5.2.1 [Build Jar in Intellij IDE](#build-jar-in-intellij-ide)    
-		5.2.2 [Build Jar in Eclipse IDE](#build-jar-in-eclipse-ide)  
-		5.2.3 [Execute Jar](#execute-jar)  
   
 ## About the game
 ![screenshot of snake](https://raw.githubusercontent.com/lpapailiou/SnakeML/master/src/main/resources/img/screenshot_application.png)
